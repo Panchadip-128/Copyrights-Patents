@@ -1,4 +1,10 @@
-# Spiking Neural Network Framework
+## COPYRIGHTS 
+
+---
+
+# Neuromorphic Spiking Neural Network
+
+## Spiking Neural Network Framework
 
 **Event-Driven Spiking Neural Network with STDP Learning**
 
@@ -6,7 +12,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
-## Copyright Notice
+### Copyright Notice
 
 **© 2026 [Your Name/Institution]. All Rights Reserved.**
 
@@ -14,11 +20,11 @@ This software is protected under the Copyright Act, 1957 (as amended) of India. 
 
 Unauthorized reproduction, distribution, modification, or use of this software in whole or in part without prior written permission is strictly prohibited and may result in civil and criminal penalties under Indian law.
 
-## Overview
+### Overview
 
 A biologically-inspired Spiking Neural Network (SNN) framework with Spike-Timing-Dependent Plasticity (STDP), optimized for neuromorphic hardware deployment. Compatible with Intel Loihi 3 and IBM NorthPole architectures.
 
-### Key Features
+#### Key Features
 
 - **Biologically Accurate Models**: LIF neurons with adaptive thresholds and refractory periods
 - **STDP Learning**: Hebbian-like synaptic plasticity based on precise spike timing
@@ -27,12 +33,12 @@ A biologically-inspired Spiking Neural Network (SNN) framework with Spike-Timing
 - **Ultra-Low Power**: Optimized for edge deployment with energy consumption tracking
 - **Event-Driven Processing**: Efficient spike-based computation
 
-## Installation
+### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/[yourusername]/spiking-neural-network.git
-cd spiking-neural-network
+git clone https://github.com/Panchadip-128/Copyrights.git
+cd Copyrights
 
 # Install dependencies
 pip install -r requirements.txt
@@ -41,7 +47,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## Quick Start
+### Quick Start
 
 ```python
 from spiking_nn import SpikingNeuralNetwork
@@ -65,7 +71,7 @@ print(f"Output shape: {output.shape}")
 print(f"Average spike rate: {stats[0]['spike_rate']:.4f}")
 ```
 
-## Project Structure
+### Project Structure
 
 ```
 cprt/
@@ -99,15 +105,15 @@ cprt/
 └── LICENSE                # License file
 ```
 
-## Usage Examples
+### Usage Examples
 
-### Running the Demo
+#### Running the Demo
 
 ```bash
 python examples/demo.py
 ```
 
-### Creating Custom Networks
+#### Creating Custom Networks
 
 ```python
 from spiking_nn import SpikingNeuralNetwork
@@ -123,7 +129,7 @@ layer = SpikingLayer(
 )
 ```
 
-### Neuromorphic Hardware Export
+#### Neuromorphic Hardware Export
 
 ```python
 # Export configuration for Intel Loihi 3
@@ -135,9 +141,9 @@ print(f"Power estimate: {loihi_config['power_estimate_mw']:.1f}mW")
 northpole_config = snn.export_neuromorphic('northpole')
 ```
 
-## Architecture Details
+### Architecture Details
 
-### LIF Neuron Model
+#### LIF Neuron Model
 
 The Leaky Integrate-and-Fire neuron implements:
 - Membrane potential dynamics with exponential decay
@@ -145,7 +151,7 @@ The Leaky Integrate-and-Fire neuron implements:
 - Adaptive threshold mechanism
 - Refractory period enforcement
 
-### STDP Learning
+#### STDP Learning
 
 Spike-Timing-Dependent Plasticity:
 - Long-Term Potentiation (LTP): Pre-before-post strengthening
@@ -153,13 +159,13 @@ Spike-Timing-Dependent Plasticity:
 - Exponential eligibility traces
 - Configurable learning windows
 
-### Encoding Schemes
+#### Encoding Schemes
 
 1. **Poisson Encoding**: Rate-based stochastic spike generation
 2. **Latency Encoding**: First-spike timing represents value
 3. **Rate Decoding**: Spike count normalization
 
-## Hardware Requirements
+### Hardware Requirements
 
 - Python 3.8+
 - PyTorch 2.0+
@@ -167,17 +173,17 @@ Spike-Timing-Dependent Plasticity:
 - 4GB+ RAM recommended
 - GPU optional (CPU-compatible)
 
-## Performance
+### Performance
 
 - **Inference Speed**: ~10-50ms per batch (CPU)
 - **Energy Efficiency**: ~0.1-1µJ per inference (estimated for neuromorphic hardware)
 - **Scalability**: Supports networks with 10K+ neurons
 
-## Contributing
+### Contributing
 
 This is proprietary software. For collaboration inquiries, contact [Your Email].
 
-## Citation
+### Citation
 
 If you use this software in your research, please cite:
 
@@ -191,19 +197,19 @@ If you use this software in your research, please cite:
 }
 ```
 
-## License
+### License
 
 © 2026 [Your Name/Institution]. All Rights Reserved.
 
 This software is protected under Indian copyright law. See [LICENSE](LICENSE) for details.
 
-## Contact
+### Contact
 
 - Author: [Your Name]
 - Email: [Your Email]
 - Institution: [Your Institution]
 
-## Acknowledgments
+### Acknowledgments
 
 Inspired by advances in neuromorphic computing, particularly Intel Loihi 3 and IBM NorthPole architectures (2026).
 
