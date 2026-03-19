@@ -1,4 +1,4 @@
-# Neural Audio Morphing Lab
+# Neural Audio Morphing Lab 
 
 **Real-time interactive blending of two audio sources with reverb, visuals, and creative control.**
 
