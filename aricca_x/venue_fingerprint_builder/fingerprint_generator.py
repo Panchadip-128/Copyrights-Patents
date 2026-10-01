@@ -383,12 +383,138 @@ class FingerprintGenerator:
     ) -> float:
         """Calculate overall fingerprint confidence score"""
         confidence = 0.0
-        
+
         if cfp_data:
             confidence += 0.4
         if website_data:
             confidence += 0.4
         if organizer_data:
             confidence += 0.2
-        
+
         return confidence
+
+    # ========================================================================
+    # Patent-Pending: Temporal Fingerprint Evolution Tracking (TFET)
+    # ========================================================================
+
+    def compare_fingerprints(
+        self,
+        current: VenueFingerprint,
+        previous: VenueFingerprint
+    ) -> Dict:
+        """
+        Patent-pending Temporal Fingerprint Evolution Tracking algorithm.
+
+        Compares two fingerprints of the same venue taken at different times
+        to detect behavioral drift. This transforms static analysis into
+        longitudinal monitoring.
+
+        The algorithm computes drift across multiple dimensions and flags
+        "fingerprint mutations" — significant changes that may indicate
+        evolving deceptive behavior.
+
+        Returns a drift report containing:
+          - dimension-level drift scores
+          - aggregate drift magnitude
+          - list of flagged mutations
+          - temporal risk adjustment factor
+        """
+        drift_dimensions = {}
+        mutations = []
+
+        # Dimension 1: CFP Risk Drift
+        cfp_drift = abs(current.cfp_risk_score - previous.cfp_risk_score)
+        drift_dimensions['cfp_risk_drift'] = cfp_drift
+        if cfp_drift > 0.2:
+            mutations.append({
+                'dimension': 'cfp_risk',
+                'previous': previous.cfp_risk_score,
+                'current': current.cfp_risk_score,
+                'drift': cfp_drift,
+                'direction': 'worsened' if current.cfp_risk_score > previous.cfp_risk_score else 'improved'
+            })
+
+        # Dimension 2: Website Structural Drift
+        web_drift = abs(current.website_depth_score - previous.website_depth_score)
+        struct_drift = abs(current.structural_completeness - previous.structural_completeness)
+        combined_web_drift = (web_drift + struct_drift) / 2
+        drift_dimensions['website_structural_drift'] = combined_web_drift
+        if combined_web_drift > 0.15:
+            mutations.append({
+                'dimension': 'website_structure',
+                'previous_depth': previous.website_depth_score,
+                'current_depth': current.website_depth_score,
+                'drift': combined_web_drift,
+                'direction': 'restructured'
+            })
+
+        # Dimension 3: Indexing Claim Drift
+        prev_indexers = set(previous.claimed_indexers)
+        curr_indexers = set(current.claimed_indexers)
+        added_indexers = curr_indexers - prev_indexers
+        removed_indexers = prev_indexers - curr_indexers
+        indexing_drift = (len(added_indexers) + len(removed_indexers)) / max(len(prev_indexers | curr_indexers), 1)
+        drift_dimensions['indexing_claim_drift'] = indexing_drift
+        if added_indexers:
+            mutations.append({
+                'dimension': 'indexing_claims',
+                'added': list(added_indexers),
+                'removed': list(removed_indexers),
+                'drift': indexing_drift,
+                'direction': 'claims_expanded'
+            })
+
+        # Dimension 4: CFP Signature Drift
+        signature_changed = current.cfp_syntax_signature != previous.cfp_syntax_signature
+        sig_drift = 1.0 if signature_changed else 0.0
+        drift_dimensions['cfp_signature_drift'] = sig_drift
+        if signature_changed:
+            mutations.append({
+                'dimension': 'cfp_signature',
+                'previous': previous.cfp_syntax_signature,
+                'current': current.cfp_syntax_signature,
+                'drift': sig_drift,
+                'direction': 'signature_mutated'
+            })
+
+        # Dimension 5: Organizer Continuity
+        prev_orgs = set(previous.organizer_names)
+        curr_orgs = set(current.organizer_names)
+        org_overlap = len(prev_orgs & curr_orgs) / max(len(prev_orgs | curr_orgs), 1)
+        org_drift = 1.0 - org_overlap
+        drift_dimensions['organizer_drift'] = org_drift
+        if org_drift > 0.5:
+            mutations.append({
+                'dimension': 'organizers',
+                'continuity': org_overlap,
+                'drift': org_drift,
+                'direction': 'significant_turnover'
+            })
+
+        # Compute aggregate drift magnitude (weighted)
+        aggregate_drift = (
+            cfp_drift * 0.20 +
+            combined_web_drift * 0.15 +
+            indexing_drift * 0.30 +
+            sig_drift * 0.20 +
+            org_drift * 0.15
+        )
+
+        # Temporal risk adjustment: high drift = increased risk
+        # This factor is applied by the credibility engine to adjust scores
+        if aggregate_drift > 0.3:
+            temporal_risk_adjustment = min(aggregate_drift * 0.5, 0.25)
+        else:
+            temporal_risk_adjustment = 0.0
+
+        return {
+            'venue_id': current.venue_id,
+            'previous_timestamp': previous.generation_timestamp.isoformat(),
+            'current_timestamp': current.generation_timestamp.isoformat(),
+            'drift_dimensions': drift_dimensions,
+            'aggregate_drift_magnitude': aggregate_drift,
+            'mutations': mutations,
+            'mutation_count': len(mutations),
+            'temporal_risk_adjustment': temporal_risk_adjustment,
+            'is_stable': len(mutations) == 0
+        }

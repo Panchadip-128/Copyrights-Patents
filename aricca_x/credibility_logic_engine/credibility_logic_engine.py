@@ -208,17 +208,17 @@ class CredibilityLogicEngine:
         
         # Critical flags
         if components.cfp_risk_score > 0.8:
-            flags.append("🚨 CRITICAL: CFP shows severe predatory indicators")
+            flags.append("[CRITICAL] CFP exhibits severe structural predatory indicators")
         
         if components.indexing_credibility_score < 0.3:
-            flags.append("⚠️ WARNING: Indexing claims highly suspicious")
+            flags.append("[WARNING] Indexing claims lack verifiability")
         
         # Important flags
         if components.contact_legitimacy_score < 0.4:
-            flags.append("⚠️ WARNING: Contact information appears illegitimate")
+            flags.append("[WARNING] Initial contact vectors fail institutional validation")
         
         if components.website_credibility_score < 0.3:
-            flags.append("⚠️ WARNING: Website quality below acceptable standards")
+            flags.append("[WARNING] Digital infrastructure metrics below baseline standards")
         
         # Heuristic flags
         critical_failures = [
@@ -227,7 +227,7 @@ class CredibilityLogicEngine:
         ]
         if critical_failures:
             for failure in critical_failures:
-                flags.append(f"🚨 CRITICAL: {failure.name}")
+                flags.append(f"[CRITICAL] Heuristic Violation: {failure.name}")
         
         return flags
     
@@ -289,8 +289,8 @@ class CredibilityLogicEngine:
                     heuristic_results=[],
                     confidence=0.0,
                     assessment_timestamp=datetime.now(),
-                    recommendations=[f"Assessment failed: {str(e)}"],
-                    flags=["🚨 CRITICAL: Assessment error"]
+                    recommendations=[f"Assessment system exception: {str(e)}"],
+                    flags=["[CRITICAL] Analysis module failure"]
                 ))
         
         return assessments

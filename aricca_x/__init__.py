@@ -5,7 +5,7 @@ A software system designed to analyze research venues and manuscript submissions
 structured venue fingerprints, evaluating submission compliance, analyzing citation behavior, 
 and producing deterministic credibility and risk scores using rule-based logic and explainable heuristics.
 
-Copyright (c) 2026. All rights reserved.
+Copyright (c) 2026. All rights reserved. Patent Pending.
 """
 
 __version__ = "1.0.0"

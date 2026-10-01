@@ -4,7 +4,7 @@ ARICCA-X Main CLI Entry Point
 
 Automated Research Integrity, Credibility & Compliance Analyzer - Extended Edition
 
-Copyright (c) 2026. All rights reserved.
+Copyright (c) 2026. All rights reserved. Patent Pending.
 """
 
 import sys
@@ -196,7 +196,7 @@ Examples:
   # Analyze citations
   python aricca_x_cli.py analyze-citations paper.pdf
 
-Copyright (c) 2026. All rights reserved.
+Copyright (c) 2026. All rights reserved. Patent Pending.
         """
     )
     

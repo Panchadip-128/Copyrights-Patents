@@ -11,11 +11,11 @@ ARICCA-X is a sophisticated software system designed to analyze research venues 
 - **Non-ML Based**: Entirely rule-based and deterministic (no machine learning dependencies)
 - **Multi-Layer Reasoning**: Proprietary algorithms across multiple analysis dimensions
 - **Reproducible Scores**: Explicit scoring formulas produce consistent, explainable results
-- **Copyright-Protected Architecture**: Unique modular structure and proprietary algorithms
+- **Patent-Pending Architecture**: Unique modular structure, novel algorithms, and technical processes
 
 ## System Architecture
 
-ARICCA-X consists of seven copyright-protected core modules:
+ARICCA-X consists of seven patent-pending core modules:
 
 ```
 /aricca_x
@@ -31,7 +31,7 @@ ARICCA-X consists of seven copyright-protected core modules:
 ### Core Modules
 
 #### 1. **CFP Parser Engine**
-Analyzes Call for Papers documents using proprietary pattern detection:
+Analyzes Call for Papers documents using patent-pending pattern detection processes:
 - Syntax pattern recognition
 - Urgency indicator detection
 - Suspicious phrasing identification
@@ -85,35 +85,62 @@ Multi-format report generation:
 - Customizable styling
 - Export handling for various formats
 
-## Copyright-Strong Features
+## Patent-Pending Technical Innovations
 
-### Proprietary Algorithms
+### Five Novel Technical Contributions (see `PATENT_CLAIMS.md` for formal claims)
 
-1. **CFP Syntax Signature Generation**
-   - Unique hashing algorithm for CFP characteristics
-   - Pattern-based fingerprinting
-   - Multi-dimensional scoring
+1. **Adaptive Decay Weighting (ADW)** — *Claim 1*
+   - Dynamic weight redistribution when data sources are missing
+   - Prevents false-neutral assessments from incomplete data
+   - Data-absence penalty applied to risk score
+   - Implemented in: `credibility_logic_engine/scoring_engine.py`
 
-2. **Credibility Calculation Formula**
-   ```
-   Credibility = (ComponentScore × 0.60) + (HeuristicScore × 0.40)
-   ```
-   - Proprietary weighting scheme
-   - Explicit, non-ML based
-   - Fully reproducible
+2. **Cross-Signal Anomaly Detection (CSAD)** — *Claim 2*
+   - Pairwise divergence analysis between correlated credibility signals
+   - Detects deceptive venues that invest in one signal but neglect correlated ones
+   - Signal correlation matrix with configurable divergence thresholds
+   - Implemented in: `credibility_logic_engine/scoring_engine.py`
 
-3. **Risk Scoring Formula**
-   ```
-   Risk = Σ(ComponentRisk × Weight) + HeuristicPenalties
-   ```
-   - Deterministic calculation
-   - Transparent factor contributions
-   - No black-box components
+3. **Grammatical Tense Analysis (GTA)** — *Claim 3*
+   - Classifies indexing claims by verb tense (past/present/future/conditional)
+   - Detects deceptive language: "will be indexed" vs. "is indexed"
+   - Tense-specific risk weighting for suspicion scoring
+   - Implemented in: `venue_fingerprint_builder/indexing_claim_detector.py`
 
-4. **Citation Network Density**
-   - Graph-theoretic analysis
-   - Proprietary clustering detection
-   - Manipulation pattern identification
+4. **Temporal Fingerprint Evolution Tracking (TFET)** — *Claim 4*
+   - Compares venue fingerprints over time across 5 drift dimensions
+   - Flags "fingerprint mutations" indicating behavioral change
+   - Produces temporal risk adjustment for longitudinal monitoring
+   - Implemented in: `venue_fingerprint_builder/fingerprint_generator.py`
+
+5. **Deterministic Multi-Phase Assessment Pipeline** — *Claim 5*
+   - Six-phase pipeline with auditable intermediate representations
+   - Guarantees bit-identical reproducibility (same inputs → same outputs)
+   - Improvement over ML black-box systems
+   - Implemented across all modules, orchestrated by `credibility_logic_engine/`
+
+### Proprietary Formulas
+
+**Adaptive Decay Weight Redistribution:**
+```
+effective_weight[i] = base_weight[i] + (base_weight[i] / Σ_available) × Σ_absent
+```
+
+**Cross-Signal Anomaly Amplification:**
+```
+amplification = (divergence - threshold) × coefficient, when divergence > threshold
+```
+
+**Credibility Calculation:**
+```
+Credibility = (ComponentScore × 0.60) + (HeuristicScore × 0.40)
+```
+where HeuristicScore = 1.0 - Σ(importance_weight × failed_heuristic)
+
+**Temporal Risk Adjustment:**
+```
+adjustment = min(aggregate_drift × 0.5, 0.25), when drift > 0.3
+```
 
 ### Unique Data Structures
 
@@ -188,31 +215,30 @@ if assessment.risk_level in ['high', 'critical']:
     print(f"Credibility Score: {assessment.overall_credibility_score:.2%}")
 ```
 
-## Copyright Protection
+## Intellectual Property & Patents
 
-### What Makes ARICCA-X Copyright-Worthy
+### Patentable Technical Innovations (Alice § 101 Compliant)
 
-1. **Original Expression**: Unique software architecture and module organization
-2. **Proprietary Algorithms**: Custom scoring formulas and heuristics
-3. **Deterministic Logic**: Rule-based system (not dataset-dependent)
-4. **Structured Data Models**: Original data structure definitions
-5. **Template System**: Proprietary report rendering templates
-6. **Integration Logic**: Unique orchestration of components
+ARICCA-X contains five independent patent claims, each addressing a specific
+technical problem with a novel technical mechanism:
 
-### Not Protected
+| Claim | Technical Problem | Novel Solution |
+|-------|------------------|----------------|
+| 1 | Data completeness bias in scoring | Adaptive Decay Weighting |
+| 2 | Cross-signal deception | Pairwise divergence analysis |
+| 3 | Tense-based claim deception | Grammatical Tense Analysis |
+| 4 | Temporal behavioral evolution | Fingerprint Evolution Tracking |
+| 5 | Non-reproducibility of ML systems | Six-phase deterministic pipeline |
 
-- General concepts of venue analysis
-- Common academic standards (IEEE, ACM formats)
-- Public knowledge about predatory publishing
-- Standard algorithms (e.g., graph traversal)
+See [`PATENT_CLAIMS.md`](PATENT_CLAIMS.md) for complete formal claims.
 
-### Patent-Free Design
+### Prior Art Differentiation
 
-ARICCA-X deliberately avoids patent claims:
-- No novel algorithms claimed
-- No "inventions" asserted
-- Focus on creative expression of software
-- Source-code-centric protection
+- **vs. Beall's List / Cabell's**: Static checklists, no automated scoring
+- **vs. ML-based systems**: Non-reproducible, require training data
+- **vs. Weighted-average systems**: Fixed weights, no adaptive redistribution
+- **vs. Single-signal analyzers**: No cross-signal anomaly detection
+- **vs. Snapshot tools**: No temporal evolution tracking
 
 ## Technical Specifications
 
@@ -420,7 +446,7 @@ For questions, licensing, or support:
 
 **ARICCA-X - Automated Research Integrity, Credibility & Compliance Analyzer - Extended Edition**
 
-*A copyright-protected software system for academic venue analysis*
+*A patent-pending software system for academic venue analysis*
 
 
 **© 2026. All Rights Reserved.**

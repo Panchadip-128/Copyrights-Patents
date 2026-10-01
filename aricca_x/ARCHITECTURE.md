@@ -4,7 +4,7 @@
 
 ## System Overview
 
-ARICCA-X implements a multi-layer reasoning engine using proprietary rule-based algorithms. This document describes the copyright-protected architectural design.
+ARICCA-X implements a multi-layer reasoning engine using proprietary rule-based algorithms. This document describes the patent-pending architectural design.
 
 ## Core Architecture Principles
 
@@ -20,11 +20,11 @@ ARICCA-X implements a multi-layer reasoning engine using proprietary rule-based 
 - Separation of concerns
 - Reusable components
 
-### 3. Copyright-Protected Expression
-- Unique algorithm implementations
-- Proprietary data structures
-- Original scoring formulas
-- Custom template designs
+### 3. Patent-Pending Technical Features
+- Novel algorithmic processes
+- Proprietary technical data structures
+- Original mathematical scoring formulas
+- Custom data transformation and templating
 
 ## Module Dependencies
 
@@ -106,98 +106,105 @@ Manuscript → Parser → Intermediate Representation
                       Report Generator
 ```
 
-## Proprietary Algorithms
+## Novel Algorithms (Patent-Pending)
 
-### 1. CFP Risk Scoring Formula
-
-```python
-# Copyright-protected formula
-risk = (
-    urgency_score * 0.20 +
-    suspicious_count * 0.15 +
-    (1 - syntax_score) * 0.10 +
-    (1 - professionalism_score) * 0.15 +
-    (1 - language_quality) * 0.10 +
-    (1 - contact_legitimacy) * 0.15
-)
-```
-
-**Proprietary Elements**:
-- Specific weight values
-- Component selection
-- Combination methodology
-
-### 2. Credibility Calculation
+### 1. Adaptive Decay Weighting (ADW) — Claim 1
 
 ```python
-# Copyright-protected formula
-credibility = (
-    component_score * 0.60 +
-    heuristic_score * 0.40
-)
+# Patent-pending weight redistribution algorithm
+# When data sources are missing, their weight is redistributed
+# proportionally among available sources.
 
-component_score = weighted_sum([
-    cfp_credibility * 0.25,
-    website_credibility * 0.20,
-    indexing_credibility * 0.20,
-    contact_legitimacy * 0.15,
-    org_structure * 0.10,
-    pub_history * 0.10
-])
+available_weight = sum(base_w for comp, base_w in BASE_WEIGHTS.items()
+                       if data_availability[comp])
+absent_weight = sum(base_w for comp, base_w in BASE_WEIGHTS.items()
+                    if not data_availability[comp])
+
+for component in available_sources:
+    effective_weight[component] = (
+        base_weight[component] +
+        (base_weight[component] / available_weight) * absent_weight
+    )
+
+# Separately: data-absence penalty increases risk
+risk += absent_count * DATA_ABSENCE_PENALTY
 ```
 
-**Proprietary Elements**:
-- Weight distribution
-- Component breakdown
-- Aggregation method
+**Novel Elements**:
+- Dynamic weight redistribution (not fixed-weight averaging)
+- Full weight budget utilization regardless of data availability
+- Separate data-absence penalty vs. neutral default
 
-### 3. Fingerprint Generation
+### 2. Cross-Signal Anomaly Detection (CSAD) — Claim 2
 
 ```python
-# Copyright-protected algorithm
-fingerprint_hash = SHA256(
-    venue_id +
-    cfp_signature +
-    website_depth +
-    indexers_string +
-    organizers_string
-)
+# Patent-pending anomaly detection between correlated signals
+CORRELATED_SIGNAL_PAIRS = [
+    ('cfp_risk', 'website_credibility', 'quality_mismatch'),
+    ('website_credibility', 'indexing_credibility', 'claim_contradiction'),
+    # ... additional pairs
+]
 
-cfp_signature = MD5(
-    f"syn:{syntax_score:.2f}|"
-    f"pro:{professionalism_score:.2f}|"
-    f"urg:{urgency_count}|"
-    f"sus:{suspicious_count}"
-)
+for signal_a, signal_b, anomaly_type in CORRELATED_SIGNAL_PAIRS:
+    divergence = abs(score_a - score_b)
+    if divergence > ANOMALY_DIVERGENCE_THRESHOLD:
+        amplification = (divergence - threshold) * 0.3
+        anomalies.append(CrossSignalAnomaly(...))
+
+risk += sum(a.risk_amplification_factor for a in anomalies)
 ```
 
-**Proprietary Elements**:
-- Signature component selection
-- Hashing methodology
-- Format specification
+**Novel Elements**:
+- Signal correlation matrix (no prior art analog)
+- Pairwise divergence analysis across data modalities
+- Risk amplification proportional to divergence magnitude
 
-### 4. Citation Risk Assessment
+### 3. Grammatical Tense Analysis (GTA) — Claim 3
 
 ```python
-# Copyright-protected formula
-citation_risk = (
-    self_citation_penalty +
-    pattern_risk +
-    clustering_risk +
-    diversity_risk
-)
+# Patent-pending tense classification for indexing claims
+def _classify_claim_tense(claim_text):
+    # Priority: CONDITIONAL > FUTURE > PAST > PRESENT > UNKNOWN
+    # Each category has domain-specific verb phrase patterns
 
-# Proprietary thresholds
-if self_citation_rate > 0.3:
-    self_citation_penalty = 0.3
-elif self_citation_rate > 0.2:
-    self_citation_penalty = 0.15
+    if matches_conditional(claim_text):  # "may be indexed"
+        return 'conditional'             # risk_weight = 0.30
+    if matches_future(claim_text):       # "will be indexed"
+        return 'future'                  # risk_weight = 0.25
+    if matches_past(claim_text):         # "was indexed since 2020"
+        return 'past'                    # risk_weight = -0.05
+    if matches_present(claim_text):      # "is indexed in Scopus"
+        return 'present'                 # risk_weight = 0.00
+    return 'unknown'                     # risk_weight = 0.05
 ```
 
-**Proprietary Elements**:
-- Risk component definitions
-- Threshold values
-- Penalty calculation
+**Novel Elements**:
+- Grammatical tense as credibility signal (no prior art)
+- Hierarchical tense taxonomy with priority ordering
+- Domain-specific verb phrase patterns around indexing keywords
+
+### 4. Temporal Fingerprint Evolution Tracking (TFET) — Claim 4
+
+```python
+# Patent-pending multi-dimensional drift analysis
+def compare_fingerprints(current, previous):
+    dimensions = {
+        'cfp_risk_drift':            abs(current.risk - previous.risk),
+        'website_structural_drift':  avg(depth_drift, completeness_drift),
+        'indexing_claim_drift':      jaccard_distance(prev_indexers, curr_indexers),
+        'cfp_signature_drift':       1.0 if hash_changed else 0.0,
+        'organizer_drift':           1.0 - jaccard_similarity(prev_orgs, curr_orgs),
+    }
+
+    aggregate = weighted_sum(dimensions)
+    if aggregate > 0.3:
+        temporal_risk_adjustment = min(aggregate * 0.5, 0.25)
+```
+
+**Novel Elements**:
+- Five-dimensional drift analysis (no prior art for venue monitoring)
+- Fingerprint mutation flagging with direction classification
+- Temporal risk adjustment factor for longitudinal scoring
 
 ## Data Structures
 
@@ -294,7 +301,7 @@ class CitationGraph:
 ### Proprietary Template Structure
 
 ```
-Report Structure (Copyright-protected):
+Report Structure (Patent-pending):
 ├── Header
 │   ├── Title (styled)
 │   ├── Subtitle
@@ -406,4 +413,4 @@ While the core algorithms are proprietary, the system provides extension points:
 **ARICCA-X Architecture**  
 **Copyright © 2026. All Rights Reserved.**
 
-This architecture document describes proprietary designs and implementations protected by copyright law.
+This architecture document describes proprietary technical designs and novel algorithmic processes that are patent-pending.

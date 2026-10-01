@@ -29,9 +29,9 @@ You MAY NOT:
 - Reverse engineer, decompile, or disassemble the software (except as permitted by law)
 - Extract or reuse proprietary algorithms or data structures
 
-## Proprietary Algorithms
+## Patent-Pending Algorithms
 
-The following components contain proprietary, copyright-protected algorithms and expressions:
+The following components contain proprietary algorithms and technical processes that are patent-pending:
 
 1. **CFP Analysis Algorithms**
    - Syntax pattern detection logic
@@ -62,9 +62,9 @@ The following components contain proprietary, copyright-protected algorithms and
 
 The source code of ARICCA-X is protected as a literary work under copyright law. The specific expression of algorithms, the selection and arrangement of modules, the proprietary data structures, and the overall architecture constitute original creative works.
 
-## No Patent Claims
+## Patent Rights Asserted
 
-ARICCA-X does not assert patent rights. This software relies solely on copyright protection for its literary and artistic expression in source code form.
+ARICCA-X incorporates several novel technical innovations and asserts patent rights over its proprietary algorithms, specific architectural structures, and technical evaluation methods. (See `PATENT_CLAIMS.md` for detailed claims).
 
 ## Commercial Licensing
 

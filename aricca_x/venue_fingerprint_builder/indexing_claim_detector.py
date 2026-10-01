@@ -186,23 +186,33 @@ class IndexingClaimDetector:
     def _calculate_suspicion_score(self, claim_text: str) -> float:
         """
         Calculate suspicion score for the claim phrasing.
-        
-        Proprietary algorithm detecting predatory patterns.
+
+        Patent-pending algorithm combining three independent analyses:
+          1. Suspicious phrasing pattern detection
+          2. Legitimate phrasing pattern detection (reduces suspicion)
+          3. Grammatical Tense Analysis (novel contribution)
+
+        The Grammatical Tense Analysis classifies the claim's temporal
+        framing into one of four categories: PAST, PRESENT, FUTURE, or
+        CONDITIONAL. Each tense category carries a different risk weight
+        because deceptive venues systematically use future/conditional
+        phrasing to imply indexing they do not have.
+
         Returns score from 0.0 (legitimate) to 1.0 (highly suspicious)
         """
         suspicion = 0.0
-        
-        # Check for suspicious patterns
+
+        # Analysis 1: Suspicious pattern detection
         for pattern in self.suspicious_patterns:
             if pattern.search(claim_text):
                 suspicion += 0.25
-        
-        # Check for legitimate patterns (reduces suspicion)
+
+        # Analysis 2: Legitimate pattern detection (reduces suspicion)
         for pattern in self.legitimate_patterns:
             if pattern.search(claim_text):
                 suspicion -= 0.2
-        
-        # Check for vague language
+
+        # Analysis 3: Vague language detection
         vague_terms = [
             'many databases', 'various indexers', 'several indexes',
             'well known', 'reputed', 'leading'
@@ -210,14 +220,84 @@ class IndexingClaimDetector:
         for term in vague_terms:
             if term in claim_text.lower():
                 suspicion += 0.15
-        
-        # Check for future tense (indicates uncertainty)
-        future_patterns = [r'\bwill\s+be\b', r'\bplanning\s+to\b', r'\baiming\s+to\b']
-        for pattern in future_patterns:
-            if re.search(pattern, claim_text, re.IGNORECASE):
-                suspicion += 0.2
-        
+
+        # Analysis 4: Patent-Pending Grammatical Tense Analysis (GTA)
+        tense = self._classify_claim_tense(claim_text)
+        tense_risk_weights = {
+            'past': -0.05,       # "was indexed" — slight positive signal
+            'present': 0.0,      # "is indexed" — neutral
+            'future': 0.25,      # "will be indexed" — strong risk signal
+            'conditional': 0.30, # "may be indexed" — strongest risk signal
+            'unknown': 0.05      # no clear tense — slight risk
+        }
+        suspicion += tense_risk_weights.get(tense, 0.05)
+
         return max(0.0, min(suspicion, 1.0))
+
+    def _classify_claim_tense(self, claim_text: str) -> str:
+        """
+        Patent-pending Grammatical Tense Analysis (GTA) algorithm.
+
+        Classifies the temporal framing of an indexing claim into one of
+        four categories by analyzing verb phrase patterns surrounding
+        indexing-related keywords.
+
+        Categories:
+          - 'past': Historical claim ("was indexed", "has been indexed since")
+          - 'present': Current state claim ("is indexed", "currently indexed")
+          - 'future': Prospective claim ("will be indexed", "to be submitted")
+          - 'conditional': Uncertain claim ("may be indexed", "could be")
+          - 'unknown': No clear tense detected
+
+        This is a specific technical contribution: prior art detects
+        whether an indexer is mentioned, but does not analyze the
+        grammatical framing of the mention to distinguish between
+        "we are indexed in Scopus" vs "we will apply to Scopus".
+        """
+        claim_lower = claim_text.lower()
+
+        # Conditional tense patterns (check first — most suspicious)
+        conditional_patterns = [
+            r'\b(?:may|might|could|would)\s+(?:be\s+)?(?:indexed|included|listed|submitted)',
+            r'\b(?:possibly|potentially)\s+(?:indexed|included)',
+            r'\bsubject\s+to\s+(?:indexing|inclusion|approval)',
+        ]
+        for pattern in conditional_patterns:
+            if re.search(pattern, claim_lower):
+                return 'conditional'
+
+        # Future tense patterns
+        future_patterns = [
+            r'\b(?:will|shall|going\s+to)\s+(?:be\s+)?(?:indexed|included|submitted|listed)',
+            r'\b(?:planning|aiming|intending)\s+to\s+(?:submit|apply|index)',
+            r'\bto\s+be\s+(?:indexed|submitted|included)',
+            r'\bapplied?\s+for\s+(?:indexing|inclusion)',
+            r'\bunder\s+(?:review|consideration|evaluation)\s+for',
+        ]
+        for pattern in future_patterns:
+            if re.search(pattern, claim_lower):
+                return 'future'
+
+        # Past tense patterns
+        past_patterns = [
+            r'\b(?:was|were|has\s+been|had\s+been)\s+(?:indexed|included|listed)',
+            r'\bindexed\s+(?:in|by)\s+\w+\s+since\s+\d{4}',
+        ]
+        for pattern in past_patterns:
+            if re.search(pattern, claim_lower):
+                return 'past'
+
+        # Present tense patterns
+        present_patterns = [
+            r'\b(?:is|are)\s+(?:indexed|included|listed|covered|abstracted)',
+            r'\bcurrently\s+(?:indexed|included|listed)',
+            r'\bindexed\s+(?:in|by)\b',  # bare "indexed in" implies present
+        ]
+        for pattern in present_patterns:
+            if re.search(pattern, claim_lower):
+                return 'present'
+
+        return 'unknown'
     
     def _determine_veracity(
         self,
