@@ -1,6 +1,6 @@
 # ARICCA-X: Automated Research Integrity, Credibility & Compliance Analyzer - Extended Edition
 
-**Copyright © 2026. All Rights Reserved.Panchadip B & Somyajeet A**
+(https://copyrights-patents-ariccax.vercel.app)
 
 ## Overview
 
