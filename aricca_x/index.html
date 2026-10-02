@@ -405,17 +405,94 @@
         .icon-error { color: var(--accent-rose); }
         .icon-warning { color: var(--accent-amber); }
         .icon-info { color: var(--accent-blue); }
+
+        /* ============ AUTH UI ============ */
+        #auth-container {
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .auth-card {
+            width: 420px; padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+        }
+        .auth-card h2 { text-align: center; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 800;}
+        .auth-card p { text-align: center; margin-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+        .demo-box {
+            background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 2rem; font-size: 0.85rem;
+            color: var(--text-secondary); line-height: 1.6;
+        }
+        .demo-box strong { color: var(--accent-blue); display: block; margin-bottom: 8px; font-size:0.9rem;}
+        .auth-form input { margin-bottom: 1.25rem; width: 100%; padding: 12px 16px;}
+        .auth-form button { width: 100%; justify-content: center; padding: 12px; font-size: 1rem; font-weight: 600;}
+        .auth-switch {
+            text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;
+            transition: color 0.2s;
+        }
+        .auth-switch:hover { color: var(--text-primary); }
+        .auth-switch span { color: var(--accent-blue); font-weight: 600; }
+        
+        #app-container { display: none; }
+        .admin-badge {
+            background: var(--accent-rose); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; margin-left: 10px; font-weight: bold; display: none; text-transform: uppercase; letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
+<div id="auth-container">
+    <div class="auth-card" id="login-box">
+        <div style="display:flex; justify-content:center; margin-bottom:1.5rem;">
+            <div class="logo-icon" style="width:56px;height:56px;font-size:1.5rem;">AX</div>
+        </div>
+        <h2>ARICCA-X Secure Login</h2>
+        <p>Role-Based System Access Verification</p>
+        <div class="demo-box">
+            <strong>Demo Credentials (Testing Only):</strong>
+            Admin Role: <em>admin@aricca.com / admin123</em><br>
+            User Role: <em>user@aricca.com / user123</em>
+        </div>
+        <form class="auth-form" id="login-form">
+            <input type="email" id="login-email" placeholder="Email Address" required>
+            <input type="password" id="login-pwd" placeholder="Password" required>
+            <button class="btn btn-primary" type="submit">Authenticate & Enter</button>
+            <div id="login-error" style="color:var(--accent-rose); font-size:0.85rem; margin-top:12px; text-align:center; display:none; font-weight: 600;">Invalid credentials or role not recognized.</div>
+        </form>
+        <div class="auth-switch" onclick="toggleAuth('signup')">Need system access? <span>Request Account</span></div>
+    </div>
+
+    <div class="auth-card" id="signup-box" style="display: none;">
+        <div style="display:flex; justify-content:center; margin-bottom:1.5rem;">
+            <div class="logo-icon" style="width:56px;height:56px;font-size:1.5rem;">AX</div>
+        </div>
+        <h2>Request Access</h2>
+        <p>ARICCA-X is currently in closed beta.</p>
+        <form class="auth-form" id="signup-form">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Institutional Email" required>
+            <input type="text" placeholder="Institution / Organization" required>
+            <button class="btn btn-primary" type="button" onclick="alert('Signup requests are queued for manual administrative review in Demo Mode.')">Submit Request</button>
+        </form>
+        <div class="auth-switch" onclick="toggleAuth('login')">Already approved? <span>Login Here</span></div>
+    </div>
+</div>
+
+<div id="app-container">
 <header class="header">
     <div class="header-inner">
         <div class="logo">
             <div class="logo-icon">AX</div>
             ARICCA-X
+            <span id="role-badge" class="admin-badge"></span>
         </div>
-        <span class="patent-badge">Patent Pending (5 Claims)</span>
+        <div style="display: flex; align-items: center;">
+            <span class="patent-badge">Patent Pending (5 Claims)</span>
+            <button class="btn" style="margin-left: 15px; padding: 6px 14px; font-size: 0.75rem;" onclick="logout()">Logout</button>
+        </div>
     </div>
 </header>
 
@@ -817,6 +894,47 @@ Indexed by Google Scholar and Crossref</textarea>
 </footer>
 
 <script>
+// ============================================================
+// AUTHENTICATION LOGIC
+// ============================================================
+function toggleAuth(mode) {
+    document.getElementById('login-box').style.display = mode === 'login' ? 'block' : 'none';
+    document.getElementById('signup-box').style.display = mode === 'signup' ? 'block' : 'none';
+}
+
+document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const pwd = document.getElementById('login-pwd').value;
+    const err = document.getElementById('login-error');
+    const badge = document.getElementById('role-badge');
+    
+    if(email === 'admin@aricca.com' && pwd === 'admin123') {
+        err.style.display = 'none';
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('app-container').style.display = 'block';
+        badge.style.display = 'inline-block';
+        badge.innerText = 'ADMIN';
+        badge.style.background = 'var(--accent-rose)';
+    } else if(email === 'user@aricca.com' && pwd === 'user123') {
+        err.style.display = 'none';
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('app-container').style.display = 'block';
+        badge.style.display = 'inline-block';
+        badge.innerText = 'USER';
+        badge.style.background = 'var(--accent-blue)';
+    } else {
+        err.style.display = 'block';
+    }
+});
+
+function logout() {
+    document.getElementById('app-container').style.display = 'none';
+    document.getElementById('auth-container').style.display = 'flex';
+    document.getElementById('login-form').reset();
+    document.getElementById('login-error').style.display = 'none';
+}
+
 // ============================================================
 // ARICCA-X UI Engine — Client-side implementation of all
 // patent-pending algorithms for demonstration purposes
@@ -1503,5 +1621,6 @@ function runEvolutionAnalysis() {
 function formatKey(k) { return k.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
 function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>
+</div>
 </body>
 </html>
