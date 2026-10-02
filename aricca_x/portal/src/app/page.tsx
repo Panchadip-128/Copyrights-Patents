@@ -16,7 +16,7 @@ function toggleAuth(mode) {
     document.getElementById('signup-box').style.display = mode === 'signup' ? 'block' : 'none';
 }
 
-document.getElementById('login-form').addEventListener('submit', function(e) {
+window.handleLogin = function(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
     const pwd = document.getElementById('login-pwd').value;
@@ -40,7 +40,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     } else {
         err.style.display = 'block';
     }
-});
+};
 
 function logout() {
     document.getElementById('app-container').style.display = 'none';
@@ -849,7 +849,7 @@ function escHtml(s) { const d = document.createElement('div'); d.textContent = s
             Admin Role: <em>admin@aricca.com / admin123</em><br>
             User Role: <em>user@aricca.com / user123</em>
         </div>
-        <form class="auth-form" id="login-form">
+        <form class="auth-form" id="login-form" onsubmit="window.handleLogin(event)">
             <input type="email" id="login-email" placeholder="Email Address" required>
             <input type="password" id="login-pwd" placeholder="Password" required>
             <button class="btn btn-primary" type="submit">Authenticate & Enter</button>
