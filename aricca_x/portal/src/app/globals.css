@@ -46,24 +46,26 @@
             z-index: 0;
         }
 
+        /* Crisp Isometric Cyber Grid (Matches Reference Floating Cubes) */
         body::before {
             content: '';
             position: fixed;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
             background-image: 
-                repeating-linear-gradient(to bottom, transparent, transparent 49px, rgba(162, 255, 0, 0.15) 50px),
-                repeating-linear-gradient(to right, transparent, transparent 99px, rgba(162, 255, 0, 0.1) 100px);
-            transform: perspective(100vh) rotateX(65deg) translateY(-100px) translateZ(-200px);
+                repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(162, 255, 0, 0.18) 60px),
+                repeating-linear-gradient(60deg, transparent, transparent 68px, rgba(162, 255, 0, 0.12) 69.28px),
+                repeating-linear-gradient(120deg, transparent, transparent 68px, rgba(162, 255, 0, 0.12) 69.28px);
+            background-size: 100vw 100vw;
             z-index: -2;
             pointer-events: none;
         }
 
+        /* Heavy Center Vignette for Readability */
         body::after {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 40%, transparent 0%, #021a14 75%);
+            background: radial-gradient(ellipse at center, rgba(2, 26, 20, 0.6) 0%, #021a14 85%);
             z-index: -1;
             pointer-events: none;
         }
