@@ -530,6 +530,14 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
             Evolution
         </button>
+        <button class="nav-tab" data-tab="latency" id="tabLatency">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Latency (PRLV)
+        </button>
+        <button class="nav-tab" data-tab="geo" id="tabGeo">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" /></svg>
+            Geo-Triangulation
+        </button>
     </nav>
 
     <!-- =============== PANEL: VENUE ANALYSIS =============== -->
@@ -884,6 +892,78 @@ Indexed by Google Scholar and Crossref</textarea>
                 <div class="card">
                     <div class="empty-state">Configure temporal fingerprint snapshots to execute comparison.</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============== PANEL: LATENCY VERIFIER =============== -->
+    <div class="panel" id="panelLatency">
+        <div class="grid-2" style="margin-top:1.5rem">
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        Peer-Review Latency Verifier (PRLV)
+                        <span class="claim-tag">Core Engine</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Claimed Submission Date</label>
+                        <input type="date" id="lat_sub" value="2026-09-01">
+                    </div>
+                    <div class="input-group">
+                        <label>Claimed Acceptance Date</label>
+                        <input type="date" id="lat_acc" value="2026-09-12">
+                    </div>
+                    <div class="input-group">
+                        <label>Claimed Review Stages (e.g., Double-Blind, Revisions)</label>
+                        <input type="number" id="lat_stages" value="2" min="1" max="5">
+                    </div>
+                    <button class="btn btn-primary" onclick="runLatencyAnalysis()" style="width:100%;justify-content:center;">Verify Temporal Logic</button>
+                </div>
+            </div>
+            <div id="latencyResults">
+                <div class="card"><div class="empty-state">Input temporal metadata to verify review logic.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============== PANEL: GEO-TRIANGULATION =============== -->
+    <div class="panel" id="panelGeo">
+        <div class="grid-2" style="margin-top:1.5rem">
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        Geospatial Triangulation
+                        <span class="claim-tag">Core Engine</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Claimed HQ Location</label>
+                        <select id="geo_claim" style="width:100%; padding:10px; background:var(--bg-input); border:1px solid var(--border); color:white; border-radius:var(--radius-sm);">
+                            <option value="UK">London, United Kingdom</option>
+                            <option value="US">New York, USA</option>
+                            <option value="CH">Zurich, Switzerland</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Actual Server/IP Location</label>
+                        <select id="geo_ip" style="width:100%; padding:10px; background:var(--bg-input); border:1px solid var(--border); color:white; border-radius:var(--radius-sm);">
+                            <option value="UK">London, United Kingdom</option>
+                            <option value="IN" selected>Mumbai, India</option>
+                            <option value="NG">Lagos, Nigeria</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Payment Gateway Registration</label>
+                        <select id="geo_pay" style="width:100%; padding:10px; background:var(--bg-input); border:1px solid var(--border); color:white; border-radius:var(--radius-sm);">
+                            <option value="UK">London, United Kingdom</option>
+                            <option value="IN" selected>Mumbai, India</option>
+                            <option value="CY">Nicosia, Cyprus (Offshore)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="runGeoAnalysis()" style="width:100%;justify-content:center;margin-top:1rem;">Calculate Spatial Dissonance</button>
+                </div>
+            </div>
+            <div id="geoResults">
+                <div class="card"><div class="empty-state">Select spatial nodes to compute dissonance.</div></div>
             </div>
         </div>
     </div>
@@ -1613,6 +1693,89 @@ function runEvolutionAnalysis() {
     }
     html += '</div>';
     document.getElementById('evolutionResults').innerHTML = html;
+}
+
+// ============================================================
+// NEW CORE ENGINES: LATENCY & GEO-TRIANGULATION
+// ============================================================
+function runLatencyAnalysis() {
+    const sub = new Date(document.getElementById('lat_sub').value);
+    const acc = new Date(document.getElementById('lat_acc').value);
+    const stages = parseInt(document.getElementById('lat_stages').value);
+    
+    if (isNaN(sub) || isNaN(acc)) return;
+    
+    const diffTime = Math.abs(acc - sub);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Deterministic rule: Standard peer review requires minimum 14 days per stage.
+    const expectedMinDays = stages * 14;
+    const latencyDivergence = diffDays - expectedMinDays;
+    
+    let html = '<div class="card"><div class="card-title">Latency Verification Output</div>';
+    html += `<div class="stat-row"><span class="stat-label">Actual Peer-Review Latency</span><span class="stat-value">${diffDays} Days</span></div>`;
+    html += `<div class="stat-row"><span class="stat-label">Minimum Expected Latency</span><span class="stat-value">${expectedMinDays} Days</span></div>`;
+    
+    if (latencyDivergence < 0) {
+        html += `<div class="flag-item flag-critical" style="margin-top:1rem;">
+            ${ICONS.alert}
+            <div>
+                <strong>Temporal Impossibility Detected</strong><br>
+                The claimed timeline (${diffDays} days) is deterministically insufficient to complete ${stages} stage(s) of rigorous peer review. High probability of "Pay-to-Publish" immediate acceptance.
+            </div>
+        </div>`;
+    } else {
+        html += `<div class="flag-item flag-safe" style="margin-top:1rem;">
+            ${ICONS.check}
+            <div>
+                <strong>Latency Validated</strong><br>
+                The temporal delta conforms to standard academic publishing latency constraints.
+            </div>
+        </div>`;
+    }
+    html += '</div>';
+    document.getElementById('latencyResults').innerHTML = html;
+}
+
+function runGeoAnalysis() {
+    const claim = document.getElementById('geo_claim').value;
+    const ip = document.getElementById('geo_ip').value;
+    const pay = document.getElementById('geo_pay').value;
+    
+    let dissonanceScore = 0;
+    if (claim !== ip) dissonanceScore += 0.4;
+    if (claim !== pay) dissonanceScore += 0.6;
+    
+    let html = '<div class="card"><div class="card-title">Geospatial Dissonance Vector</div>';
+    
+    const c = dissonanceScore > 0.5 ? '#ef4444' : dissonanceScore > 0 ? '#f59e0b' : '#10b981';
+    html += `<div class="stat-row">
+        <span class="stat-label">Triangulation Divergence</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+            <span style="width:120px;"><div class="metric-bar"><div class="metric-bar-fill" style="width:${dissonanceScore*100}%;background:${c}"></div></div></span>
+            <span class="stat-value" style="color:${c}">${(dissonanceScore*100).toFixed(0)}%</span>
+        </span>
+    </div>`;
+    
+    if (dissonanceScore > 0) {
+        html += `<div class="flag-item ${dissonanceScore > 0.5 ? 'flag-critical' : 'flag-warning'}" style="margin-top:1rem;">
+            ${ICONS.alert}
+            <div>
+                <strong>Geospatial Fraud Indicator</strong><br>
+                Structural divergence detected between claimed academic headquarters and actual digital/financial footprint. This shell-company structure is heavily utilized by deceptive publishing networks.
+            </div>
+        </div>`;
+    } else {
+        html += `<div class="flag-item flag-safe" style="margin-top:1rem;">
+            ${ICONS.check}
+            <div>
+                <strong>Spatial Harmony</strong><br>
+                All digital and financial vectors align with the claimed institutional headquarters.
+            </div>
+        </div>`;
+    }
+    html += '</div>';
+    document.getElementById('geoResults').innerHTML = html;
 }
 
 // ============================================================
