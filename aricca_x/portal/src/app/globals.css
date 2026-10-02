@@ -44,29 +44,31 @@
             overflow-x: hidden;
             position: relative;
             z-index: 0;
+            background-image: radial-gradient(circle at 60% 40%, rgba(162, 255, 0, 0.05) 0%, transparent 60%);
         }
 
-        /* Crisp Isometric Cyber Grid (Matches Reference Floating Cubes) */
+        /* Back Wall: Horizontal Lines & Scattered 3D Cubes */
         body::before {
             content: '';
             position: fixed;
-            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            top: 0; left: 15vw; right: 0; bottom: 0;
             background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(162, 255, 0, 0.18) 60px),
-                repeating-linear-gradient(60deg, transparent, transparent 68px, rgba(162, 255, 0, 0.12) 69.28px),
-                repeating-linear-gradient(120deg, transparent, transparent 68px, rgba(162, 255, 0, 0.12) 69.28px);
-            background-size: 100vw 100vw;
+                url("data:image/svg+xml,%3Csvg width='240' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg transform='translate(40, 25)'%3E%3Cpath d='M10 5 L20 10 L10 15 L0 10 Z' fill='rgba(162,255,0,0.06)'/%3E%3Cpath d='M0 10 L10 15 L10 25 L0 20 Z' fill='rgba(162,255,0,0.1)'/%3E%3Cpath d='M20 10 L10 15 L10 25 L20 20 Z' fill='rgba(162,255,0,0.03)'/%3E%3Cpath d='M10 5 L20 10 L20 20 L10 25 L0 20 L0 10 Z' stroke='rgba(162,255,0,0.15)' stroke-width='1' fill='none'/%3E%3C/g%3E%3Cg transform='translate(140, 65)'%3E%3Cpath d='M10 5 L20 10 L10 15 L0 10 Z' fill='rgba(162,255,0,0.06)'/%3E%3Cpath d='M0 10 L10 15 L10 25 L0 20 Z' fill='rgba(162,255,0,0.1)'/%3E%3Cpath d='M20 10 L10 15 L10 25 L20 20 Z' fill='rgba(162,255,0,0.03)'/%3E%3Cpath d='M10 5 L20 10 L20 20 L10 25 L0 20 L0 10 Z' stroke='rgba(162,255,0,0.15)' stroke-width='1' fill='none'/%3E%3C/g%3E%3Cg transform='translate(200, -15)'%3E%3Cpath d='M10 5 L20 10 L10 15 L0 10 Z' fill='rgba(162,255,0,0.06)'/%3E%3Cpath d='M0 10 L10 15 L10 25 L0 20 Z' fill='rgba(162,255,0,0.1)'/%3E%3Cpath d='M20 10 L10 15 L10 25 L20 20 Z' fill='rgba(162,255,0,0.03)'/%3E%3Cpath d='M10 5 L20 10 L20 20 L10 25 L0 20 L0 10 Z' stroke='rgba(162,255,0,0.15)' stroke-width='1' fill='none'/%3E%3C/g%3E%3C/svg%3E"),
+                repeating-linear-gradient(to bottom, transparent, transparent 38px, rgba(162, 255, 0, 0.22) 39px, rgba(162, 255, 0, 0.22) 40px);
+            border-left: 1px solid rgba(162, 255, 0, 0.4);
             z-index: -2;
             pointer-events: none;
         }
 
-        /* Heavy Center Vignette for Readability */
+        /* Left Side Wall: Diagonal Perspective Lines */
         body::after {
             content: '';
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(2, 26, 20, 0.6) 0%, #021a14 85%);
-            z-index: -1;
+            top: -50vh; left: 0; width: 15vw; height: 200vh;
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 38px, rgba(162, 255, 0, 0.22) 39px, rgba(162, 255, 0, 0.22) 40px);
+            transform-origin: right center;
+            transform: skewY(25deg);
+            z-index: -2;
             pointer-events: none;
         }
 
