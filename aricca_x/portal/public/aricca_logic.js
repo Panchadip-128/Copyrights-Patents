@@ -9,8 +9,8 @@ function toggleAuth(mode) {
 
 window.handleLogin = function(e) {
     e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const pwd = document.getElementById('login-pwd').value;
+    const email = document.getElementById('login-email').value.trim();
+    const pwd = document.getElementById('login-pwd').value.trim();
     const err = document.getElementById('login-error');
     const badge = document.getElementById('role-badge');
     
