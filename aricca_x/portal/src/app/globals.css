@@ -172,7 +172,14 @@
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
         .grid-23 { display: grid; grid-template-columns: 2fr 3fr; gap: 1rem; }
         .grid-32 { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; }
-        @media (max-width: 900px) { .grid-2, .grid-3, .grid-23, .grid-32 { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { 
+            .grid-2, .grid-3, .grid-23, .grid-32 { grid-template-columns: 1fr; } 
+            .nav-tabs { flex-wrap: wrap; gap: 8px; justify-content: center; }
+            .nav-tab { flex: 1 1 40%; }
+            .auth-card { width: 95%; max-width: 420px; padding: 1.5rem; }
+            .hero-banner h1 { font-size: 1.4rem; }
+            .header-inner { flex-direction: column; gap: 12px; }
+        }
 
         /* ============ FORM ELEMENTS ============ */
         label {

@@ -16,15 +16,15 @@ window.handleLogin = function(e) {
     
     if(email === 'admin@aricca.com' && pwd === 'admin123') {
         err.style.display = 'none';
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('app-container').style.display = 'block';
+        window.location.href = '/dashboard';
+        
         badge.style.display = 'inline-block';
         badge.innerText = 'ADMIN';
         badge.style.background = 'var(--accent-rose)';
     } else if(email === 'user@aricca.com' && pwd === 'user123') {
         err.style.display = 'none';
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('app-container').style.display = 'block';
+        window.location.href = '/dashboard';
+        
         badge.style.display = 'inline-block';
         badge.innerText = 'USER';
         badge.style.background = 'var(--accent-blue)';
@@ -34,10 +34,7 @@ window.handleLogin = function(e) {
 };
 
 function logout() {
-    document.getElementById('app-container').style.display = 'none';
-    document.getElementById('auth-container').style.display = 'flex';
-    document.getElementById('login-form').reset();
-    document.getElementById('login-error').style.display = 'none';
+    window.location.href = '/';
 }
 
 // ============================================================
