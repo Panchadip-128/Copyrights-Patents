@@ -29,6 +29,14 @@ export default function Dashboard() {
             ARICCA-X
             <span id="role-badge" class="admin-badge"></span>
         </div>
+        
+        <nav class="top-module-nav">
+            <a href="#" class="module-link active">Venue Intelligence</a>
+            <a href="#" class="module-link" onclick="alert('Module loading: Connecting to ORCID and Citation Graph Databases...')">Researcher Auditing</a>
+            <a href="#" class="module-link" onclick="alert('Module loading: Initializing AI-Generated Review Detection...')">Peer-Review Forensics</a>
+            <a href="#" class="module-link" onclick="alert('Module loading: Syncing with NSF/NIH Grant Compliance API...')">Grant Compliance</a>
+        </nav>
+
         <div style="display: flex; align-items: center;">
             <span class="patent-badge">Patent Pending (5 Claims)</span>
             <button class="btn" style="margin-left: 15px; padding: 6px 14px; font-size: 0.75rem;" onclick="logout()">Logout</button>

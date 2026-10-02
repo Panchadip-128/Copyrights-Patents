@@ -90,6 +90,16 @@
             display: flex; align-items: center; justify-content: space-between;
             height: 64px;
         }
+        .top-module-nav {
+            display: flex; gap: 24px; align-items: center;
+        }
+        .module-link {
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+            text-decoration: none; padding: 22px 0; border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .module-link:hover { color: var(--text-primary); }
+        .module-link.active { color: var(--accent-emerald); border-bottom-color: var(--accent-emerald); }
         .logo {
             display: flex; align-items: center; gap: 12px;
             font-weight: 800; font-size: 1.25rem;
@@ -179,6 +189,7 @@
             .auth-card { width: 95%; max-width: 420px; padding: 1.5rem; }
             .hero-banner h1 { font-size: 1.4rem; }
             .header-inner { flex-direction: column; gap: 12px; }
+            .top-module-nav { display: none; }
         }
 
         /* ============ FORM ELEMENTS ============ */
