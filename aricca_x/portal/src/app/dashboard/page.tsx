@@ -551,7 +551,3 @@ Indexed by Google Scholar and Crossref</textarea>
 ` }} />
   );
 }
-
-    `}} />
-  );
-}
