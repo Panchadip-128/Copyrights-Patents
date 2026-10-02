@@ -125,8 +125,8 @@ graph LR
     Pub["Publication Metadata"] --> Engine{"Compliance Rule Engine"}
     Mandate["Agency Mandates (e.g. Plan S)"] --> Engine
     
-    Engine --> Check1["Check: Embargo <= 0mo"]
-    Engine --> Check2["Check: License == CC-BY"]
+    Engine --> Check1["Check: Embargo Time Limit Met"]
+    Engine --> Check2["Check: License is CC-BY"]
     Engine --> Check3["Check: Repository Deposited"]
     
     Check1 & Check2 & Check3 --> Output["Discrete Pass/Fail Audit Trail"]
