@@ -823,7 +823,7 @@ function escHtml(s) { const d = document.createElement('div'); d.textContent = s
     // Simulate initial tab click to setup active state
     setTimeout(() => {
         if(window.document.getElementById('tabVenue')) {
-            window.document.getElementById('tabVenue').click();
+            window.document.getElementById('tabVenue')?.click();
         }
     }, 100);
 
