@@ -11,7 +11,7 @@ __author__ = "X-MPFD-E++ Development Team"
 __copyright__ = "Copyright © 2026. All Rights Reserved."
 
 from .multimodal_orchestrator.orchestrator import MultimodalOrchestrator
-from .fusion_policy_engine.fusion_engine import FusionPolicyEngine, FusionPolicy
+from .fusion_policy_engine.fusion_engine import FusionPolicyEngine, FusionPolicy, FusionStrategy
 from .decision_risk_core.detector import PhishingDetector
 from .explanation_synthesis_engine.explainer import ExplanationSynthesizer
 from .leakage_bias_auditor.auditor import IntegrityAuditor
