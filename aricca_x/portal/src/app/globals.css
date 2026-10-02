@@ -49,23 +49,22 @@
                 radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 45%);
         }
 
-        /* Highly Visible Premium Hexagonal Data Layer */
-        body::before {
+        /* Highly Visible Premium Hexagonal Data Layer (LOGIN ONLY) */
+        #auth-container::before {
             content: '';
-            position: fixed;
+            position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.92' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z' stroke='rgba(162,255,0,0.3)' stroke-width='1' fill='none'/%3E%3Cpath d='M30 103.92 L60 86.6 L60 51.96 L30 69.28 L0 51.96 L0 86.6 Z' stroke='rgba(16,185,129,0.2)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
             background-size: 80px 138.56px;
             opacity: 0.9;
             z-index: -2;
             pointer-events: none;
-            /* Mask removed so the grid spans the entire screen edge-to-edge! */
         }
 
-        /* Bold Diagonal Glassmorphism Overlay */
-        body::after {
+        /* Bold Diagonal Glassmorphism Overlay (LOGIN ONLY) */
+        #auth-container::after {
             content: '';
-            position: fixed;
+            position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
             background-image: repeating-linear-gradient(
                 45deg,
@@ -432,6 +431,7 @@
         /* ============ AUTH UI ============ */
         #auth-container {
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            position: relative; overflow: hidden;
         }
         .auth-card {
             width: 420px; padding: 2.5rem 2rem;
