@@ -64,7 +64,7 @@ for i in range(5000):
     except Exception as e:
         failed += 1
 
-print(f"   ✓ Phase 1 Complete. DGA strings successfully identified: {dga_identified}. Zero NaN or log(0) calculation errors.")
+print(f"   [PASS] Phase 1 Complete. DGA strings successfully identified: {dga_identified}. Zero NaN or log(0) calculation errors.")
 
 # =========================================================
 # TEST 2: GATED FUSION LOGIC STRESS TEST (5,000 Iterations)
@@ -98,7 +98,7 @@ for i in range(5000):
     except Exception as e:
         failed += 1
 
-print(f"   ✓ Phase 2 Complete. Logic gates dynamically bypassed heavy structural DOM compute {bypassed_compute} times. Zero state-conflict crashes.")
+print(f"   [PASS] Phase 2 Complete. Logic gates dynamically bypassed heavy structural DOM compute {bypassed_compute} times. Zero state-conflict crashes.")
 
 end_time = time.time()
 time_taken = end_time - start_time
