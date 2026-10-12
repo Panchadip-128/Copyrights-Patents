@@ -6,4 +6,7 @@ from .fingerprint_generator import FingerprintGenerator
 from .website_analyzer import WebsiteAnalyzer
 from .indexing_claim_detector import IndexingClaimDetector
 
-__all__ = ['FingerprintGenerator', 'WebsiteAnalyzer', 'IndexingClaimDetector']
+VenueFingerprintBuilder = FingerprintGenerator
+
+__all__ = ['FingerprintGenerator', 'WebsiteAnalyzer', 'IndexingClaimDetector', 'VenueFingerprintBuilder']
+

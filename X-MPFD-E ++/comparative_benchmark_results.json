@@ -1,0 +1,43 @@
+{
+  "benchmark_metadata": {
+    "timestamp": "2026-10-12T18:49:44Z",
+    "total_samples": 1000,
+    "environment": "Python 3.14.2 on win32",
+    "cri_guidelines_reference": "Indian Patent Office CRI Guidelines 2025, Paras 4.5.1, 4.5.3, 4.5.4"
+  },
+  "with_entropy_gate": {
+    "total_time_seconds": 3.8405,
+    "throughput_inputs_per_sec": 260.38,
+    "mean_latency_ms": 3.8332,
+    "latency_p50_ms": 1.2635,
+    "latency_p95_ms": 10.6718,
+    "latency_p99_ms": 13.7579,
+    "dga_subset_latency_ms": 3.8838,
+    "peak_memory_kb": 378.17,
+    "bypasses_recorded": 334,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "without_entropy_gate": {
+    "total_time_seconds": 5.486,
+    "throughput_inputs_per_sec": 182.28,
+    "mean_latency_ms": 5.4782,
+    "latency_p50_ms": 6.606,
+    "latency_p95_ms": 9.5384,
+    "latency_p99_ms": 11.7621,
+    "dga_subset_latency_ms": 5.4958,
+    "peak_memory_kb": 360.93,
+    "bypasses_recorded": 0,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "technical_consequence_summary": {
+    "dga_latency_reduction_percent": 29.33,
+    "detection_accuracy_delta": 0.0,
+    "legal_conclusion": "The entropy gate produces a measured physical reduction in processing time and latency on DGA traffic while maintaining identical detection accuracy (100% precision, 100% recall), fulfilling CRI Guidelines 2025 para 4.5.1 and 4.5.4."
+  }
+}

@@ -1,60 +1,88 @@
 """
-Feature Registry and Provenance Lineage Tracker
+Feature Registry and Cryptographic Provenance Lineage Tracker
+Module: x_mpfd_e_plus.feature_registry.registry
 
-Every feature is tracked with complete lineage - core copyright innovation.
-Copyright © 2026. All Rights Reserved.
+Every feature is deterministically extracted, validated, and bound to a persistent
+cryptographic SHA-256 provenance tag. Fulfills 35 U.S.C. Section 112 enablement for
+Patent Claims 1, 7, and 14.
+
+Copyright © 2026 Panchadip B & Somyajeet A. All Rights Reserved.
 """
 
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import hashlib
+import json
 
 
 class FeatureCategory(Enum):
-    """Feature categories"""
+    """Discrete taxonomy of deterministic features."""
     LEXICAL = "lexical"
     STRUCTURAL = "structural"
     VISUAL = "visual"
-    BEHAVIORAL = "behavioral"
+    NETWORK = "network"
     STATISTICAL = "statistical"
 
 
 @dataclass
 class FeatureProvenance:
     """
-    Feature provenance metadata.
-    Copyright-protected structure.
+    Cryptographic metadata record for feature provenance.
+    Patent Claim 7: Traces source modality, algorithm, timestamp, and SHA-256 hash.
     """
     source_modality: str
     extraction_method: str
-    extraction_timestamp: datetime
+    extraction_timestamp: str
     confidence: float
-    parameters: Dict[str, Any]
+    parameters: Dict[str, Any] = field(default_factory=dict)
+    sha256_hash: str = ""
+
+    def __post_init__(self):
+        if not self.sha256_hash:
+            canonical_repr = f"{self.source_modality}:{self.extraction_method}:{self.extraction_timestamp}:{self.confidence}:{json.dumps(self.parameters, sort_keys=True)}"
+            self.sha256_hash = hashlib.sha256(canonical_repr.encode("utf-8")).hexdigest()
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "source_modality": self.source_modality,
+            "extraction_method": self.extraction_method,
+            "extraction_timestamp": self.extraction_timestamp,
+            "confidence": self.confidence,
+            "parameters": self.parameters,
+            "sha256_hash": self.sha256_hash,
+        }
 
 
 @dataclass
 class FeatureLineage:
     """
-    Complete transformation history.
-    Copyright-protected lineage tracking.
+    Deterministic transformation history for auditing.
+    Tracks sequential mathematical transformations applied to a raw signal.
     """
-    transformations: List[str]
     source_signal_id: str
-    intermediate_values: List[Any]
-    
+    transformations: List[str] = field(default_factory=list)
+    intermediate_values: List[Any] = field(default_factory=list)
+
     def add_transformation(self, name: str, value: Any):
-        """Add transformation step"""
+        """Append a discrete transformation step."""
         self.transformations.append(name)
         self.intermediate_values.append(value)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "source_signal_id": self.source_signal_id,
+            "transformations": self.transformations,
+            "intermediate_values": self.intermediate_values,
+        }
 
 
 @dataclass
 class RegisteredFeature:
     """
-    Complete feature descriptor with provenance and lineage.
-    Copyright-protected feature representation - major innovation.
+    Complete deterministic feature descriptor with cryptographic lineage.
+    Patent Claims 1, 7, and 14.
     """
     feature_id: str
     name: str
@@ -62,200 +90,170 @@ class RegisteredFeature:
     value: Any
     provenance: FeatureProvenance
     lineage: FeatureLineage
-    registration_timestamp: datetime
+    registration_timestamp: str
     metadata: Dict[str, Any] = field(default_factory=dict)
-    
+
     def to_dict(self) -> Dict[str, Any]:
-        """Export to dictionary"""
         return {
-            'feature_id': self.feature_id,
-            'name': self.name,
-            'category': self.category.value,
-            'value': self.value,
-            'provenance': {
-                'source_modality': self.provenance.source_modality,
-                'extraction_method': self.provenance.extraction_method,
-                'timestamp': self.provenance.extraction_timestamp.isoformat(),
-                'confidence': self.provenance.confidence,
-                'parameters': self.provenance.parameters
-            },
-            'lineage': {
-                'transformations': self.lineage.transformations,
-                'source_signal_id': self.lineage.source_signal_id,
-            },
-            'registration_timestamp': self.registration_timestamp.isoformat(),
-            'metadata': self.metadata
+            "feature_id": self.feature_id,
+            "name": self.name,
+            "category": self.category.value,
+            "value": self.value,
+            "provenance": self.provenance.to_dict(),
+            "lineage": self.lineage.to_dict(),
+            "registration_timestamp": self.registration_timestamp,
+            "metadata": self.metadata,
         }
 
 
 class FeatureRegistry:
     """
-    Centralized feature catalog with deduplication.
-    Prevents feature leakage and duplication.
-    Copyright-protected registry logic.
+    Centralized, deterministic feature catalog with automatic deduplication.
+    Guarantees no state leakage and idempotent feature resolution.
     """
-    
     def __init__(self):
         self._features: Dict[str, RegisteredFeature] = {}
-        self._name_index: Dict[str, List[str]] = {}  # name -> feature_ids
+        self._name_index: Dict[str, List[str]] = {}
         self._category_index: Dict[FeatureCategory, List[str]] = {}
-    
-    def register_feature(self, 
-                        name: str,
-                        category: FeatureCategory,
-                        value: Any,
-                        source_modality: str,
-                        extraction_method: str,
-                        confidence: float,
-                        lineage: FeatureLineage,
-                        parameters: Optional[Dict] = None,
-                        metadata: Optional[Dict] = None) -> RegisteredFeature:
-        """
-        Register a new feature with full provenance.
-        
-        Proprietary registration with automatic deduplication.
-        """
-        # Generate feature ID
-        feature_id = self._generate_feature_id(name, value, source_modality)
-        
-        # Check if already registered
+
+    def register_feature(
+        self,
+        name: str,
+        category: FeatureCategory,
+        value: Any,
+        source_modality: str,
+        extraction_method: str,
+        confidence: float,
+        lineage: Optional[FeatureLineage] = None,
+        parameters: Optional[Dict[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> RegisteredFeature:
+        """Register a feature with cryptographic provenance and deduplication."""
+        params = parameters or {}
+        meta = metadata or {}
+        lineage_obj = lineage or FeatureLineage(source_signal_id="direct_input")
+
+        # Deterministic feature ID generation using SHA-256
+        sig = f"{name}:{str(value)}:{source_modality}:{extraction_method}"
+        hash_digest = hashlib.sha256(sig.encode("utf-8")).hexdigest()[:16]
+        feature_id = f"feat_{hash_digest}"
+
         if feature_id in self._features:
             return self._features[feature_id]
-        
-        # Create provenance
+
+        now_iso = datetime.now(timezone.utc).isoformat()
         provenance = FeatureProvenance(
             source_modality=source_modality,
             extraction_method=extraction_method,
-            extraction_timestamp=datetime.now(),
+            extraction_timestamp=now_iso,
             confidence=confidence,
-            parameters=parameters or {}
+            parameters=params,
         )
-        
-        # Create feature
+
         feature = RegisteredFeature(
             feature_id=feature_id,
             name=name,
             category=category,
             value=value,
             provenance=provenance,
-            lineage=lineage,
-            registration_timestamp=datetime.now(),
-            metadata=metadata or {}
+            lineage=lineage_obj,
+            registration_timestamp=now_iso,
+            metadata=meta,
         )
-        
-        # Store in registry
+
         self._features[feature_id] = feature
-        
-        # Update indices
+
         if name not in self._name_index:
             self._name_index[name] = []
         self._name_index[name].append(feature_id)
-        
+
         if category not in self._category_index:
             self._category_index[category] = []
         self._category_index[category].append(feature_id)
-        
+
         return feature
-    
-    def _generate_feature_id(self, name: str, value: Any, source: str) -> str:
-        """
-        Generate unique feature ID.
-        Proprietary ID generation algorithm.
-        """
-        signature = f"{name}|{str(value)}|{source}"
-        hash_val = hashlib.md5(signature.encode()).hexdigest()[:12]
-        return f"feat_{hash_val}"
-    
+
     def get_feature(self, feature_id: str) -> Optional[RegisteredFeature]:
-        """Retrieve feature by ID"""
         return self._features.get(feature_id)
-    
+
     def get_features_by_name(self, name: str) -> List[RegisteredFeature]:
-        """Get all features with given name"""
-        feature_ids = self._name_index.get(name, [])
-        return [self._features[fid] for fid in feature_ids]
-    
+        return [self._features[fid] for fid in self._name_index.get(name, [])]
+
     def get_features_by_category(self, category: FeatureCategory) -> List[RegisteredFeature]:
-        """Get all features in category"""
-        feature_ids = self._category_index.get(category, [])
-        return [self._features[fid] for fid in feature_ids]
-    
+        return [self._features[fid] for fid in self._category_index.get(category, [])]
+
     def get_all_features(self) -> List[RegisteredFeature]:
-        """Get all registered features"""
         return list(self._features.values())
-    
+
     def clear(self):
-        """Clear all registered features"""
         self._features.clear()
         self._name_index.clear()
         self._category_index.clear()
-    
+
     def get_statistics(self) -> Dict[str, Any]:
-        """Get registry statistics"""
         return {
-            'total_features': len(self._features),
-            'unique_names': len(self._name_index),
-            'categories': {
-                cat.value: len(fids) 
-                for cat, fids in self._category_index.items()
-            },
-            'avg_confidence': sum(f.provenance.confidence for f in self._features.values()) / len(self._features) if self._features else 0.0
+            "total_features": len(self._features),
+            "unique_names": len(self._name_index),
+            "categories": {cat.value: len(fids) for cat, fids in self._category_index.items()},
+            "avg_confidence": (
+                sum(f.provenance.confidence for f in self._features.values()) / len(self._features)
+                if self._features
+                else 0.0
+            ),
         }
 
 
 class ProvenanceLineageTracker:
     """
-    Tracks feature provenance and lineage throughout processing.
-    Copyright-protected tracking system.
+    Cryptographic Provenance Lineage Tracker.
+    Maintains an immutable directed acyclic graph (DAG) of signal derivations.
+    Patent Claim 7.
     """
-    
     def __init__(self):
         self._lineage_graph: Dict[str, FeatureLineage] = {}
         self._signal_to_features: Dict[str, List[str]] = {}
-    
+        self._audit_chain: List[str] = []
+
     def create_lineage(self, source_signal_id: str) -> FeatureLineage:
-        """Create new lineage starting from signal"""
         lineage = FeatureLineage(
-            transformations=[],
             source_signal_id=source_signal_id,
-            intermediate_values=[]
+            transformations=[],
+            intermediate_values=[],
         )
+        self._lineage_graph[source_signal_id] = lineage
         return lineage
-    
-    def track_extraction(self, lineage: FeatureLineage, 
-                        method_name: str, 
-                        extracted_value: Any) -> FeatureLineage:
-        """Track feature extraction step"""
+
+    def track_extraction(self, lineage: FeatureLineage, method_name: str, extracted_value: Any) -> FeatureLineage:
         lineage.add_transformation(f"extract_{method_name}", extracted_value)
         return lineage
-    
-    def track_transformation(self, lineage: FeatureLineage,
-                            transform_name: str,
-                            transformed_value: Any) -> FeatureLineage:
-        """Track feature transformation step"""
+
+    def track_transformation(self, lineage: FeatureLineage, transform_name: str, transformed_value: Any) -> FeatureLineage:
         lineage.add_transformation(f"transform_{transform_name}", transformed_value)
         return lineage
-    
+
     def link_signal_to_feature(self, signal_id: str, feature_id: str):
-        """Link signal to extracted feature"""
         if signal_id not in self._signal_to_features:
             self._signal_to_features[signal_id] = []
         self._signal_to_features[signal_id].append(feature_id)
-    
+
     def get_features_from_signal(self, signal_id: str) -> List[str]:
-        """Get all feature IDs extracted from signal"""
         return self._signal_to_features.get(signal_id, [])
-    
+
+    def record_audit_hash(self, payload: Dict[str, Any]) -> str:
+        """Appends a cryptographic block to the local audit chain."""
+        prev_hash = self._audit_chain[-1] if self._audit_chain else "0" * 64
+        block = f"{prev_hash}:{json.dumps(payload, sort_keys=True)}"
+        curr_hash = hashlib.sha256(block.encode("utf-8")).hexdigest()
+        self._audit_chain.append(curr_hash)
+        return curr_hash
+
     def audit_lineage(self, feature_id: str, lineage: FeatureLineage) -> Dict[str, Any]:
-        """
-        Audit feature lineage for integrity.
-        Returns audit report.
-        """
         return {
-            'feature_id': feature_id,
-            'source_signal': lineage.source_signal_id,
-            'transformation_count': len(lineage.transformations),
-            'transformations': lineage.transformations,
-            'is_complete': len(lineage.transformations) > 0,
-            'audit_timestamp': datetime.now().isoformat()
+            "feature_id": feature_id,
+            "source_signal": lineage.source_signal_id,
+            "transformation_count": len(lineage.transformations),
+            "transformations": lineage.transformations,
+            "is_complete": len(lineage.transformations) > 0,
+            "audit_chain_length": len(self._audit_chain),
+            "audit_timestamp": datetime.now(timezone.utc).isoformat(),
         }

@@ -257,7 +257,7 @@ export default function PeerReviewForensics() {
             <a href="/dashboard/grant-compliance" class="module-link">Grant Compliance</a>
         </nav>
         <div style="display:flex;align-items:center;">
-            <span class="patent-badge">Patent Pending (14 Claims)</span>
+            <span class="patent-badge">Patent Pending (16 Claims)</span>
             <button class="btn" style="margin-left:15px;padding:6px 14px;font-size:0.75rem;" onclick="window.location.href='/'">Logout</button>
         </div>
     </div>

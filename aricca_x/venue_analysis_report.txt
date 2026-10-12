@@ -1,0 +1,47 @@
+================================================================================
+ ARICCA-X Analysis Report: International Conference on Advanced Computing 2026  
+        Automated Research Integrity, Credibility & Compliance Analysis         
+                         Generated: 2026-10-10 12:59:49                         
+================================================================================
+
+Executive Summary
+-----------------
+Venue: International Conference on Advanced Computing 2026
+Overall Credibility Score: 79.77%
+Risk Level: MEDIUM
+
+This venue shows mixed signals - exercise caution.
+
+Credibility Analysis
+--------------------
+Score Breakdown:
+  • CFP Risk: 0.25
+  • Website Credibility: 0.82
+  • Indexing Credibility: 0.50
+
+Risk Assessment
+---------------
+No critical risk flags identified
+
+Detailed Findings
+-----------------
+All credibility checks passed successfully.
+
+Recommendations
+---------------
+No specific recommendations
+
+Supporting Evidence
+-------------------
+No suspicious acceptance claims
+Normal urgency levels
+Website meets quality standards
+No indexing claims to verify
+Contact information appears legitimate
+Normal fee mentions
+No speed claims
+
+================================================================================
+   ARICCA-X - Automated Research Integrity, Credibility & Compliance Analyzer   
+                    Copyright (c) 2026. All rights reserved.                    
+================================================================================

@@ -38,7 +38,7 @@ export default function Dashboard() {
         </nav>
 
         <div style="display: flex; align-items: center;">
-            <span class="patent-badge">Patent Pending (14 Claims)</span>
+            <span class="patent-badge">Patent Pending (16 Claims)</span>
             <button class="btn" style="margin-left: 15px; padding: 6px 14px; font-size: 0.75rem;" onclick="logout()">Logout</button>
         </div>
     </div>

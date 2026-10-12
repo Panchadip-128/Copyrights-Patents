@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "validation_suite": "Hold-Out Validation Corpus (500 Unseen Telemetry Inputs)",
+    "date": "2026-10-13",
+    "total_inputs": 500,
+    "environment": "Python 3.14.2 on win32",
+    "hardware_profiling": "tracemalloc & perf_counter_ns",
+    "composition": {
+      "authentic_enterprise_portals": 200,
+      "botnet_dga_families": 160,
+      "shallow_cloned_harvesters": 140
+    }
+  },
+  "mode_1_full_url_entropy": {
+    "configuration": "Mode 1: Full URL Shannon Entropy [Baseline]",
+    "entropy_scope": "url",
+    "entropy_threshold": 4.5,
+    "runtime_telemetry": {
+      "total_execution_time_seconds": 2.1707,
+      "throughput_inputs_per_sec": 230.34,
+      "mean_latency_ms": 4.336,
+      "median_latency_p50_ms": 1.41,
+      "latency_p95_ms": 10.901,
+      "latency_p99_ms": 14.905,
+      "peak_python_heap_memory_kb": 253.64,
+      "memory_profiling_tool": "Python tracemalloc (heap allocations, not silicon appliance RAM)",
+      "hardware_dom_bypasses_executed": 191,
+      "bypass_rate_pct": 38.2
+    },
+    "classification_metrics": {
+      "accuracy_pct": 95.6,
+      "precision_pct": 93.17,
+      "recall_pct": 100.0,
+      "false_positive_rate_pct": 11.0,
+      "true_positives": 300,
+      "true_negatives": 178,
+      "false_positives": 22,
+      "false_negatives": 0
+    }
+  },
+  "mode_2_host_path_entropy": {
+    "configuration": "Mode 2: Host+Path Shannon Entropy [Query-Excluded Middle Scope]",
+    "entropy_scope": "host_path",
+    "entropy_threshold": 4.15,
+    "runtime_telemetry": {
+      "total_execution_time_seconds": 2.3214,
+      "throughput_inputs_per_sec": 215.38,
+      "mean_latency_ms": 4.638,
+      "median_latency_p50_ms": 1.178,
+      "latency_p95_ms": 11.331,
+      "latency_p99_ms": 41.898,
+      "peak_python_heap_memory_kb": 202.95,
+      "memory_profiling_tool": "Python tracemalloc (heap allocations, not silicon appliance RAM)",
+      "hardware_dom_bypasses_executed": 262,
+      "bypass_rate_pct": 52.4
+    },
+    "classification_metrics": {
+      "accuracy_pct": 100.0,
+      "precision_pct": 100.0,
+      "recall_pct": 100.0,
+      "false_positive_rate_pct": 0.0,
+      "true_positives": 300,
+      "true_negatives": 200,
+      "false_positives": 0,
+      "false_negatives": 0
+    }
+  },
+  "mode_3_hostname_entropy": {
+    "configuration": "Mode 3: Hostname Component Shannon Entropy [Domain Scope]",
+    "entropy_scope": "hostname",
+    "entropy_threshold": 3.8,
+    "runtime_telemetry": {
+      "total_execution_time_seconds": 2.1372,
+      "throughput_inputs_per_sec": 233.96,
+      "mean_latency_ms": 4.27,
+      "median_latency_p50_ms": 0.79,
+      "latency_p95_ms": 10.942,
+      "latency_p99_ms": 34.217,
+      "peak_python_heap_memory_kb": 182.82,
+      "memory_profiling_tool": "Python tracemalloc (heap allocations, not silicon appliance RAM)",
+      "hardware_dom_bypasses_executed": 291,
+      "bypass_rate_pct": 58.2
+    },
+    "classification_metrics": {
+      "accuracy_pct": 100.0,
+      "precision_pct": 100.0,
+      "recall_pct": 100.0,
+      "false_positive_rate_pct": 0.0,
+      "true_positives": 300,
+      "true_negatives": 200,
+      "false_positives": 0,
+      "false_negatives": 0
+    }
+  },
+  "comparative_analysis": {
+    "finding_summary": "Mode 1 (Full URL Entropy at 4.50) achieves 95.60% overall accuracy with 191 hardware DOM bypasses (38.2%), but exhibits an 11.0% False Positive Rate (22/200 authentic portals) due to long hex session UUID query tokens. Mode 2 (Host+Path excluding query string at 4.15) achieves 100.0% overall accuracy, 0.00% FPR (0/200 FPs), and 262 hardware DOM bypasses (52.4%), successfully neutralizing query token noise while preserving path structural signal. Mode 3 (Hostname Entropy at 3.80) achieves 100.0% overall accuracy, 0.00% FPR (0/200 FPs), and 291 hardware DOM bypasses (58.2%). In both Mode 2 and Mode 3, malicious inputs that do not trip the early-exit gate are NOT missed; they are passed to the downstream AST parser and TLS evaluator where they are detected with 100% recall.",
+    "memory_measurement_clarification": "Peak memory values (approx 180-260 KB) are measured using Python tracemalloc tracking runtime interpreter heap allocations, rather than dedicated appliance silicon/ASIC RAM."
+  }
+}

@@ -26,42 +26,58 @@ ARICCA-X implements a multi-layer reasoning engine using proprietary rule-based 
 - Original mathematical scoring formulas
 - Custom data transformation and templating
 
-## Module Dependencies
+## System Architecture (Bifurcated & Deterministic)
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    ARICCA-X CLI                         │
-└─────────────────────────────────────────────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-        ▼                   ▼                   ▼
-┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│ Credibility  │    │ Compliance   │    │  Citation    │
-│    Logic     │    │  Compiler    │    │   Graph      │
-│   Engine     │    │              │    │  Analyzer    │
-└──────────────┘    └──────────────┘    └──────────────┘
-        │                                        │
-        ├────────────────────────────────────────┤
-        │                                        │
-        ▼                                        ▼
-┌──────────────┐                        ┌──────────────┐
-│   Venue      │                        │     Risk     │
-│ Fingerprint  │                        │ Explanation  │
-│   Builder    │                        │  Generator   │
-└──────────────┘                        └──────────────┘
-        │                                        │
-        │                                        │
-        └────────────┬───────────────────────────┘
-                     │
-                     ▼
-             ┌──────────────┐
-             │    Report    │
-             │   Renderer   │
-             └──────────────┘
-                     │
-                     ▼
-             [Output Files]
+┌────────────────────────────────────────────────────────────────────────┐
+│               ARICCA-X Command-Line & Administrative Portal            │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+    ┌───────────────────────────────┼───────────────────────────────┐
+    │                               │                               │
+    ▼                               ▼                               ▼
+┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
+│  Module A: Venue       │      │  Module B: Researcher  │      │  Module C: Peer-Review │
+│  Intelligence Engine   │      │  Auditing Engine       │      │  Forensics Engine      │
+│  - Levenshtein URL     │      │  - Bounded DFS (k<=5)  │      │  - Sentence CV < 0.20  │
+│  - Urgency (<30d)      │      │  - True H-Index (TIH)  │      │  - Hedging Density     │
+│  - Tense Analysis (GTA)│      │  - Loop-Purged H-Index │      │  - Specificity Regex   │
+│  - TFET Evolution      │      │  - CIR (< 0.30) Alert  │      │  - Polarity Alignment  │
+└───────────┬────────────┘      └───────────┬────────────┘      └───────────┬────────────┘
+            │                               │                               │
+            └───────────────────────┐       │       ┌───────────────────────┘
+                                    │       │       │
+                                    ▼       ▼       ▼
+                                ┌────────────────────────┐
+                                │  Module D: Grant       │
+                                │  Compliance Engine     │
+                                │  - NIH, NSF, Plan S    │
+                                │  - Boolean Rule Matrix │
+                                │  - Remediation Notes   │
+                                └───────────┬────────────┘
+                                            │
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│        Cross-Correlation Engine: 6-Phase Deterministic Pipeline        │
+│                                                                        │
+│ Phase 1: Component Scoring with Adaptive Decay Weighting (ADW)         │
+│          w'_i = w_i / sum_{k in A} w_k  | Epistemic Interval [L, U]   │
+│ Phase 2: Domain Heuristic Rule Evaluation                              │
+│ Phase 3: Credibility & Anomaly Aggregation with CSAD Amplification    │
+│          Risk' = min(1, Risk * (1 + alpha * g(D, tau)))                │
+│ Phase 4: 4-Tier Risk Classification (low, medium, high, critical)      │
+│ Phase 5: Deterministic Actionable Recommendation Generation            │
+│ Phase 6: Flag Generation & Tamper-Evident SHA-256 Audit Hash Chaining  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│  Deterministic Core Primitives (deterministic_core/)                   │
+│  - canonical.py: Bit-identical JSON & SHA-256 canonical hashing        │
+│  - audit_chain.py: Immutable cryptographic hash pointer verification   │
+│  - rules.py: Sealed RuleRegistry with promotion provenance tracking    │
+│  - determinism_guard.py: Production ML exclusion runtime guard         │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Data Flow
