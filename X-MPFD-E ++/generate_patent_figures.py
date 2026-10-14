@@ -274,7 +274,7 @@ def generate_fig_4():
 
     # Callout placed cleanly at (0.07, 0.87) with shrinkB=5 so arrow points without colliding
     ax.annotate(
-        'Optimal Operating Point:\nTPR = 100.0%, FPR = 0.00%\nZero False Positives (tau = 0.65)',
+        'Optimal Operating Point:\nTPR = 100.0%, FPR = 0.00%\nZero False Positives',
         xy=(0.0, 1.0), xytext=(0.07, 0.86),
         arrowprops=dict(arrowstyle='->', lw=1.5, color='#C53030', shrinkB=6),
         fontsize=8.8, fontweight='bold', bbox=dict(boxstyle='round,pad=0.4', facecolor='#FEFCBF', edgecolor='#B7791F', alpha=0.95)
