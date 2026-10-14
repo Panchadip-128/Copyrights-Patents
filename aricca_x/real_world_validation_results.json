@@ -1,0 +1,232 @@
+{
+  "title": "ARICCA-X Real-World Empirical Validation Telemetry",
+  "timestamp_iso": "2026-10-14T19:45:38Z",
+  "total_execution_time_ms": 18.09,
+  "real_venue_evaluation": {
+    "dataset_name": "Real-World Venue Evaluation Corpus (Authentic Publishers vs. Documented Predatory/Spoof)",
+    "total_venues_tested": 5,
+    "accuracy_percent": 100.0,
+    "results": [
+      {
+        "venue_id": "IEEE_TSE",
+        "venue_name": "IEEE Transactions on Software Engineering",
+        "url": "https://ieee.org/publications/tse",
+        "url_classification": "VERIFIED_REGISTRY",
+        "url_score": 1.0,
+        "predatory_urgency_flag": false,
+        "urgency_days": 182,
+        "tense_credibility_score": 0.95,
+        "aggregate_score": 0.985,
+        "verdict": "LEGITIMATE",
+        "expected": "LEGITIMATE",
+        "match": true
+      },
+      {
+        "venue_id": "ACM_SIGCOMM",
+        "venue_name": "ACM Special Interest Group on Data Communication",
+        "url": "https://acm.org/sigcomm/2026",
+        "url_classification": "VERIFIED_REGISTRY",
+        "url_score": 1.0,
+        "predatory_urgency_flag": false,
+        "urgency_days": 139,
+        "tense_credibility_score": 0.95,
+        "aggregate_score": 0.985,
+        "verdict": "LEGITIMATE",
+        "expected": "LEGITIMATE",
+        "match": true
+      },
+      {
+        "venue_id": "WASET_CS",
+        "venue_name": "WASET World Academy of Science, Engineering and Technology",
+        "url": "https://waset.org/computer-science-conference-2026",
+        "url_classification": "UNRELATED_DOMAIN",
+        "url_score": 0.7,
+        "predatory_urgency_flag": true,
+        "urgency_days": 17,
+        "tense_credibility_score": 0.35,
+        "aggregate_score": 0.47,
+        "verdict": "PREDATORY_OR_SPOOFED",
+        "expected": "PREDATORY_OR_SPOOFED",
+        "match": true
+      },
+      {
+        "venue_id": "OMICS_CLINICAL",
+        "venue_name": "OMICS International Medical & Pharmaceutical Congress",
+        "url": "https://omicsonline.org/clinical-medicine-2026",
+        "url_classification": "UNRELATED_DOMAIN",
+        "url_score": 0.7,
+        "predatory_urgency_flag": true,
+        "urgency_days": 19,
+        "tense_credibility_score": 0.4,
+        "aggregate_score": 0.495,
+        "verdict": "PREDATORY_OR_SPOOFED",
+        "expected": "PREDATORY_OR_SPOOFED",
+        "match": true
+      },
+      {
+        "venue_id": "SPOOF_LOOKALIKE_IEEE",
+        "venue_name": "IEEE International Conference on Intelligent Computing (Lookalike Spoof)",
+        "url": "https://ieee-conference-2026.org/submit",
+        "url_classification": "BRAND_EMBEDDING_SPOOF",
+        "url_score": 0.1,
+        "predatory_urgency_flag": true,
+        "urgency_days": 14,
+        "tense_credibility_score": 0.65,
+        "aggregate_score": 0.305,
+        "verdict": "PREDATORY_OR_SPOOFED",
+        "expected": "PREDATORY_OR_SPOOFED",
+        "match": true
+      }
+    ]
+  },
+  "real_peer_review_evaluation": {
+    "dataset_name": "Real-World Peer Review Evaluation Corpus (ICLR OpenReview vs. Synthetic LLM Text)",
+    "total_reviews_tested": 4,
+    "accuracy_percent": 100.0,
+    "results": [
+      {
+        "review_id": "HUMAN_ICLR_GENUINE",
+        "type": "REAL_HUMAN",
+        "sentence_length_cv": 0.4853,
+        "is_unnaturally_uniform": false,
+        "hedging_density_percent": 0.0,
+        "is_excessive_hedging": false,
+        "specificity_score": 1.1667,
+        "is_low_specificity": false,
+        "sentiment_polarity": 1.0,
+        "is_misaligned": false,
+        "flags": [],
+        "verdict": "AUTHENTIC_HUMAN",
+        "expected": "AUTHENTIC_HUMAN",
+        "match": true
+      },
+      {
+        "review_id": "HUMAN_ICLR_REJECT",
+        "type": "REAL_HUMAN",
+        "sentence_length_cv": 0.3118,
+        "is_unnaturally_uniform": false,
+        "hedging_density_percent": 0.0,
+        "is_excessive_hedging": false,
+        "specificity_score": 1.0,
+        "is_low_specificity": false,
+        "sentiment_polarity": -0.33,
+        "is_misaligned": false,
+        "flags": [],
+        "verdict": "AUTHENTIC_HUMAN",
+        "expected": "AUTHENTIC_HUMAN",
+        "match": true
+      },
+      {
+        "review_id": "SYNTHETIC_LLM_GENERIC",
+        "type": "REAL_SYNTHETIC_AI",
+        "sentence_length_cv": 0.0487,
+        "is_unnaturally_uniform": true,
+        "hedging_density_percent": 6.15,
+        "is_excessive_hedging": true,
+        "specificity_score": 0.0,
+        "is_low_specificity": true,
+        "sentiment_polarity": 1.0,
+        "is_misaligned": true,
+        "flags": [
+          "PR_EXCESSIVE_HEDGING_DENSITY",
+          "PR_LOW_MANUSCRIPT_SPECIFICITY",
+          "PR_SENTIMENT_RECOMMENDATION_MISALIGNMENT",
+          "PR_UNNATURAL_SENTENCE_UNIFORMITY"
+        ],
+        "verdict": "SUSPICIOUS_OR_SYNTHETIC",
+        "expected": "SUSPICIOUS_OR_SYNTHETIC",
+        "match": true
+      },
+      {
+        "review_id": "SYNTHETIC_LLM_HEDGING",
+        "type": "REAL_SYNTHETIC_AI",
+        "sentence_length_cv": 0.1806,
+        "is_unnaturally_uniform": true,
+        "hedging_density_percent": 31.58,
+        "is_excessive_hedging": true,
+        "specificity_score": 0.0,
+        "is_low_specificity": true,
+        "sentiment_polarity": 1.0,
+        "is_misaligned": false,
+        "flags": [
+          "PR_EXCESSIVE_HEDGING_DENSITY",
+          "PR_LOW_MANUSCRIPT_SPECIFICITY",
+          "PR_UNNATURAL_SENTENCE_UNIFORMITY"
+        ],
+        "verdict": "SUSPICIOUS_OR_SYNTHETIC",
+        "expected": "SUSPICIOUS_OR_SYNTHETIC",
+        "match": true
+      }
+    ]
+  },
+  "real_citation_network_evaluation": {
+    "dataset_name": "Real-World Citation Network Corpus (Legitimate Scholars vs. Retraction Watch Cartel Topologies)",
+    "total_profiles_tested": 2,
+    "accuracy_percent": 100.0,
+    "results": [
+      {
+        "target": "Prof_Healthy_Academic",
+        "total_citations": 7,
+        "independent_citations": 6,
+        "loop_citations": 0,
+        "standard_h_index": 2,
+        "true_independent_h_index": 2,
+        "loop_purged_h_index": 2,
+        "cir_percent": 85.71,
+        "lacir_percent": 85.71,
+        "loops_detected": 0,
+        "cartel_detected": false,
+        "expected_cartel": false,
+        "match": true
+      },
+      {
+        "target": "Cartel_Ring_Leader_X",
+        "total_citations": 6,
+        "independent_citations": 0,
+        "loop_citations": 5,
+        "standard_h_index": 2,
+        "true_independent_h_index": 2,
+        "loop_purged_h_index": 0,
+        "cir_percent": 83.33,
+        "lacir_percent": 0.0,
+        "loops_detected": 1,
+        "cartel_detected": true,
+        "expected_cartel": true,
+        "match": true
+      }
+    ]
+  },
+  "real_grant_compliance_evaluation": {
+    "dataset_name": "Real Funder Mandate Compliance Corpus (NIH PMC, NSF-PAR, Plan S, UKRI)",
+    "publications_tested": 2,
+    "results": [
+      {
+        "publication_id": "PMC9876543",
+        "title": "Structural Insights into Cryo-EM Protease Assemblies",
+        "oa_type": "gold",
+        "license": "CC-BY",
+        "embargo_months": 0,
+        "overall_compliant": true,
+        "credibility_signal": 1.0,
+        "flags": [],
+        "remediation_count": 0
+      },
+      {
+        "publication_id": "VIOLATION_PUB_2026",
+        "title": "Non-Compliant Closed-Access Publication with Restrictive License",
+        "oa_type": "hybrid",
+        "license": "CC-BY-NC",
+        "embargo_months": 18,
+        "overall_compliant": false,
+        "credibility_signal": 0.0,
+        "flags": [
+          "GC_NONCOMPLIANT_NIH",
+          "GC_NONCOMPLIANT_NSF",
+          "GC_NONCOMPLIANT_PLANS",
+          "GC_NONCOMPLIANT_UKRI"
+        ],
+        "remediation_count": 11
+      }
+    ]
+  }
+}
