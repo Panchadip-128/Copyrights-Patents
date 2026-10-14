@@ -8,7 +8,7 @@ Tests and validates the core inventions over cited prior art:
   4. Module B: Researcher Auditing (Bounded DFS depth 5, True Independent H-Index, Loop-purged H-Index, CIR <0.30)
   5. Module C: Peer-Review Forensics (CV <0.20, Hedging density, Specificity regex, Sentiment misalignment)
   6. Module D: Grant Compliance (Boolean rule matrices: NIH, NSF, Plan S, UKRI)
-  7. Adaptive Decay Weighting (ADW) with Epistemic Intervals (AU2012231158B2 distinction)
+  7. Adaptive Dynamic Weighting (ADW) with Epistemic Intervals (AU2012231158B2 distinction)
   8. Cross-Signal Anomaly Detection (CSAD) multiplicative risk amplification (Zero prior art overlap)
   9. Tamper-evident SHA-256 Audit Hash Chaining
 

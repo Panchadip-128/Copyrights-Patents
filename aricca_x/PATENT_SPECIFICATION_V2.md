@@ -99,7 +99,7 @@ ARICCA-X is the first platform to address **all seven threat vectors** through a
 | Step | ARICCA-X Process | Prior Art Limitation |
 |------|------------------|---------------------|
 | 1 | Ingests CFP text and applies **Grammatical Tense Analysis** (Claim 3) | Prior art only checks whether an indexer is mentioned |
-| 2 | Runs **Adaptive Decay Weighting** (Claim 1) to handle missing data | Prior art uses fixed weights, producing misleading results |
+| 2 | Runs **Adaptive Dynamic Weighting** (Claim 1) to handle missing data | Prior art uses fixed weights, producing misleading results |
 | 3 | Performs **Cross-Signal Anomaly Detection** (Claim 2) | Prior art analyzes signals independently |
 | 4 | Compares current snapshot via **Temporal Fingerprint Evolution** (Claim 4) | No prior art performs longitudinal venue monitoring |
 | 5 | Outputs a fully **deterministic, auditable report** (Claim 5) | ML-based tools produce non-reproducible outputs |
@@ -128,7 +128,7 @@ Flagging CCR > 0.40 as anomalous;
 
 **(d)** detecting Temporal Citation Bursts where >60% of citations from a single source occur within a 90-day window;
 
-**(e)** aggregating scores using Adaptive Decay Weighting (Claim 1) to produce a composite Citation Integrity Score; and
+**(e)** aggregating scores using Adaptive Dynamic Weighting (Claim 1) to produce a composite Citation Integrity Score; and
 
 **(f)** outputting a deterministic CartelRisk classification (NONE | LOW | MODERATE | HIGH | CRITICAL).
 

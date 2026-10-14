@@ -45,7 +45,7 @@ a non-transitory computer-readable memory storing instructions that, when execut
   (iv) evaluating said publication metadata stream in a **Grant Compliance Engine** by executing machine-readable Boolean rule matrices corresponding to applicable funding mandates to yield rule-level pass/fail indicators and deterministic remediation directives;
 
 **(c)** synthesize the outputs of said dedicated modules in a **Cross-Correlation Engine** configured to:
-  (i) apply an Adaptive Decay Weighting (ADW) algorithm that redistributes base weight allocations of unobserved streams proportionally over observed streams without fabricating default scores, and computes a closed-form epistemic evidence interval; and
+  (i) apply an Adaptive Dynamic Weighting (ADW) algorithm that redistributes base weight allocations of unobserved streams proportionally over observed streams without fabricating default scores, and computes a closed-form epistemic evidence interval; and
   (ii) execute a Cross-Signal Anomaly Detection (CSAD) algorithm that computes mathematical divergence $D$ between normalized credibility scores of independent modules, and amplifies composite risk proportionally via $Risk' = \min(1, Risk \times (1 + \alpha \cdot g(D, \tau)))$ when divergence exceeds a divergence threshold $\tau$, wherein $\alpha$ is an asymmetric factor penalizing surface-layer facade inflation relative to substrate-layer evidence; and
 
 **(d)** output a deterministic composite risk profile and an auditable, cryptographically verifiable evidence chain for the assessed academic entity;
@@ -62,9 +62,9 @@ The system of Claim 1, further comprising a bifurcated architecture separating r
 
 ---
 
-### CLAIM 3: Adaptive Decay Weighting (ADW) with Epistemic Evidence Intervals
+### CLAIM 3: Adaptive Dynamic Weighting (ADW) with Epistemic Evidence Intervals
 
-The system of Claim 1, wherein the Adaptive Decay Weighting (ADW) algorithm comprises:
+The system of Claim 1, wherein the Adaptive Dynamic Weighting (ADW) algorithm comprises:
 **(a)** identifying an observed subset of dimensions $A \subseteq K$ having verified data inputs, and designating any unobserved dimension $j \notin A$ as strictly unknown without substituting neutral or default values;
 **(b)** calculating an effective weight $w'_i$ for each observed dimension $i \in A$ according to the proportional redistribution formula:
 $$w'_i = \frac{w_i}{\sum_{k \in A} w_k}$$
@@ -184,7 +184,7 @@ The system of Claim 1, wherein the Grant Compliance Engine comprises:
 ### CLAIM 11: Six-Phase Strictly Serializable Deterministic Pipeline
 
 A computerized method for academic integrity verification, the method comprising executing six sequential deterministic processing phases:
-**(a) Phase 1 (Component Scoring)**: receiving module scores and computing effective weights using the Adaptive Decay Weighting (ADW) algorithm of Claim 3;
+**(a) Phase 1 (Component Scoring)**: receiving module scores and computing effective weights using the Adaptive Dynamic Weighting (ADW) algorithm of Claim 3;
 **(b) Phase 2 (Heuristic Evaluation)**: evaluating domain Boolean heuristic rules and calculating cumulative rule failure penalties;
 **(c) Phase 3 (Credibility & Anomaly Aggregation)**: computing composite risk from Phase 1 and Phase 2 outputs and applying the Cross-Signal Anomaly Detection (CSAD) multiplicative risk amplification of Claim 4;
 **(d) Phase 4 (Risk Classification)**: mapping composite risk to a four-tier classification comprising low, medium, high, and critical tiers based on fixed numerical thresholds;
@@ -264,7 +264,7 @@ A computer-implemented method for physical gateway interdiction and compute thre
 |---|---|---|---|
 | **Claim 1** | Four-module multi-signal deterministic architecture combining venue, citation loop DFS, stylometric misalignment, and grant rule matrices. | Eliminates black-box ML drift and data completeness bias through non-ML algebraic formulas. | Generates cryptographically verifiable audit chain and composite risk profile. |
 | **Claim 2** | Bifurcated architecture isolating offline research ML models from immutable production rule registries with runtime guard. | Guarantees non-probabilistic production determinism at interpreter level. | Runtime execution interdiction upon detection of unauthorized ML inference modules. |
-| **Claim 3** | Adaptive Decay Weighting (ADW) with closed-form proportional redistribution and epistemic evidence interval bounding. | Overcomes false-neutral score corruption caused by missing data sources. | Produces mathematically bounded interval $[L, U]$ and width $W$. |
+| **Claim 3** | Adaptive Dynamic Weighting (ADW) with closed-form proportional redistribution and epistemic evidence interval bounding. | Overcomes false-neutral score corruption caused by missing data sources. | Produces mathematically bounded interval $[L, U]$ and width $W$. |
 | **Claim 4** | Layer-asymmetric Cross-Signal Anomaly Detection (CSAD) multiplying risk by excess divergence $g(D, \tau)$. | Exposes deceptive bad actors who selectively polish surface signals while neglecting structural substrates. | Deterministically amplifies risk without statistical clustering. |
 | **Claim 5-7** | Levenshtein edit distance, predatory window $\Delta t < 30\text{d}$, GTA tense taxonomy, and TFET longitudinal drift $\|\Delta F\|_W$. | Automates forensic detection of hijacked venues and prospective indexing misrepresentations. | Identifies lookalike domains and longitudinal fingerprint mutations. |
 | **Claim 8** | Bounded-depth DFS ($k=5$), four-way citation decomposition, True Independent H-Index, loop-purged H-Index, and CIR $<0.30$. | Solves reciprocal colleague collusion undetected by standard self-citation filters. | Restores true unmanipulated bibliometric citation rank. |

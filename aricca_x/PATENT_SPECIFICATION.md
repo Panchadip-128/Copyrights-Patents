@@ -19,7 +19,7 @@ Therefore, there is a need in the art for a computational system that can dynami
 
 ## 3. SUMMARY OF THE INVENTION
 The present invention (embodied in the ARICCA-X system) overcomes the limitations of the prior art by providing a deterministic, multi-phase computational pipeline. The system introduces several novel technical methodologies:
-- **Adaptive Decay Weighting (ADW):** A mechanism that dynamically redistributes the scoring weights of missing data dimensions to available dimensions, preventing deceptive venues from artificially inflating their scores by hiding information.
+- **Adaptive Dynamic Weighting (ADW):** A mechanism that dynamically redistributes the scoring weights of missing data dimensions to available dimensions, preventing deceptive venues from artificially inflating their scores by hiding information.
 - **Cross-Signal Anomaly Detection (CSAD):** A computational method for calculating the divergence between independent evaluation vectors (e.g., Call for Papers risk vs. Infrastructure quality) and applying a mathematically defined risk amplification penalty when divergence exceeds a predefined threshold.
 - **Grammatical Tense Analysis (GTA):** A linguistic processing engine that eschews standard keyword matching in favor of temporal framing classification, computationally distinguishing between legitimate present-tense indexing claims (e.g., "is indexed in") and deceptive future/conditional claims (e.g., "will be indexed in").
 - **Temporal Fingerprint Evolution Tracking (TFET):** A method for acquiring and comparing multi-dimensional venue metadata snapshots at different time intervals ($T_1$ and $T_2$) to calculate a quantitative aggregate drift vector, thereby identifying structural mutations indicative of predatory behavior.
@@ -30,13 +30,13 @@ The present invention (embodied in the ARICCA-X system) overcomes the limitation
 The system executes a strictly deterministic, six-phase pipeline:
 1. **Component Analysis:** Independent scoring of structural dimensions (CFP, Website, Indexing, Contact).
 2. **Heuristic Evaluation:** Boolean logic gates assessing critical thresholds (e.g., acceptance rate guarantees).
-3. **Credibility Calculation:** Integration of Component and Heuristic scores via Adaptive Decay Weighting and Cross-Signal Anomaly Detection.
+3. **Credibility Calculation:** Integration of Component and Heuristic scores via Adaptive Dynamic Weighting and Cross-Signal Anomaly Detection.
 4. **Risk Classification:** Mapping of continuous credibility scores to discrete risk tiers.
 5. **Recommendation Generation:** Rule-based generation of actionable compliance steps.
 6. **Flagging:** Generation of auditable exception alerts based on dimensional failures.
 
 ### 4.2 UI and Demonstrability
-The system is coupled with a web-based testing apparatus (`aricca_x_ui.html`) that allows human operators and patent examiners to visually step through the deterministic logic. The UI provides real-time visualization of the Adaptive Decay Weighting redistributions and renders the calculated divergences in the Cross-Signal Anomaly Detection engine.
+The system is coupled with a web-based testing apparatus (`aricca_x_ui.html`) that allows human operators and patent examiners to visually step through the deterministic logic. The UI provides real-time visualization of the Adaptive Dynamic Weighting redistributions and renders the calculated divergences in the Cross-Signal Anomaly Detection engine.
 
 ## 5. CLAIMS
 
@@ -46,7 +46,7 @@ What is claimed is:
 - receiving multi-dimensional input data associated with an academic venue;
 - calculating independent credibility scores for each dimension;
 - detecting the absence of data in one or more dimensions;
-- executing an Adaptive Decay Weighting (ADW) algorithm to proportionally redistribute the predetermined weights of the absent dimensions to the available dimensions; and
+- executing an Adaptive Dynamic Weighting (ADW) algorithm to proportionally redistribute the predetermined weights of the absent dimensions to the available dimensions; and
 - calculating an aggregate score using the dynamically redistributed weights, thereby preventing false-neutral baseline scores resulting from omitted data.
 
 **2. A system for detecting contradictory digital assertions via Cross-Signal Anomaly Detection (CSAD), comprising:**

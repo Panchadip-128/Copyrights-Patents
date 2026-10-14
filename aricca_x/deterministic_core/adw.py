@@ -1,5 +1,5 @@
 """
-Adaptive Decay Weighting (ADW) with Epistemic Evidence Interval
+Adaptive Dynamic Weighting (ADW) with Epistemic Evidence Interval
 
 Formula (preferred embodiment):
 
