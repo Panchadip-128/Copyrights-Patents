@@ -212,7 +212,7 @@ def build_pdf():
             Paragraph("<b>JURISDICTION:</b> Indian Patent Office (IPO)", meta_style),
         ],
         [
-            Paragraph("<b>FROM:</b> Panchadip B & Somyajeet A (Inventors & Architects)", meta_style),
+            Paragraph("<b>FROM:</b> Engineering & Technical Architecture Team, ARICCA-X", meta_style),
             Paragraph("<b>GOVERNING STATUTE:</b> CRI Guidelines 2025 / Sec. 3(k), 10(4)", meta_style),
         ],
         [
@@ -728,32 +728,13 @@ def build_pdf():
     # Formal Sign-off
     story.append(Paragraph("5. FORMAL CONCLUSION & INVENTOR DECLARATION", h1_style))
     sign_off_text = (
-        "We declare that the foregoing technical disclosures, empirical measurements, hardware telemetry, and architectural fortifications "
+        "This memorandum declares that the foregoing technical disclosures, empirical measurements, hardware telemetry, and architectural fortifications "
         "faithfully represent the reduction to practice of the ARICCA-X system as implemented in the accompanying production codebase. "
         "With the empirical comparative benchmarks, concrete Submission Gateway Interdiction Controller interface, threshold derivations, "
         "and Dual-Corpus Validation Strategy now complete, all Section 3(k) objection risks have been systematically addressed with measured empirical data, "
         "formal threshold derivations, and concrete controller interfaces in full alignment with the Indian CRI Guidelines 2025."
     )
     story.append(Paragraph(sign_off_text, body_style))
-    story.append(Spacer(1, 4))
-
-    sig_data = [
-        [
-            Paragraph("<b>Panchadip B</b><br/>Lead Inventor & System Architect<br/>MAHE / Mutbi ARC, Manipal", meta_style),
-            Paragraph("<b>Somyajeet A</b><br/>Co-Inventor & Algorithm Specialist<br/>MAHE / Mutbi ARC, Manipal", meta_style),
-            Paragraph("<b>Patent Counsel</b><br/>Due Diligence Reviewer<br/>Lextria Research / IPTTO MAHE", meta_style),
-        ]
-    ]
-    sig_table = Table(sig_data, colWidths=[168, 168, 168])
-    sig_table.setStyle(TableStyle([
-        ("BOX", (0, 0), (-1, -1), 0.75, colors.HexColor("#CBD5E0")),
-        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#F7FAFC")),
-        ("TOPPADDING", (0, 0), (-1, -1), 3),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-        ("LEFTPADDING", (0, 0), (-1, -1), 6),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-    ]))
-    story.append(sig_table)
 
     # Build the PDF
     doc.build(story, canvasmaker=NumberedCanvas)

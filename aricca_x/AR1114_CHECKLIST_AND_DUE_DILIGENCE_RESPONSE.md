@@ -1,7 +1,7 @@
 # FORMAL PATENT DUE DILIGENCE & COMPLIANCE MEMORANDUM (AR1114)
 
 **TO:** Patent Counsel & Due Diligence Review Team, Lextria Research / IPTTO MAHE  
-**FROM:** Panchadip B & Somyajeet A (Inventors & Lead System Architects, ARICCA-X)  
+**FROM:** Engineering & Technical Architecture Team, ARICCA-X  
 **DATE:** October 15, 2026  
 **APPLICATION NUMBER / REF:** AR1114  
 **INVENTION TITLE:** *Deterministic Multi-Signal Processing System for Academic Integrity Verification with Epistemic Missing-Evidence Bounds, Cryptographically Linked Phase Records, and Physical Submission Gateway Interdiction*  
@@ -722,6 +722,5 @@ Implemented in [`grant_compliance.py`](file:///d:/Copyrights/aricca_x/grant_comp
 We remain at counsel's disposal for any further technical briefing or patent drawing preparation.
 
 **Respectfully submitted,**  
-**Panchadip B & Somyajeet A**  
-*Inventors & Lead System Architects, ARICCA-X Project*  
-*MAHE / Mutbi ARC, Manipal*
+**Engineering & Technical Architecture Team, ARICCA-X**
+

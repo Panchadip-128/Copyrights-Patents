@@ -1,7 +1,7 @@
 # FORMAL PATENT COUNSEL RESPONSE & TECHNICAL FORTIFICATION MEMORANDUM
 
 **TO:** Thilak (Lead Patent Search Analyst & Prior Art Specialist)  
-**FROM:** Panchadip B & Somyajeet A (Inventors & Engineering Team, ARICCA-X)  
+**FROM:** Engineering & Technical Architecture Team, ARICCA-X  
 **DATE:** October 10, 2026  
 **SUBJECT:** Comprehensive Technical Response & Architectural Fortification in View of the Final Prior Art Search Report (`ARICCA-X_PriorArt_SearchReport.pdf`)  
 **INVENTION TITLE:** *ARICCA-X: Academic Research Integrity & Credibility Correlation Analyzer: Deterministic, Machine-Executable Multi-Signal System for Academic Integrity Verification*  
@@ -1040,6 +1040,6 @@ All deterministic modules operate against sealed, immutable production registrie
 Please let us know if you require any additional mathematical proofs, code extracts, or test artifacts. We are ready to proceed with formal filing!
 
 Sincerely,  
-**Panchadip B & Somyajeet A**  
-*Inventors & Lead Engineers, ARICCA-X Project*
+**Engineering & Technical Architecture Team, ARICCA-X**
+
 

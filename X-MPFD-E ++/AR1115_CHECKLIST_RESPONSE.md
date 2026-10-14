@@ -5,7 +5,7 @@ Patent Counsel
 Lextria Research / IPTTO, Manipal Academy of Higher Education (MAHE)  
 
 **From:**  
-Panchadip B & Somyajeet A (Inventors & Applicants)  
+Engineering & Technical Architecture Team, X-MPFD-E++  
 
 **Invention Reference:**  
 **AR1115** — *Deterministic, Machine-Executable Multimodal System and Method for Rapid Zero-Day Phishing and Fraud Detection with Conditional Hardware Gating*  
@@ -301,6 +301,5 @@ The invention now stands fully documented with:
 We respectfully request patent counsel to proceed with final compilation and filing of the Complete Specification.
 
 **Respectfully submitted,**  
-**Panchadip B & Somyajeet A**  
-*Inventors & System Architects, X-MPFD-E++*  
+**Engineering & Technical Architecture Team, X-MPFD-E++**  
 *October 14, 2026*
