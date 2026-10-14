@@ -198,7 +198,7 @@ def build_pdf():
 
     # Title Banner
     story.append(Paragraph("FORMAL PATENT DUE DILIGENCE & COMPLIANCE MEMORANDUM", title_style))
-    story.append(Paragraph("Direct Technical Response to Due Diligence Report AR1114 (CRI Guidelines 2025)", subtitle_style))
+    story.append(Paragraph("Direct Technical Response to Due Diligence Report AR1114 (Technical Standards & Sufficiency)", subtitle_style))
     story.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor("#0F294A"), spaceAfter=6))
 
     # Meta Table
@@ -208,12 +208,12 @@ def build_pdf():
             Paragraph("<b>DATE:</b> October 15, 2026", meta_style),
         ],
         [
-            Paragraph("<b>TO:</b> Patent Counsel & Due Diligence Review Team, Lextria Research / IPTTO MAHE", meta_style),
-            Paragraph("<b>JURISDICTION:</b> Indian Patent Office (IPO)", meta_style),
+            Paragraph("<b>TO:</b> Patent Counsel & Due Diligence Review Team, Lextria Research", meta_style),
+            Paragraph("<b>JURISDICTION:</b> International Patent Architecture (PCT / Direct Technical Filing)", meta_style),
         ],
         [
             Paragraph("<b>FROM:</b> Engineering & Technical Architecture Team, ARICCA-X", meta_style),
-            Paragraph("<b>GOVERNING STATUTE:</b> CRI Guidelines 2025 / Sec. 3(k), 10(4)", meta_style),
+            Paragraph("<b>GOVERNING STATUTE:</b> Technical Enablement & Sufficiency of Disclosure (PCT Art. 5 / 35 U.S.C. § 112)", meta_style),
         ],
         [
             Paragraph("<b>INVENTION:</b> Deterministic Multi-Signal Academic Integrity Platform with Missing-Evidence Bounds, Cryptographically Linked Phase Records, and Physical Gateway Interdiction", meta_style),
@@ -255,11 +255,11 @@ def build_pdf():
     story.append(Spacer(1, 6))
 
     # =========================================================================
-    # PART 1: SECTION 3(k) MATHEMATICAL METHOD REBUTTAL
+    # PART 1: MEASURED TECHNICAL EFFECT ON PHYSICAL HARDWARE
     # =========================================================================
-    story.append(Paragraph("1. SECTION 3(k) REBUTTAL: MEASURED TECHNICAL EFFECT ON PHYSICAL HARDWARE", h1_style))
+    story.append(Paragraph("1. SYSTEMIC TECHNICAL EFFECT ON PHYSICAL COMPUTING HARDWARE", h1_style))
     story.append(Paragraph(
-        "Under Paragraph 4.5.4 of the Indian CRI Guidelines 2025, patent eligibility under Section 3(k) is established where the claimed "
+        "To establish patent eligibility and technical character under universal patent sufficiency standards, the claimed "
         "system produces an empirical <b>technical effect</b>—namely, an improvement in the functioning of the computer itself, or a measurable "
         "technical solution to a technical problem evidenced by comparative data. We executed an empirical comparative benchmark harness "
         "(<code>comparative_benchmark.py</code>) on physical x86-64 hardware measuring each core invention against established baselines:",
@@ -465,7 +465,7 @@ def build_pdf():
     # =========================================================================
     story.append(Paragraph("1.3 Dual-Corpus Validation Strategy: Controlled Ground-Truth vs. Real-World Empirical Telemetry", h1_style))
     story.append(Paragraph(
-        "To establish patent defensibility under Section 10(4) and Section 3(k), neither synthetic data alone nor real-world data alone is sufficient. "
+        "To establish definitive technical sufficiency and patent defensibility, neither synthetic data alone nor real-world data alone is sufficient. "
         "Real-world data lacks verifiable negative ground truth (covert citation rings and subtle AI reviews cannot be proven absent), while synthetic data alone "
         "invites 'toy model' objections. ARICCA-X resolves this via a <b>Dual-Corpus Validation Strategy</b>: (1) an 11,500-input controlled synthetic corpus proving mathematical "
         "bounds, zero division-by-zero, and zero-annotation-noise recall; and (2) a live empirical corpus executed in <b>18.09 ms with 100.0% accuracy</b> "
@@ -534,12 +534,12 @@ def build_pdf():
     story.append(Spacer(1, 6))
 
     # =========================================================================
-    # PART 2: SECTION 3(k) BUSINESS METHOD & SUBMISSION GATEWAY REBUTTAL
+    # PART 2: SYSTEM ARCHITECTURE & PHYSICAL SUBMISSION GATEWAY INTERDICTION CONTROLLER
     # =========================================================================
-    story.append(Paragraph("2. SECTION 3(k) REBUTTAL: SUBMISSION GATEWAY INTERDICTION CONTROLLER INTERFACE", h1_style))
+    story.append(Paragraph("2. PHYSICAL SUBMISSION GATEWAY INTERDICTION CONTROLLER (SGIC) ARCHITECTURE", h1_style))
     story.append(Paragraph(
-        "Under Section 3(k), business methods are excluded. However, where an invention controls the operational state of physical computing "
-        "and network resources, patent eligibility is preserved. The ARICCA-X platform does not merely output an editorial score or display "
+        "Where a system directly controls the operational state of physical computing and network infrastructure, it constitutes a "
+        "patentable technical machine. The ARICCA-X platform does not merely output an editorial score or display "
         "information. It implements the concrete <b>Submission Gateway Interdiction Controller (SGIC) interface</b> (<code>gateway_controller.py</code>) "
         "that translates risk profiles and evidence-coverage bounds into concrete machine-level control directives:",
         body_style,
@@ -657,7 +657,7 @@ def build_pdf():
     # =========================================================================
     story.append(Paragraph("4. CONSOLIDATED REFERENCE REGISTRIES & LEXICONS", h1_style))
     story.append(Paragraph(
-        "To satisfy Section 10(4) sufficiency of disclosure, below are the complete reference registries implemented in production:",
+        "To satisfy comprehensive sufficiency of disclosure and reproducibility, below are the complete reference registries implemented in production:",
         body_style,
     ))
 
@@ -711,7 +711,7 @@ def build_pdf():
         "<i>Antecedent Basis for Claims 17 & 18:</i> Please advise whether the specification as originally filed provides sufficient "
         "antecedent basis to support independent Claims 17 and 18 for the Submission Gateway Interdiction Controller interface, "
         "or whether these features should be pursued via a Divisional Application / Continuation-in-Part (CIP), or alternatively "
-        "incorporated as dependent system limitations to Claim 1, in compliance with Section 59(1) of the Indian Patents Act."
+        "incorporated as dependent system limitations to Claim 1, fully supported by the specification."
     )
     inquiry_table = Table([[Paragraph(inquiry_text, callout_style)]], colWidths=[504])
     inquiry_table.setStyle(TableStyle([
@@ -726,13 +726,13 @@ def build_pdf():
     story.append(Spacer(1, 4))
 
     # Formal Sign-off
-    story.append(Paragraph("5. FORMAL CONCLUSION & INVENTOR DECLARATION", h1_style))
+    story.append(Paragraph("5. FORMAL CONCLUSION & TECHNICAL DECLARATION", h1_style))
     sign_off_text = (
         "This memorandum declares that the foregoing technical disclosures, empirical measurements, hardware telemetry, and architectural fortifications "
         "faithfully represent the reduction to practice of the ARICCA-X system as implemented in the accompanying production codebase. "
         "With the empirical comparative benchmarks, concrete Submission Gateway Interdiction Controller interface, threshold derivations, "
-        "and Dual-Corpus Validation Strategy now complete, all Section 3(k) objection risks have been systematically addressed with measured empirical data, "
-        "formal threshold derivations, and concrete controller interfaces in full alignment with the Indian CRI Guidelines 2025."
+        "and Dual-Corpus Validation Strategy now complete, all technical eligibility inquiries have been systematically addressed with measured empirical data, "
+        "formal threshold derivations, and concrete controller interfaces."
     )
     story.append(Paragraph(sign_off_text, body_style))
 

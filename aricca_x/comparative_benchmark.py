@@ -1,6 +1,6 @@
 """
 Comparative Benchmark Harness for ARICCA-X (Patent Ref: AR1114)
-Measures Technical Effect "With vs Without" Core Inventions under Indian CRI Guidelines 2025:
+Measures Technical Effect "With vs Without" Core Inventions under International Patent Enablement Standards:
 
   1. Feature 1: Observed-Set Weighting with Bounds (ADW)
      vs Baseline (Prior Art AU2012231158B2 Neutral Placeholder Substitution 0.5)
@@ -369,7 +369,7 @@ def run_benchmark_3_audit_chain(num_samples: int = 1000) -> Dict[str, Any]:
 def run_full_benchmark():
     print("=" * 80)
     print(" ARICCA-X COMPREHENSIVE EMPIRICAL COMPARATIVE BENCHMARK (AR1114)")
-    print(" Under Indian Patent Office CRI Guidelines 2025")
+    print(" Under International Patent Enablement & Technical Standards")
     print("=" * 80)
 
     hw = get_hardware_environment()
@@ -412,7 +412,7 @@ def run_full_benchmark():
     print(f"  Memory Overhead per Record:        {exp3['ram_overhead_per_record_bytes']} bytes")
 
     benchmark_payload = {
-        "benchmark_title": "ARICCA-X Comparative Empirical Benchmark under CRI Guidelines 2025",
+        "benchmark_title": "ARICCA-X Comparative Empirical Benchmark for Technical Enablement",
         "timestamp_iso": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "hardware_environment": hw,
         "experiment_1_adw_vs_au2012231158b2": exp1,

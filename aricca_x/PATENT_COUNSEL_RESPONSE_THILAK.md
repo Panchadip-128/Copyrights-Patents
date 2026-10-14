@@ -16,7 +16,7 @@ Dear Thilak,
 
 We have thoroughly analyzed your **Prior Art Search Report** (`ARICCA-X_PriorArt_SearchReport.pdf`). We greatly appreciate the depth of your analysis, particularly your identification of potential 35 U.S.C. § 101 (*Alice Corp.* abstract idea) and 35 U.S.C. §§ 102/103 (novelty and non-obviousness) risks concerning earlier disjoint tools in URL classification, domain monitoring, citation indices, and AI-text detection.
 
-In direct response to your findings, our engineering team has executed a comprehensive architectural overhaul across the ARICCA-X production codebase (`d:\Copyrights\aricca_x`). We have successfully:
+In direct response to your findings, our engineering team has executed a comprehensive architectural overhaul across the ARICCA-X production codebase ([`aricca_x`](https://github.com/Panchadip-128/Copyrights/tree/main/aricca_x)). We have successfully:
 
 1. **Eliminated all probabilistic machine learning models from the production execution path**, implementing a **strictly bifurcated architecture** with an active deterministic runtime guard (`enforce_deterministic_runtime()`). This squarely positions the invention outside the scope of *Alice/Mayo* abstract idea rejections by anchoring every claim in concrete, machine-executable graph algorithms, Boolean logic matrices, and closed-form arithmetic.
 2. **Fortified the technical boundaries between ARICCA-X and every cited prior art patent and publication** (including US9178901B2, US12113828B2, US7493403B2, AU2012231158B2, Schreiber 2007, Kojaku et al. 2021, and Baidya et al. 2026).
@@ -145,7 +145,7 @@ def cross_signal_anomaly_detection(
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\deterministic_core\csad.py`](file:///d:/Copyrights/aricca_x/deterministic_core/csad.py).
+*Code Reference:* [`deterministic_core/csad.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/deterministic_core/csad.py).
 
 ---
 
@@ -215,7 +215,7 @@ def adaptive_decay_weighting(base_weights: Mapping[str, float],
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\deterministic_core\adw.py`](file:///d:/Copyrights/aricca_x/deterministic_core/adw.py).
+*Code Reference:* [`deterministic_core/adw.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/deterministic_core/adw.py).
 
 ---
 
@@ -314,7 +314,7 @@ def classify_citation(citing_authors: Iterable[str], target: str,
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\researcher_auditor\researcher_auditor.py`](file:///d:/Copyrights/aricca_x/researcher_auditor/researcher_auditor.py).
+*Code Reference:* [`researcher_auditor/researcher_auditor.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/researcher_auditor/researcher_auditor.py).
 
 ---
 
@@ -416,7 +416,7 @@ def evaluate_tfet(self, t1: FingerprintSnapshot, t2: FingerprintSnapshot) -> TFE
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\venue_intelligence\venue_intelligence.py`](file:///d:/Copyrights/aricca_x/venue_intelligence/venue_intelligence.py).
+*Code Reference:* [`venue_intelligence/venue_intelligence.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/venue_intelligence/venue_intelligence.py).
 
 ---
 
@@ -507,7 +507,7 @@ def evaluate_sentiment_alignment(self, text: str, recommendation: str) -> Sentim
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\peer_review_forensics\peer_review_forensics.py`](file:///d:/Copyrights/aricca_x/peer_review_forensics/peer_review_forensics.py).
+*Code Reference:* [`peer_review_forensics/peer_review_forensics.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/peer_review_forensics/peer_review_forensics.py).
 
 ---
 
@@ -579,7 +579,7 @@ def verify_exported_chain(chain: Dict[str, Any]) -> bool:
 }
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\deterministic_core\audit_chain.py`](file:///d:/Copyrights/aricca_x/deterministic_core/audit_chain.py).
+*Code Reference:* [`deterministic_core/audit_chain.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/deterministic_core/audit_chain.py).
 
 ---
 
@@ -645,7 +645,7 @@ class SubmissionGatewayInterdictionController:
                                audit_record_hash=audit_hash, actuation_latency_ms=latency_ms, telemetry_request=telemetry_req)
 ```
 
-*Code Reference:* [`d:\Copyrights\aricca_x\submission_gateway\gateway_controller.py`](file:///d:/Copyrights/aricca_x/submission_gateway/gateway_controller.py).
+*Code Reference:* [`submission_gateway/gateway_controller.py`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/submission_gateway/gateway_controller.py).
 
 ---
 
@@ -676,7 +676,7 @@ The claims recite an inventive concept that transforms the process into signific
 
 ## 5. Empirical Reduction to Practice & Verification Logs
 
-To satisfy the **Reduction to Practice** requirement under 35 U.S.C. § 112 and Indian Patent Office CRI Guidelines 2025, ARICCA-X has been subjected to rigorous testing on physical x86-64 hardware. Below are the verified execution logs, raw telemetry JSON blocks, and empirical comparative data:
+To satisfy the **Reduction to Practice** requirement under 35 U.S.C. § 112 and international patent technical standards (e.g. PCT Art. 5), ARICCA-X has been subjected to rigorous testing on physical x86-64 hardware. Below are the verified execution logs, raw telemetry JSON blocks, and empirical comparative data:
 
 ### 5.1. Measured Technical Effect ("With vs. Without" Benchmarks on 1,000 Trials)
 Telemetry recorded via `comparative_benchmark.py` on Microsoft Windows 11 Pro, AMD Ryzen 5 (6 Cores, 12 Threads) with Python 3.14.2:
@@ -689,7 +689,7 @@ Telemetry recorded via `comparative_benchmark.py` on Microsoft Windows 11 Pro, A
 
 ```json
 {
-  "benchmark_title": "ARICCA-X Comparative Empirical Benchmark under CRI Guidelines 2025",
+  "benchmark_title": "ARICCA-X Comparative Empirical Benchmark for Technical Enablement",
   "timestamp_iso": "2026-10-14T19:36:58Z",
   "hardware_environment": {
     "os_name": "Windows", "os_release": "11", "os_version": "10.0.26200",
@@ -943,7 +943,7 @@ CONCLUSION: Deterministic engine is fully robust across arbitrary scale and edge
 
 ## 6. Complete 18-Claim Patent Application Structure
 
-We recommend organizing the formal patent application around the following **18-claim hierarchy** (full text in [`PATENT_CLAIMS.md`](file:///d:/Copyrights/aricca_x/PATENT_CLAIMS.md) and [`PATENT_SPECIFICATION_V2.md`](file:///d:/Copyrights/aricca_x/PATENT_SPECIFICATION_V2.md)):
+We recommend organizing the formal patent application around the following **18-claim hierarchy** (full text in [`PATENT_CLAIMS.md`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/PATENT_CLAIMS.md) and [`PATENT_SPECIFICATION_V2.md`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/PATENT_SPECIFICATION_V2.md)):
 
 * **Claim 1 (Independent System Claim):** Master deterministic multi-signal academic integrity verification system integrating Modules A, B, C, D and the Cross-Correlation Engine with ADW and CSAD, strictly executed without machine-learning inference models.
 * **Claim 2 (Dependent):** Bifurcated architecture separating offline ML research sandbox from sealed immutable production rule registry with cryptographically recorded promotion provenance.
@@ -970,7 +970,7 @@ We recommend organizing the formal patent application around the following **18-
 
 With the codebase and technical specifications fully aligned with your Prior Art Search Report, we recommend the following immediate next steps:
 
-1. **Adopt Claim Set 1–18 as the Base Claims:** The claim language in [`PATENT_CLAIMS.md`](file:///d:/Copyrights/aricca_x/PATENT_CLAIMS.md) contains explicit mathematical formulations, variable definitions, and threshold constants, providing robust protection against 35 U.S.C. § 112 definiteness challenges.
+1. **Adopt Claim Set 1–18 as the Base Claims:** The claim language in [`PATENT_CLAIMS.md`](https://github.com/Panchadip-128/Copyrights/blob/main/aricca_x/PATENT_CLAIMS.md) contains explicit mathematical formulations, variable definitions, and threshold constants, providing robust protection against 35 U.S.C. § 112 definiteness challenges.
 2. **Utilize Section 3 Above for Specification Draft:** The technical explanations of CSAD, ADW, Bounded DFS, GTA, TFET, and SGIC can be directly adapted into the *Detailed Description of the Preferred Embodiments*.
 3. **Incorporate Test Logs into Specification as Working Examples:** The test results from Section 5 can be included as *Working Example 1 (Reproducibility & Verification)* and *Working Example 2 (Empirical Fuzzing Benchmark)* to solidify § 112 enablement.
 4. **Prepare Patent Drawings:**
