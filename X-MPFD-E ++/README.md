@@ -3,6 +3,8 @@
 [![Patent Pending](https://img.shields.io/badge/Patent-Pending%20(15%20Claims)-#10b981?style=for-the-badge)](./PATENT_CLAIMS.md)
 [![Prior Art Defense](https://img.shields.io/badge/Prior_Art-15_Page_Report-blue?style=for-the-badge)](./FINAL_PRIOR_ART_SEARCH_REPORT.md)
 [![Lextria Due Diligence](https://img.shields.io/badge/Lextria_Diligence-AR1115_Response-orange?style=for-the-badge)](./LEXTRIA_DUE_DILIGENCE_RESPONSE_AR1115.md)
+[![Checklist Response](https://img.shields.io/badge/Checklist_AR1115-Full_Compliance-teal?style=for-the-badge)](./AR1115_CHECKLIST_RESPONSE.md)
+[![Patent Drawings](https://img.shields.io/badge/Drawings-Section_10(4)_FIGS_1--5-purple?style=for-the-badge)](./figures/)
 [![Counsel Response](https://img.shields.io/badge/Patent_Counsel-Response_Dossier-purple?style=for-the-badge)](./PATENT_COUNSEL_RESPONSE_THILAK.md)
 [![Status](https://img.shields.io/badge/Status-Empirically%20Validated-green?style=for-the-badge)](#7-empirical-reduction-to-practice--validation)
 [![License](https://img.shields.io/badge/License-Proprietary%20IP-red?style=for-the-badge)](./LICENSE.md)
@@ -193,7 +195,31 @@ python empirical_evidence_generator.py
 
 ---
 
-## 8. CLI Usage Guide
+## 8. Response to Tentative Checklist (AR1115) & Section 10(4) Patent Drawings
+
+In compliance with the formal **Tentative Checklist** issued by patent counsel **Adv. Pranav Bhat (Lextria Research / IPTTO MAHE)**, the following technical definitions, empirical profiling data, and formal patent drawings have been incorporated into the patent filing package:
+
+| Checklist Query | Statutory Purpose | Technical Specification in X-MPFD-E++ | Proof / Artifact Reference |
+| :--- | :--- | :--- | :--- |
+| **Item 1: URL Normalization** | Sec. 10(4) & Claim 2 | **Form NFC** Unicode normalization + **single-pass percent-decoding** (`unquote`) + **lowercase** scheme/hostname + default port strip (`:80`, `:443`). Character frequencies $P(x_i)$ and entropy $H(U)$ are invariant to evasion encodings. | `x_mpfd_e_plus/multimodal_orchestrator/orchestrator.py` (`URLNormalizer`) |
+| **Item 2: DOM AST Node Types** | Sec. 10(4) & Claims 3, 4 | Element nodes counted in $N_{total}$; HTML5 void elements counted as leaves without pushing to `depth_stack`; **text and comment nodes strictly excluded** from $N_{total}$ and stack depth; `<iframe>` inner documents not traversed. | `x_mpfd_e_plus/multimodal_orchestrator/orchestrator.py` (`DeterministicDOMAnalyzer`) |
+| **Item 3: DGA Latency Breakdown** | CRI Guidelines 2025 Para 4.5.1 | High-precision microsecond profiling shows bypassed input executes normalization (0.037 ms) + entropy (0.043 ms) + gate check (0.0003 ms) + registry SHA-256 (0.027 ms) + fusion rule (0.018 ms) + explanation & block audit hash (0.041 ms), while **withholding 2.650 ms of HTML AST parsing**. Overall DGA latency reduced from 6.621 ms to 3.971 ms (-40.0%). | `dga_latency_breakdown_results.json` & `dga_latency_breakdown.py` |
+| **Item 4: Fusion Calibration Constants** | Claims 5, 11, 12 | **Late Fusion:** $W_{late} = [0.40, 0.40, 0.20]$, decision threshold $\tau_{late} = 0.65$ (selected via Youden's $J = 0.994$ on 1,000 samples).<br>**Early Fusion:** $W_{early} = [0.45, 0.35, 0.20]^T$, decision threshold $\tau_{early} = 0.60$ for PHISHING, $0.35$ for SUSPICIOUS. | `x_mpfd_e_plus/fusion_policy_engine/fusion_engine.py` (Table 6-1 & 6-2) |
+| **Item 5: Validation Artifacts & Logs** | Sec. 10(4) Sufficiency | Deposited reproducible JSON logs of 1,000 comparative benchmark runs, 500 independent holdout inputs across 3 entropy modes, 90 enterprise entropy distributions, and captured execution logs of 24 unit tests and 9 examples. | `comparative_benchmark_results.json`, `ANNEXURE_B_...json`, `test_execution_log.txt`, `examples_execution_log.txt` |
+| **Item 6: Section 10(4) Patent Drawings** | Rule 15 Patents Rules, 2003 | Generated five 300 DPI high-resolution figures in PNG and vector PDF for Form 2 Complete Specification filing. | `figures/` directory (`FIG_1` to `FIG_5`) |
+
+### Formal Section 10(4) Patent Drawings (Drawings Sheet):
+* **[FIG. 1: Processing Latency Distribution (Gated vs Ungated Pipeline)](./figures/FIG_1_latency_distribution_gated_vs_ungated.png):** Demonstrates median latency reduction from 6.61 ms to 1.26 ms (80.9% speedup).
+* **[FIG. 2: Shannon Entropy Distribution & Gating Boundary](./figures/FIG_2_entropy_distribution_legitimate_vs_dga.png):** Illustrates the 0.174 bits/char safety margin between legitimate sites (max 4.34) and DGA domains (min 4.51).
+* **[FIG. 3: Topological AST Structural Density Ratio vs DOM Depth](./figures/FIG_3_sdr_deviation_cloned_vs_authentic.png):** Demarcates the shallow credential harvester envelope ($D_{max} \le 4, SDR \le 3.5$) from deep enterprise portals ($D_{max} \ge 12, SDR \ge 13.0$).
+* **[FIG. 4: Receiver Operating Characteristic (ROC) Comparison](./figures/FIG_4_roc_curves_fusion_policies.png):** Confirms AUC = 1.000 for Gated Multimodal Fusion over single-modality baselines.
+* **[FIG. 5: Microsecond Latency Breakdown of DGA Processing](./figures/FIG_5_dga_latency_breakdown_operations.png):** Proves physical suppression of the 2.65 ms AST workload under CRI Guidelines 2025 Para 4.5.1.
+
+See full documentation in [**AR1115 CHECKLIST RESPONSE**](./AR1115_CHECKLIST_RESPONSE.md) and [**AR1115 Checklist Response PDF**](./AR1115_Checklist_Response.pdf).
+
+---
+
+## 9. CLI Usage Guide
 
 ```bash
 # Display help and available commands
@@ -214,7 +240,7 @@ python x_mpfd_cli.py batch-analyze urls.txt --output batch_results.json
 
 ---
 
-## 9. Repository Structure
+## 10. Repository Structure
 
 ```text
 X-MPFD-E ++/
@@ -229,14 +255,28 @@ X-MPFD-E ++/
 │   ├── multimodal_orchestrator/     # DOM AST Parser (SDR) & Lexical Entropy (Claims 2, 3, 11)
 │   ├── provenance_lineage_tracker/  # Immutable DAG lineage tracker (Claim 7)
 │   └── report_generator/            # Text, Canonical JSON (Claim 14), and HTML reports
+├── figures/                         # Section 10(4) Patent Drawings (FIG 1 to FIG 5 in PNG & PDF)
+│   ├── FIG_1_latency_distribution_gated_vs_ungated.png (.pdf)
+│   ├── FIG_2_entropy_distribution_legitimate_vs_dga.png (.pdf)
+│   ├── FIG_3_sdr_deviation_cloned_vs_authentic.png (.pdf)
+│   ├── FIG_4_roc_curves_fusion_policies.png (.pdf)
+│   └── FIG_5_dga_latency_breakdown_operations.png (.pdf)
 ├── test_prior_art_inventions.py     # 24 automated unit tests verifying Sections 3(k), 3(m), 3(n), 10(4)
-├── comparative_benchmark.py         # 1,000-sample comparative benchmark (CRI Guidelines 2025)
-├── legitimate_entropy_profiler.py   # Statistical profile of 90 authentic enterprise portals
-├── comparative_benchmark_results.json# Measured empirical benchmark data log
-├── legitimate_entropy_profile.json  # Authentic domain statistical distribution log
+├── test_execution_log.txt           # Captured execution log of all 24 unit tests (100% pass)
 ├── examples.py                      # 9 comprehensive end-to-end patent workflows
+├── examples_execution_log.txt       # Captured execution log of all 9 patent examples
+├── comparative_benchmark.py         # 1,000-sample comparative benchmark (CRI Guidelines 2025)
+├── comparative_benchmark_results.json# Measured empirical benchmark data log
+├── dga_latency_breakdown.py         # Microsecond sub-operation profiler for DGA compute bypass
+├── dga_latency_breakdown_results.json# Measured microsecond sub-operation data log (Item 3)
+├── legitimate_entropy_profiler.py   # Statistical profile of 90 authentic enterprise portals
+├── legitimate_entropy_profile.json  # Authentic domain statistical distribution log
 ├── empirical_evidence_generator.py  # 10,000-input stress fuzzer & benchmark
+├── generate_patent_figures.py       # Matplotlib generator for 300 DPI patent drawings
+├── generate_checklist_pdf.py        # ReportLab builder for AR1115_Checklist_Response.pdf
 ├── x_mpfd_cli.py                    # Command-line interface
+├── AR1115_CHECKLIST_RESPONSE.md     # Formal comprehensive response to Tentative Checklist AR1115
+├── AR1115_Checklist_Response.pdf    # Print-ready submission PDF for counsel with embedded drawings
 ├── LEXTRIA_DUE_DILIGENCE_RESPONSE_AR1115.md # Formal rebuttal dossier for Adv. Pranav Bhat / IPTTO MAHE
 ├── PATENT_CLAIMS.md                 # Verbatim 15-claim USPTO/PCT patent specification
 ├── PATENT_COUNSEL_RESPONSE_THILAK.md# Response dossier addressed to patent counsel

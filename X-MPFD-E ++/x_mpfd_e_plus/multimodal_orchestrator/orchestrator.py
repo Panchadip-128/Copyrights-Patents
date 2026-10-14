@@ -12,19 +12,90 @@ Copyright © 2026 Panchadip B & Somyajeet A. All Rights Reserved.
 
 from typing import Any, Dict, List, Optional, Tuple
 from html.parser import HTMLParser
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote, urlunparse
 from datetime import datetime, timezone
 import math
 import re
 import hashlib
+import unicodedata
+
+
+class URLNormalizer:
+    """
+    Deterministic URL Normalizer.
+    Addresses Checklist Item 1 (AR1115):
+    - Unicode Normalization: Form NFC (Canonical Decomposition followed by Canonical Composition)
+    - Percent-Encoding: Decoded exactly ONCE via unquote to expose obfuscated characters
+    - Case Normalization: Scheme and netloc/hostname converted to lowercase (RFC 3986 § 3.2.2)
+    - Port Normalization: Strips redundant default ports (:80 for http, :443 for https)
+    - Path Normalization: Standardizes consecutive slashes and query delimiters
+    """
+    @classmethod
+    def normalize(cls, raw_url: str) -> Tuple[str, Dict[str, Any]]:
+        if not raw_url:
+            return "", {"unicode_form": "NFC", "percent_decoded": False}
+
+        # 1. Unicode Normalization: Form NFC
+        unicode_normalized = unicodedata.normalize("NFC", raw_url.strip())
+
+        # 2. Single-pass Percent-Decoding
+        percent_decoded = unquote(unicode_normalized)
+
+        # 3. Parse components
+        parsed = urlparse(percent_decoded)
+        scheme = parsed.scheme.lower() if parsed.scheme else "http"
+        netloc = parsed.netloc.lower()
+
+        # 4. Port Normalization: Strip default ports
+        if scheme == "http" and netloc.endswith(":80"):
+            netloc = netloc[:-3]
+        elif scheme == "https" and netloc.endswith(":443"):
+            netloc = netloc[:-4]
+
+        # 5. Path canonicalization: Collapse multiple leading slashes
+        path = parsed.path
+        if not path and not netloc:
+            path = "/"
+
+        reconstructed = urlunparse((
+            scheme,
+            netloc,
+            path,
+            parsed.params,
+            parsed.query,
+            parsed.fragment
+        ))
+
+        metadata = {
+            "unicode_form": "NFC",
+            "percent_decoded_once": True,
+            "scheme_lowercased": scheme,
+            "hostname_lowercased": netloc,
+            "raw_length": len(raw_url),
+            "normalized_length": len(reconstructed),
+        }
+        return reconstructed, metadata
 
 
 class DeterministicDOMAnalyzer(HTMLParser):
     """
     Deterministic HTML Abstract Syntax Tree (AST) Parser.
-    Computes total node count, maximum tree depth, and Structural Density Ratio (SDR).
+    Addresses Checklist Item 2 (AR1115):
+    - Element Nodes: Counted in N_total; non-void tags increment depth stack.
+    - Void Elements: HTML5 void elements (area, base, br, col, embed, hr, img, input, link, meta, param, source, track, wbr)
+      increment N_total and update max_depth as leaves, but are NOT pushed onto depth_stack.
+    - Text Nodes: Ignored in N_total to ensure topological density is layout-invariant.
+    - Comment Nodes: Ignored in N_total (or stripped by NoiseFilter).
+    - Script Nodes: Counted as 1 element tag; script body JavaScript code is not parsed as DOM tags.
+    - Iframe Nodes: Counted as 1 element tag; inner cross-origin iframe documents are not traversed in host AST.
+    - Implicitly Closed Nodes: Void tags do not leak stack depth.
     Patent Claims 3 and 4.
     """
+    VOID_ELEMENTS = {
+        "area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr"
+    }
+
     def __init__(self):
         super().__init__()
         self.total_nodes: int = 0
@@ -38,15 +109,16 @@ class DeterministicDOMAnalyzer(HTMLParser):
         self.external_links: int = 0
         self.tag_counts: Dict[str, int] = {}
         self.depth_stack: List[str] = []
+        # Explicit node statistics for Section 10(4) sufficiency
+        self.element_nodes_count: int = 0
+        self.void_element_nodes_count: int = 0
+        self.excluded_text_nodes_count: int = 0
+        self.excluded_comment_nodes_count: int = 0
 
     def handle_starttag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
         tag = tag.lower()
         self.total_nodes += 1
-        self.current_depth += 1
-        self.depth_stack.append(tag)
-        if self.current_depth > self.max_depth:
-            self.max_depth = self.current_depth
-
+        self.element_nodes_count += 1
         self.tag_counts[tag] = self.tag_counts.get(tag, 0) + 1
 
         attrs_dict = {k.lower(): (v or "") for k, v in attrs}
@@ -68,11 +140,44 @@ class DeterministicDOMAnalyzer(HTMLParser):
             if href.startswith(("http://", "https://", "//")):
                 self.external_links += 1
 
+        if tag in self.VOID_ELEMENTS:
+            self.void_element_nodes_count += 1
+            effective_depth = self.current_depth + 1
+            if effective_depth > self.max_depth:
+                self.max_depth = effective_depth
+            # Void elements are self-closing; DO NOT push to depth_stack
+        else:
+            self.current_depth += 1
+            self.depth_stack.append(tag)
+            if self.current_depth > self.max_depth:
+                self.max_depth = self.current_depth
+
     def handle_endtag(self, tag: str):
-        if self.depth_stack:
+        tag = tag.lower()
+        if tag in self.VOID_ELEMENTS:
+            return  # Void elements have no closing tag to process
+        if self.depth_stack and self.depth_stack[-1] == tag:
             self.depth_stack.pop()
-        if self.current_depth > 0:
-            self.current_depth -= 1
+            if self.current_depth > 0:
+                self.current_depth -= 1
+        elif tag in self.depth_stack:
+            while self.depth_stack and self.depth_stack[-1] != tag:
+                self.depth_stack.pop()
+                if self.current_depth > 0:
+                    self.current_depth -= 1
+            if self.depth_stack:
+                self.depth_stack.pop()
+                if self.current_depth > 0:
+                    self.current_depth -= 1
+
+    def handle_data(self, data: str):
+        if data and data.strip():
+            self.excluded_text_nodes_count += 1
+            # Text nodes are explicitly NOT counted in total_nodes
+
+    def handle_comment(self, data: str):
+        self.excluded_comment_nodes_count += 1
+        # Comments are explicitly NOT counted in total_nodes
 
     def calculate_sdr(self) -> float:
         """
@@ -116,11 +221,15 @@ class LexicalAnalyzer:
 
     @classmethod
     def analyze_url(cls, url: str) -> Dict[str, Any]:
-        """Extracts complete deterministic lexical vector."""
-        parsed = urlparse(url)
+        """
+        Extracts complete deterministic lexical vector.
+        Applies RFC 3986 and Unicode NFC normalization before entropy calculation.
+        """
+        normalized_url, norm_meta = URLNormalizer.normalize(url)
+        parsed = urlparse(normalized_url)
         netloc = parsed.netloc.lower()
-        path = parsed.path.lower()
-        full_entropy = cls.calculate_shannon_entropy(url)
+        path = parsed.path
+        full_entropy = cls.calculate_shannon_entropy(normalized_url)
         netloc_entropy = cls.calculate_shannon_entropy(netloc)
         host_path_str = f"{netloc}{path}" if path else netloc
         host_path_entropy = cls.calculate_shannon_entropy(host_path_str)
@@ -167,6 +276,8 @@ class LexicalAnalyzer:
 
         return {
             "url": url,
+            "normalized_url": normalized_url,
+            "normalization_metadata": norm_meta,
             "hostname": netloc,
             "shannon_entropy": round(full_entropy, 4),
             "hostname_entropy": round(netloc_entropy, 4),

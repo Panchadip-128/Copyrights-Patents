@@ -1,0 +1,32 @@
+
+test_lexical_analyzer_vector_extraction (__main__.TestClaim2LexicalShannonEntropy.test_lexical_analyzer_vector_extraction) ... ok
+test_shannon_entropy_mathematical_precision (__main__.TestClaim2LexicalShannonEntropy.test_shannon_entropy_mathematical_precision) ... ok
+test_provenance_lineage_tracker_dag (__main__.TestClaim7CryptographicProvenanceLineage.test_provenance_lineage_tracker_dag) ... ok
+test_sha256_provenance_tag_immutability (__main__.TestClaim7CryptographicProvenanceLineage.test_sha256_provenance_tag_immutability) ... ok
+test_deterministic_explanation_generation (__main__.TestClaim8ExplanationSynthesisEngine.test_deterministic_explanation_generation) ... ok
+test_bit_for_bit_determinism (__main__.TestClaims191014PipelineDeterminismAndAliceDefense.test_bit_for_bit_determinism) ... ok
+test_claim_14_canonical_json_report (__main__.TestClaims191014PipelineDeterminismAndAliceDefense.test_claim_14_canonical_json_report) ... ok
+test_claim_9_cross_architecture_bit_exact_determinism (__main__.TestClaims191014PipelineDeterminismAndAliceDefense.test_claim_9_cross_architecture_bit_exact_determinism)
+CLAIM 9: Bit-exact determinism across runtime environments and architectures. ... ok
+test_ast_parsing_and_sdr_calculation (__main__.TestClaims3And4StructuralASTandSDR.test_ast_parsing_and_sdr_calculation) ... ok
+test_cloned_harvester_shallow_sdr_deviation (__main__.TestClaims3And4StructuralASTandSDR.test_cloned_harvester_shallow_sdr_deviation) ... ok
+test_consensus_majority_voting (__main__.TestClaims51112MultimodalFusionStrategies.test_consensus_majority_voting) ... ok
+test_early_fusion_matrix_algebra (__main__.TestClaims51112MultimodalFusionStrategies.test_early_fusion_matrix_algebra) ... ok
+test_late_confidence_weighted_fusion (__main__.TestClaims51112MultimodalFusionStrategies.test_late_confidence_weighted_fusion) ... ok
+test_gated_fusion_hardware_compute_bypass (__main__.TestClaims6And15ConditionalGatedFusionHardwareOptimization.test_gated_fusion_hardware_compute_bypass) ... ok
+test_gated_fusion_hostname_entropy_avoids_query_token_false_positives (__main__.TestClaims6And15ConditionalGatedFusionHardwareOptimization.test_gated_fusion_hostname_entropy_avoids_query_token_false_positives)
+Validates configurable scope in Claims 1, 2, 10, 15: ... ok
+test_gated_fusion_normal_pipeline_flow (__main__.TestClaims6And15ConditionalGatedFusionHardwareOptimization.test_gated_fusion_normal_pipeline_flow) ... ok
+test_consensus_voting_with_two_modalities (__main__.TestSection10MissingModalityHandling.test_consensus_voting_with_two_modalities) ... ok
+test_missing_html_modality_handling (__main__.TestSection10MissingModalityHandling.test_missing_html_modality_handling) ... ok
+test_hardware_directive_isolate_on_cloned_harvester (__main__.TestSection3mSystemControlDirectivesAndRuleExecution.test_hardware_directive_isolate_on_cloned_harvester) ... ok
+test_hardware_directive_withhold_on_dga (__main__.TestSection3mSystemControlDirectivesAndRuleExecution.test_hardware_directive_withhold_on_dga) ... ok
+test_table_6_2_complete_cartesian_8_cell_matrix (__main__.TestSection3mSystemControlDirectivesAndRuleExecution.test_table_6_2_complete_cartesian_8_cell_matrix) ... ok
+test_audit_verification_of_valid_report (__main__.TestSection3nAuditVerificationAndTamperDetection.test_audit_verification_of_valid_report) ... ok
+test_deterministic_decision_replay (__main__.TestSection3nAuditVerificationAndTamperDetection.test_deterministic_decision_replay) ... ok
+test_tamper_detection_when_recorded_value_altered (__main__.TestSection3nAuditVerificationAndTamperDetection.test_tamper_detection_when_recorded_value_altered) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.024s
+
+OK
