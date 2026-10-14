@@ -58,7 +58,8 @@ The system enforces an asymmetric computational bypass. High-entropy automated t
     | WITHHOLD_PARSER_AND_RENDERER   |   | Ingest HTML Stream             |
     | - Drop network packet at buffer|   +---------------+----------------+
     | - Dynamic O(L) early exit      |                   |
-    | - Saves 2.65 ms AST compute    |                   v
+    | - Suppresses downstream AST    |                   v
+    |   parse                        |
     +--------------------------------+   +--------------------------------+
                                          | Deterministic DOM AST Parser   |
                                          | - Tag-stack state machine      |

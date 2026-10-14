@@ -3,10 +3,9 @@ Architecture & Decision Flow Diagram Generator
 Script: generate_architecture_diagrams.py
 Project: X-MPFD-E++
 
-Generates publication-quality 300 DPI system architecture and hardware control flow diagrams
-with generous spacing, orthogonal non-overlapping routing, and zero label collisions:
-- figures/FIG_ARCH_system_architecture.png
-- figures/FIG_FLOW_hardware_gating_decision_flow.png
+Generates publication-quality 300 DPI system architecture and hardware control flow diagrams:
+- figures/FIG_ARCH_system_architecture.png (Without hardcoded 2.65 ms label)
+- figures/FIG_FLOW_hardware_gating_decision_flow.png (Includes SUSPICIOUS branch for Delta SDR > 50% with valid TLS)
 """
 
 import os
@@ -47,8 +46,9 @@ def generate_system_architecture_diagram():
     # Layer 2: Gating Comparator (Center, y = 50 to 66)
     draw_box(43, 50, 34, 16, "Hardware Gating Comparator", "Condition: H(U) > tau (4.50 / 4.15 / 3.80)", color='#991B1B', fill='#FEF2F2', edgecolor='#EF4444')
 
-    # Layer 3: Branches (y = 20 to 38)
-    draw_box(4, 18, 34, 20, "Hardware Directive:\nWITHHOLD_PARSER_AND_RENDERER", "O(L) early exit | Drop packet\nSaves 2.65 ms AST compute", color='#991B1B', fill='#FEE2E2', edgecolor='#DC2626')
+    # Layer 3: Branches (y = 18 to 38)
+    # Notice: 2.65 ms label removed to avoid conflict with microsecond profiler file
+    draw_box(4, 18, 34, 20, "Hardware Directive:\nWITHHOLD_PARSER_AND_RENDERER", "O(L) early exit | Drop packet\nSuppresses downstream AST parse", color='#991B1B', fill='#FEE2E2', edgecolor='#DC2626')
     draw_box(43, 18, 34, 20, "Deterministic DOM AST Parser", "Tag-stack state machine\nCalculates SDR = N / D_max", color='#1E40AF', fill='#DBEAFE', edgecolor='#2563EB')
     draw_box(82, 18, 34, 20, "Transport & Form POST Analyzer", "TLS certificate verification\nTarget action endpoint check", color='#15803D', fill='#DCFCE7', edgecolor='#16A34A')
 
@@ -100,20 +100,19 @@ def generate_system_architecture_diagram():
     print(f"    [+] Saved {out_png}")
 
 def generate_decision_flowchart():
-    print("[*] Generating Decision Flowchart (FIG_FLOW)...")
-    # Generous dimensions so all boxes, labels, and orthogonal arrows have complete clearance
-    fig, ax = plt.subplots(figsize=(12, 11), dpi=300)
-    ax.set_xlim(0, 120)
+    print("[*] Generating Decision Flowchart (FIG_FLOW) with SUSPICIOUS branch...")
+    fig, ax = plt.subplots(figsize=(12.5, 11), dpi=300)
+    ax.set_xlim(0, 125)
     ax.set_ylim(0, 120)
     ax.axis('off')
 
-    ax.add_patch(patches.Rectangle((0, 0), 120, 120, facecolor='#FFFFFF', edgecolor='none'))
+    ax.add_patch(patches.Rectangle((0, 0), 125, 120, facecolor='#FFFFFF', edgecolor='none'))
 
     def draw_step(x, y, w, h, text, color='#0F172A', fill='#F8FAFC', border='#94A3B8'):
         box = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.6,rounding_size=1.2",
                              facecolor=fill, edgecolor=border, linewidth=1.5)
         ax.add_patch(box)
-        ax.text(x + w/2, y + h/2, text, ha='center', va='center', fontsize=8.5, fontweight='bold', color=color)
+        ax.text(x + w/2, y + h/2, text, ha='center', va='center', fontsize=8.2, fontweight='bold', color=color)
 
     def draw_diamond(cx, cy, w, h, text, color='#991B1B', fill='#FEF2F2', border='#DC2626'):
         poly = patches.Polygon([
@@ -123,7 +122,7 @@ def generate_decision_flowchart():
             (cx - w/2, cy)
         ], closed=True, facecolor=fill, edgecolor=border, linewidth=1.5)
         ax.add_patch(poly)
-        ax.text(cx, cy, text, ha='center', va='center', fontsize=8, fontweight='bold', color=color)
+        ax.text(cx, cy, text, ha='center', va='center', fontsize=7.8, fontweight='bold', color=color)
 
     # -------------------------------------------------------------
     # Main Spine (Center at x = 60)
@@ -149,59 +148,72 @@ def generate_decision_flowchart():
     # Left Branch: Early Exit for DGAs (YES: H(U) > tau)
     # Left diamond vertex is at (42, 62)
     # -------------------------------------------------------------
-    # Orthogonal arrow: Left to x=22, then down to y=44
-    ax.plot([42, 22, 22], [62, 62, 44], color='#DC2626', lw=1.8)
-    ax.annotate('', xy=(22, 44), xytext=(22, 46), arrowprops=dict(arrowstyle="->", color='#DC2626', lw=1.8))
-    # Label placed cleanly above horizontal path with clear background
-    ax.text(32, 64.5, "YES: H(U) > tau\n(Zero-Day DGA)", ha='center', va='bottom', fontsize=8, fontweight='bold', color='#B91C1C',
+    ax.plot([42, 19, 19], [62, 62, 44], color='#DC2626', lw=1.8)
+    ax.annotate('', xy=(19, 44), xytext=(19, 46), arrowprops=dict(arrowstyle="->", color='#DC2626', lw=1.8))
+    ax.text(30.5, 64.5, "YES: H(U) > tau\n(Zero-Day DGA)", ha='center', va='bottom', fontsize=8, fontweight='bold', color='#B91C1C',
             bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFF5F5', edgecolor='#FEB2B2', alpha=0.9))
 
-    # Left Result Box: centered at x=22, y=34, w=34, h=16
-    draw_step(5, 26, 34, 16, "DECISION: PHISHING_DGA\nRisk = 0.99 (High Confidence)\nDirective: WITHHOLD_PARSER\n(Bypasses HTML AST Parsing)",
+    # Left Result Box: centered at x=19, y=34, w=34, h=16
+    draw_step(2, 26, 34, 16, "DECISION: PHISHING_DGA\nRisk = 0.99 (High Confidence)\nDirective: WITHHOLD_PARSER\n(Bypasses HTML AST Parsing)",
               color='#991B1B', fill='#FEE2E2', border='#DC2626')
 
     # -------------------------------------------------------------
     # Right Branch: Normal Downstream Pipeline (NO: H(U) <= tau)
     # Right diamond vertex is at (78, 62)
     # -------------------------------------------------------------
-    # Orthogonal arrow: Right to x=96, then down to y=54
-    ax.plot([78, 96, 96], [62, 62, 54], color='#2563EB', lw=1.8)
-    ax.annotate('', xy=(96, 54), xytext=(96, 56), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.8))
-    # Label placed cleanly above horizontal path with clear background
-    ax.text(87, 64.5, "NO: H(U) <= tau\n(Allocate Threads)", ha='center', va='bottom', fontsize=8, fontweight='bold', color='#1D4ED8',
+    ax.plot([78, 100, 100], [62, 62, 54], color='#2563EB', lw=1.8)
+    ax.annotate('', xy=(100, 54), xytext=(100, 56), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.8))
+    ax.text(89, 64.5, "NO: H(U) <= tau\n(Allocate Threads)", ha='center', va='bottom', fontsize=8, fontweight='bold', color='#1D4ED8',
             bbox=dict(boxstyle='round,pad=0.3', facecolor='#EFF6FF', edgecolor='#BFDBFE', alpha=0.9))
 
-    # Right Step 1: Allocate Worker Threads (y = 44 to 52, center=(96, 48), w=38, h=8)
-    draw_step(77, 44, 38, 8, "Allocate Parser Worker Threads\nExecute HTML AST State Machine", color='#1E40AF', fill='#DBEAFE', border='#2563EB')
+    # Right Step 1: Allocate Worker Threads (center=(100, 49), w=40, h=8)
+    draw_step(80, 45, 40, 8, "Allocate Parser Worker Threads\nExecute HTML AST State Machine", color='#1E40AF', fill='#DBEAFE', border='#2563EB')
 
     # Arrow down to Step 2
-    ax.annotate('', xy=(96, 36), xytext=(96, 44), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.6))
+    ax.annotate('', xy=(100, 38), xytext=(100, 45), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.6))
 
-    # Right Step 2: Compute SDR (y = 28 to 36, center=(96, 32), w=38, h=8)
-    draw_step(77, 28, 38, 8, "Calculate Structural Density\nSDR = N_total / D_max", color='#1E40AF', fill='#DBEAFE', border='#2563EB')
+    # Right Step 2: Compute SDR (center=(100, 34), w=40, h=8)
+    draw_step(80, 30, 40, 8, "Calculate Structural Density\nSDR = N_total / D_max", color='#1E40AF', fill='#DBEAFE', border='#2563EB')
 
     # Arrow down to Diamond 2
-    ax.annotate('', xy=(96, 21), xytext=(96, 28), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.6))
+    ax.annotate('', xy=(100, 24), xytext=(100, 30), arrowprops=dict(arrowstyle="->", color='#2563EB', lw=1.6))
 
-    # Diamond 2: Cloned Harvester Check (center at x=96, y=15, w=32, h=10)
-    # Top: (96, 20), Bottom: (96, 10), Left: (80, 15), Right: (112, 15)
-    draw_diamond(96, 15, 32, 10, "Delta SDR > 50% ?\n& TLS Invalid", color='#C2410C', fill='#FFF7ED', border='#EA580C')
+    # -------------------------------------------------------------
+    # Diamond 2: Structural Density Anomaly Check (center at x=100, y=19, w=30, h=10)
+    # -------------------------------------------------------------
+    draw_diamond(100, 19, 30, 10, "Delta SDR > 50% ?\n(Anomalous DOM)", color='#C2410C', fill='#FFF7ED', border='#EA580C')
 
-    # Diamond 2 Left Branch: Phishing Clone (from (80, 15) to left x=58, down to y=8)
-    ax.plot([80, 58, 58], [15, 15, 8], color='#EA580C', lw=1.8)
-    ax.annotate('', xy=(58, 8), xytext=(58, 10), arrowprops=dict(arrowstyle="->", color='#EA580C', lw=1.8))
-    ax.text(69, 17, "YES (Clone)", ha='center', va='bottom', fontsize=7.5, fontweight='bold', color='#C2410C',
+    # Diamond 2 Branch NO: Legitimate (Delta SDR <= 50%) -> straight down
+    ax.annotate('', xy=(100, 8), xytext=(100, 14), arrowprops=dict(arrowstyle="->", color='#16A34A', lw=1.8))
+    ax.text(108, 12, "NO (Safe)", ha='left', va='center', fontsize=7.5, fontweight='bold', color='#15803D')
+    draw_step(84, 1, 32, 7, "DECISION: LEGITIMATE\nRisk = 0.05 | Directive: ALLOW_STREAM", color='#166534', fill='#DCFCE7', border='#16A34A')
+
+    # Diamond 2 Branch YES: Elevated Delta SDR -> route left to Diamond 3 (TLS Check)
+    ax.plot([85, 68], [19, 19], color='#EA580C', lw=1.8)
+    ax.annotate('', xy=(68, 19), xytext=(70, 19), arrowprops=dict(arrowstyle="->", color='#EA580C', lw=1.8))
+    ax.text(76.5, 21, "YES (Delta SDR > 50%)", ha='center', va='bottom', fontsize=7.2, fontweight='bold', color='#C2410C',
             bbox=dict(boxstyle='round,pad=0.2', facecolor='#FFF7ED', edgecolor='#FDBA74'))
 
-    draw_step(43, 1, 30, 7, "DECISION: PHISHING_CLONE\nRisk = 0.95 | Directive: ISOLATE", color='#9A3412', fill='#FFEDD5', border='#EA580C')
+    # -------------------------------------------------------------
+    # Diamond 3: Transport Layer Security Check (center at x=56, y=19, w=24, h=10)
+    # -------------------------------------------------------------
+    draw_diamond(56, 19, 24, 10, "TLS Valid ?\n(Certificate)", color='#1E40AF', fill='#EFF6FF', border='#3B82F6')
 
-    # Diamond 2 Bottom Branch: Legitimate (from (96, 10) down to y=8)
-    ax.annotate('', xy=(96, 8), xytext=(96, 10), arrowprops=dict(arrowstyle="->", color='#16A34A', lw=1.8))
-    ax.text(105, 9, "NO (Safe)", ha='left', va='center', fontsize=7.5, fontweight='bold', color='#15803D')
+    # Diamond 3 Branch YES: Valid TLS with Delta SDR > 50% -> SUSPICIOUS (Risk = 0.70)
+    ax.annotate('', xy=(56, 8), xytext=(56, 14), arrowprops=dict(arrowstyle="->", color='#CA8A04', lw=1.8))
+    ax.text(64, 12, "YES: Valid TLS", ha='left', va='center', fontsize=7.2, fontweight='bold', color='#854D0E')
+    draw_step(44, 1, 35, 7, "DECISION: SUSPICIOUS\nRisk = 0.70 | Directive: ALLOCATE_PARSER\n(Elevated SDR Anomaly with Valid TLS)",
+              color='#854D0E', fill='#FEF9C3', border='#CA8A04')
 
-    draw_step(81, 1, 30, 7, "DECISION: LEGITIMATE\nRisk = 0.05 | Directive: ALLOW_STREAM", color='#166534', fill='#DCFCE7', border='#16A34A')
+    # Diamond 3 Branch NO: Invalid TLS with Delta SDR > 50% -> PHISHING_CLONE (Risk = 0.95)
+    ax.plot([44, 20, 20], [19, 19, 8], color='#EA580C', lw=1.8)
+    ax.annotate('', xy=(20, 8), xytext=(20, 10), arrowprops=dict(arrowstyle="->", color='#EA580C', lw=1.8))
+    ax.text(32, 21, "NO: Invalid TLS", ha='center', va='bottom', fontsize=7.2, fontweight='bold', color='#C2410C',
+            bbox=dict(boxstyle='round,pad=0.2', facecolor='#FFF7ED', edgecolor='#FDBA74'))
+    draw_step(4, 1, 35, 7, "DECISION: PHISHING_CLONE\nRisk = 0.95 | Directive: ISOLATE\n(Harvester: Shallow DOM + Invalid TLS)",
+              color='#9A3412', fill='#FFEDD5', border='#EA580C')
 
-    plt.title("X-MPFD-E++ Conditional Hardware Gating & Execution Flowchart", fontsize=12, fontweight='bold', pad=14, color='#0F172A')
+    plt.title("X-MPFD-E++ Conditional Hardware Gating & Multi-Outcome Decision Flowchart", fontsize=12, fontweight='bold', pad=14, color='#0F172A')
     plt.tight_layout()
 
     out_png = os.path.join(OUTPUT_DIR, "FIG_FLOW_hardware_gating_decision_flow.png")

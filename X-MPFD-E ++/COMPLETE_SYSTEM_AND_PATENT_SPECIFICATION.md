@@ -46,7 +46,7 @@ X-MPFD-E++ resolves these limitations through a deterministic, multimodal archit
 |                     [ WITHHOLD_PARSER_AND_RENDERER ]        [ ALLOCATE_AST_PARSER ]                |
 |                     - Drop network packet at buffer         - Spawn parser worker threads          |
 |                     - Dynamic O(L) early exit               - Ingest HTML token stream             |
-|                     - Saves 2.65 ms AST parse CPU           - Tag-stack state machine              |
+|                     - Suppresses downstream AST parse       - Tag-stack state machine              |
 |                                                                      |                             |
 |                                                                      v                             |
 |                                                             [ Compute Static SDR ]                 |
