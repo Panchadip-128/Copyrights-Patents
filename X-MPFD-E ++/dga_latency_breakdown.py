@@ -3,7 +3,7 @@ DGA Latency Microsecond Breakdown Profiler
 Script: dga_latency_breakdown.py
 Project: X-MPFD-E++ (Patent Application AR1115)
 
-Directly addresses Checklist Item 3 (Adv. Pranav Bhat / IPTTO MAHE):
+Directly addresses Checklist Item 3 (Patent Counsel / IPTTO MAHE):
 Clarifies the latency reported for the domain-generated subset:
 - 3.971 ms (with conditional entropy gate) vs 6.621 ms (without gate / full AST parsing).
 - Measures per-operation microsecond timings for:
@@ -218,7 +218,7 @@ def run_microsecond_breakdown(iterations: int = 200) -> Dict[str, Any]:
     results = {
         "metadata": {
             "title": "DGA Latency Microsecond Breakdown & Computational Bypass Profiling",
-            "reference": "AR1115 Checklist Item 3 (Adv. Pranav Bhat / IPTTO MAHE)",
+            "reference": "AR1115 Checklist Item 3 (Patent Counsel / IPTTO MAHE)",
             "iterations_per_pattern": iterations,
             "total_measurements": len(t_norm),
             "environment": "Python 3.14.2 on win32 (perf_counter_ns)",

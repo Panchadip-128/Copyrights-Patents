@@ -197,7 +197,7 @@ python empirical_evidence_generator.py
 
 ## 8. Response to Tentative Checklist (AR1115) & Section 10(4) Patent Drawings
 
-In compliance with the formal **Tentative Checklist** issued by patent counsel **Adv. Pranav Bhat (Lextria Research / IPTTO MAHE)**, the following technical definitions, empirical profiling data, and formal patent drawings have been incorporated into the patent filing package:
+In compliance with the formal **Tentative Checklist** issued by **Patent Counsel (Lextria Research / IPTTO MAHE)**, the following technical definitions, empirical profiling data, and formal patent drawings have been incorporated into the patent filing package:
 
 | Checklist Query | Statutory Purpose | Technical Specification in X-MPFD-E++ | Proof / Artifact Reference |
 | :--- | :--- | :--- | :--- |

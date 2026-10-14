@@ -208,7 +208,7 @@ def build_pdf():
             Paragraph("<b>DATE:</b> October 15, 2026", meta_style),
         ],
         [
-            Paragraph("<b>TO:</b> Adv. Pranav Bhat, Lextria Research / IPTTO MAHE", meta_style),
+            Paragraph("<b>TO:</b> Patent Counsel & Due Diligence Review Team, Lextria Research / IPTTO MAHE", meta_style),
             Paragraph("<b>JURISDICTION:</b> Indian Patent Office (IPO)", meta_style),
         ],
         [
@@ -707,7 +707,7 @@ def build_pdf():
 
     # Formal Inquiry Callout for Counsel
     inquiry_text = (
-        "<b>CRITICAL ANTECEDENT BASIS QUERY FOR ADV. PRANAV BHAT (PATENT COUNSEL):</b><br/>"
+        "<b>CRITICAL ANTECEDENT BASIS QUERY FOR PATENT COUNSEL:</b><br/>"
         "<i>Antecedent Basis for Claims 17 & 18:</i> Please advise whether the specification as originally filed provides sufficient "
         "antecedent basis to support independent Claims 17 and 18 for the Submission Gateway Interdiction Controller interface, "
         "or whether these features should be pursued via a Divisional Application / Continuation-in-Part (CIP), or alternatively "
@@ -741,7 +741,7 @@ def build_pdf():
         [
             Paragraph("<b>Panchadip B</b><br/>Lead Inventor & System Architect<br/>MAHE / Mutbi ARC, Manipal", meta_style),
             Paragraph("<b>Somyajeet A</b><br/>Co-Inventor & Algorithm Specialist<br/>MAHE / Mutbi ARC, Manipal", meta_style),
-            Paragraph("<b>Adv. Pranav Bhat</b><br/>Patent Counsel & Due Diligence Reviewer<br/>Lextria Research / IPTTO MAHE", meta_style),
+            Paragraph("<b>Patent Counsel</b><br/>Due Diligence Reviewer<br/>Lextria Research / IPTTO MAHE", meta_style),
         ]
     ]
     sig_table = Table(sig_data, colWidths=[168, 168, 168])

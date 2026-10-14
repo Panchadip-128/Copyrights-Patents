@@ -1,7 +1,7 @@
 """
 Legitimate Domain Shannon Entropy Distribution Profiler
 Repository: X-MPFD-E++
-Addressed to: Adv. Pranav Bhat (Lextria Research / IPTTO MAHE)
+Addressed to: Patent Counsel (Lextria Research / IPTTO MAHE)
 Reference: AR1115 Due Diligence Report, Section 4 (Input Scope & Parsing Profile)
 
 Empirically derives and verifies the mathematical basis for:

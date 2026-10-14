@@ -1,7 +1,7 @@
 """
 Comparative Performance Benchmark: With vs. Without Entropy Gate
 Repository: X-MPFD-E++
-Addressed to: Adv. Pranav Bhat (Lextria Research / IPTTO MAHE)
+Addressed to: Patent Counsel (Lextria Research / IPTTO MAHE)
 Reference: AR1115 Due Diligence Report, Sections 1 & 5
 
 Empirically measures the technical consequence independent of computation under

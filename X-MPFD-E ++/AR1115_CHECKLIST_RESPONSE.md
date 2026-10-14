@@ -1,7 +1,7 @@
 # X-MPFD-E++: FORMAL RESPONSE TO TENTATIVE PATENT CHECKLIST (AR1115)
 
 **To:**  
-Adv. Pranav Bhat, Patent Counsel  
+Patent Counsel  
 Lextria Research / IPTTO, Manipal Academy of Higher Education (MAHE)  
 
 **From:**  
@@ -298,7 +298,7 @@ The invention now stands fully documented with:
 2. **Definitive proof of technical effect and hardware resource control under CRI Guidelines 2025 (Paras 4.5.1, 4.5.3, 4.5.4)**.
 3. **Robust Section 101 / Alice Corporation patent-eligibility defenses** via closed-form determinism, machine-executable control directives, and cryptographic hash verification.
 
-We respectfully request patent counsel Adv. Pranav Bhat to proceed with final compilation and filing of the Complete Specification.
+We respectfully request patent counsel to proceed with final compilation and filing of the Complete Specification.
 
 **Respectfully submitted,**  
 **Panchadip B & Somyajeet A**  

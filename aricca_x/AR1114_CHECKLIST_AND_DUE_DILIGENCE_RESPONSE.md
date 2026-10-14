@@ -1,6 +1,6 @@
 # FORMAL PATENT DUE DILIGENCE & COMPLIANCE MEMORANDUM (AR1114)
 
-**TO:** Adv. Pranav Bhat & Patent Due Diligence Team, Lextria Research / IPTTO MAHE  
+**TO:** Patent Counsel & Due Diligence Review Team, Lextria Research / IPTTO MAHE  
 **FROM:** Panchadip B & Somyajeet A (Inventors & Lead System Architects, ARICCA-X)  
 **DATE:** October 15, 2026  
 **APPLICATION NUMBER / REF:** AR1114  
@@ -11,7 +11,7 @@
 
 ## EXECUTIVE SUMMARY & STATEMENT OF COMPLIANCE
 
-We thank Patent Counsel (Adv. Pranav Bhat, Lextria Research / IPTTO MAHE) for the thorough, incisive, and rigorous Due Diligence Report (`DueDiligence_Report_AR1114.pdf`). We welcome the scrutiny under the Indian CRI Guidelines 2025 (specifically Paragraphs 4.5.1, 4.5.3, and 4.5.4 regarding Section 3(k) exclusions: mathematical methods, algorithms, computer programmes per se, and business methods).
+We thank Patent Counsel (Lextria Research / IPTTO MAHE) for the thorough, incisive, and rigorous Due Diligence Report (`DueDiligence_Report_AR1114.pdf`). We welcome the scrutiny under the Indian CRI Guidelines 2025 (specifically Paragraphs 4.5.1, 4.5.3, and 4.5.4 regarding Section 3(k) exclusions: mathematical methods, algorithms, computer programmes per se, and business methods).
 
 In direct response to your findings, our engineering team has executed a deep-dive technical fortification of both the software implementation (`d:\Copyrights\aricca_x`) and the patent disclosure. Every question, threshold query, architectural discrepancy, and empirical evidentiary requirement raised in your 7-page report has been addressed, implemented, empirically benchmarked on physical hardware, and formally documented below.
 
@@ -405,9 +405,9 @@ Implemented in [`grant_compliance.py`](file:///d:/Copyrights/aricca_x/grant_comp
 2. **Incorporate Complete Lexicon & Pattern Tables into Detailed Description:** The exhaustive listings in Part 4 fulfill the Section 10(4) sufficiency of disclosure requirement, proving complete reduction to practice.
 3. **Formalize Eight Verification Suites & Nine Patent Examples:** Update the specification text to confirm that eight verification suites (including the Submission Gateway Interdiction Suite) and nine comprehensive patent examples are fully implemented and passing.
 
-### 5.2 Formal Inquiry for Patent Counsel (Adv. Pranav Bhat):
+### 5.2 Formal Inquiry for Patent Counsel:
 > **CRITICAL ANTECEDENT BASIS QUERY (CLAIMS 17 & 18):**  
-> *Adv. Bhat, please evaluate whether the specification as originally filed provides sufficient antecedent basis to support independent Claims 17 and 18 for the Submission Gateway Interdiction Controller, or whether these features should be pursued via a Divisional Application / Continuation-in-Part (CIP), or alternatively incorporated as dependent system limitations to Claim 1. We want to ensure compliance with Section 59(1) of the Indian Patents Act (prohibiting amendments introducing subject matter not disclosed in substance in the specification as filed) and avoid any 'new matter' rejection during prosecution.*
+> *Please evaluate whether the specification as originally filed provides sufficient antecedent basis to support independent Claims 17 and 18 for the Submission Gateway Interdiction Controller, or whether these features should be pursued via a Divisional Application / Continuation-in-Part (CIP), or alternatively incorporated as dependent system limitations to Claim 1. We want to ensure compliance with Section 59(1) of the Indian Patents Act (prohibiting amendments introducing subject matter not disclosed in substance in the specification as filed) and avoid any 'new matter' rejection during prosecution.*
 
 We remain at counsel's disposal for any further technical briefing or patent drawing preparation.
 
