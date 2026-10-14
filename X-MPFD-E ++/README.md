@@ -1,11 +1,11 @@
 # X-MPFD-E++ | Deterministic Multimodal Fraud Fusion Engine 🛡️
 
 [![Patent Pending](https://img.shields.io/badge/Patent-Pending%20(15%20Claims)-#10b981?style=for-the-badge)](./PATENT_CLAIMS.md)
-[![Prior Art Defense](https://img.shields.io/badge/Prior_Art-15_Page_Report-blue?style=for-the-badge)](./FINAL_PRIOR_ART_SEARCH_REPORT.md)
-[![Lextria Due Diligence](https://img.shields.io/badge/Lextria_Diligence-AR1115_Response-orange?style=for-the-badge)](./LEXTRIA_DUE_DILIGENCE_RESPONSE_AR1115.md)
+[![Complete Specification](https://img.shields.io/badge/Complete_Specification-PDF%20%26%20MD-blue?style=for-the-badge)](./COMPLETE_SYSTEM_AND_PATENT_SPECIFICATION.md)
+[![Changes & Compliance](https://img.shields.io/badge/Compliance_Specification-Form_2%20Ready-indigo?style=for-the-badge)](./CHANGES_MADE_AND_COMPLIANCE_SPECIFICATION.md)
 [![Checklist Response](https://img.shields.io/badge/Checklist_AR1115-Full_Compliance-teal?style=for-the-badge)](./AR1115_CHECKLIST_RESPONSE.md)
 [![Patent Drawings](https://img.shields.io/badge/Drawings-Section_10(4)_FIGS_1--5-purple?style=for-the-badge)](./figures/)
-[![Counsel Response](https://img.shields.io/badge/Patent_Counsel-Response_Dossier-purple?style=for-the-badge)](./PATENT_COUNSEL_RESPONSE_THILAK.md)
+[![Prior Art Defense](https://img.shields.io/badge/Prior_Art-Search_Report-blue?style=for-the-badge)](./FINAL_PRIOR_ART_SEARCH_REPORT.md)
 [![Status](https://img.shields.io/badge/Status-Empirically%20Validated-green?style=for-the-badge)](#7-empirical-reduction-to-practice--validation)
 [![License](https://img.shields.io/badge/License-Proprietary%20IP-red?style=for-the-badge)](./LICENSE.md)
 
@@ -62,7 +62,7 @@ graph TD
 | **Category B: Black-Box ML**<br>*(CrowdStrike Falcon, Palo Alto WildFire, Proofpoint)* | Deep neural networks outputting opaque probabilistic scores (e.g. 0.98). | **The "Black Box" Problem:** Uninterpretable; cannot provide legal proof for false positives. Rejected under § 101. | **Deterministic Provenance & Boolean Gating:** Explicit Boolean logic matrices with cryptographic SHA-256 feature tags and deterministic linguistic synthesis. | **Claims 1, 5, 7, 8, 9** |
 | **Category C: Single-Modality Scanners**<br>*(CheckPhish, Traditional DOM Scrapers)* | Evaluates single vectors (screenshot visual similarity or HTML keyword search). | **Evasion via Polymorphism:** Easily bypassed by CSS overlays, iframe injection, or keyword obfuscation. | **Multimodal Signal Tensor (MST) & SDR:** Evaluates $[V_L, V_S, V_M]$ simultaneously. Real AST parsing computes Structural Density Ratio ($SDR = N / D_{max}$). | **Claims 3, 4, 11, 13** |
 
-For the full legal analysis, see [**FINAL PRIOR ART SEARCH REPORT**](./FINAL_PRIOR_ART_SEARCH_REPORT.md) and [**PATENT COUNSEL RESPONSE DOSSIER**](./PATENT_COUNSEL_RESPONSE_THILAK.md).
+For the full legal analysis, see [**FINAL PRIOR ART SEARCH REPORT**](./FINAL_PRIOR_ART_SEARCH_REPORT.md) and [**COMPLETE SYSTEM AND PATENT SPECIFICATION**](./COMPLETE_SYSTEM_AND_PATENT_SPECIFICATION.md).
 
 ---
 
@@ -272,15 +272,20 @@ X-MPFD-E ++/
 ├── legitimate_entropy_profiler.py   # Statistical profile of 90 authentic enterprise portals
 ├── legitimate_entropy_profile.json  # Authentic domain statistical distribution log
 ├── empirical_evidence_generator.py  # 10,000-input stress fuzzer & benchmark
-├── generate_patent_figures.py       # Matplotlib generator for 300 DPI patent drawings
-├── generate_checklist_pdf.py        # ReportLab builder for AR1115_Checklist_Response.pdf
-├── x_mpfd_cli.py                    # Command-line interface
+├── Complete_System_And_Patent_Specification.pdf # Master Form 2 Complete Specification Filing PDF
+├── COMPLETE_SYSTEM_AND_PATENT_SPECIFICATION.md  # Master Form 2 Complete Specification Markdown
+├── Changes_Made_And_Compliance_Specification.pdf # Official Form 2 Changes & Prior Art Claim Chart PDF
+├── CHANGES_MADE_AND_COMPLIANCE_SPECIFICATION.md  # Official Form 2 Changes & Prior Art Claim Chart Markdown
+├── AR1115_Checklist_Response.pdf    # Print-ready 9-page submission PDF for counsel with embedded drawings
 ├── AR1115_CHECKLIST_RESPONSE.md     # Formal comprehensive response to Tentative Checklist AR1115
-├── AR1115_Checklist_Response.pdf    # Print-ready submission PDF for counsel with embedded drawings
-├── LEXTRIA_DUE_DILIGENCE_RESPONSE_AR1115.md # Formal rebuttal dossier for Adv. Pranav Bhat / IPTTO MAHE
-├── PATENT_CLAIMS.md                 # Verbatim 15-claim USPTO/PCT patent specification
-├── PATENT_COUNSEL_RESPONSE_THILAK.md# Response dossier addressed to patent counsel
-└── FINAL_PRIOR_ART_SEARCH_REPORT.md # 15-page prior art analysis and defense
+├── PATENT_CLAIMS.md                 # Verbatim 15-claim USPTO/PCT/Indian patent specification
+├── FINAL_PRIOR_ART_SEARCH_REPORT.md # 15-page prior art analysis and defense
+├── generate_patent_figures.py       # Matplotlib generator for 300 DPI patent drawings (FIG. 1 to 5)
+├── generate_architecture_diagrams.py# Generator for 300 DPI system architecture and flowcharts
+├── generate_complete_system_pdf.py  # ReportLab builder for Complete_System_And_Patent_Specification.pdf
+├── generate_changes_made_pdf.py     # ReportLab builder for Changes_Made_And_Compliance_Specification.pdf
+├── x_mpfd_cli.py                    # Command-line interface
+└── LICENSE.md                       # Proprietary intellectual property license
 ```
 
 ---

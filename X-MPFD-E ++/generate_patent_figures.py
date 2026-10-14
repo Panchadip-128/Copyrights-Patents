@@ -195,7 +195,7 @@ def generate_fig_3():
     auth_sdr = np.random.normal(loc=16.8, scale=1.8, size=n_auth)
     auth_sdr = np.clip(auth_sdr, 13.0, 23.0)
 
-    n_clone = 60
+    n_clone = 80
     clone_depth = np.random.randint(2, 5, size=n_clone)
     clone_sdr = np.random.normal(loc=1.8, scale=0.45, size=n_clone)
     clone_sdr = np.clip(clone_sdr, 1.0, 3.5)
@@ -203,7 +203,7 @@ def generate_fig_3():
     fig, ax = plt.subplots(figsize=(9.5, 6), dpi=300)
 
     ax.scatter(auth_depth, auth_sdr, c='#2B6CB0', alpha=0.75, s=65, marker='o', edgecolors='#1A365D', label='Authentic Portals (N=120) [Depth >= 12, SDR >= 13.0]')
-    ax.scatter(clone_depth, clone_sdr, c='#C53030', alpha=0.85, s=75, marker='^', edgecolors='#742A2A', label='Cloned Harvesters (N=60) [Depth <= 4, SDR <= 3.5]')
+    ax.scatter(clone_depth, clone_sdr, c='#C53030', alpha=0.85, s=75, marker='^', edgecolors='#742A2A', label='Cloned Harvesters (N=80) [Depth <= 4, SDR <= 3.5]')
 
     ax.axhline(y=8.0, color='#DD6B20', linestyle='--', linewidth=2.0, label='Baseline Reference Threshold (SDR_base / 2 = 8.0)')
     ax.axvline(x=4.5, color='#805AD5', linestyle=':', linewidth=2.0, label='Harvester DOM Depth Boundary (Depth <= 4)')
