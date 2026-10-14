@@ -174,7 +174,7 @@ class PhishingDetector:
             tls_valid=tls_valid,
             url=url,
             features=features,
-            lexical_risk=v_l.get("lexical_risk_score"),
+            lexical_risk=None if "weighted" in str(self.fusion_engine.current_policy.strategy).lower() else v_l.get("lexical_risk_score"),
             structural_risk=v_s.get("structural_risk_score"),
             visual_risk=v_m.get("visual_risk_score"),
             has_html=v_s.get("has_html", False),

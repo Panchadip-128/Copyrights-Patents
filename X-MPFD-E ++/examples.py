@@ -140,7 +140,7 @@ def example_4_late_confidence_weighted_fusion():
     print(f"Re-normalized Weights:     w_L=0.667, w_M=0.333 (HTML omitted)")
     print(f"Decision:                  {result_missing.decision}")
     print(f"Risk Score:                {result_missing.risk_score:.2%}")
-    print(f"Note:                      Without re-normalization raw formula yields 0.44; re-normalized yields 98.33%")
+    print(f"Note:                      With re-normalized weights [0.667, 0.333], formula yields 72.82%; without re-normalization it yields 43.69% (0.44)")
 
 
 def example_5_early_fusion_matrix_algebra():

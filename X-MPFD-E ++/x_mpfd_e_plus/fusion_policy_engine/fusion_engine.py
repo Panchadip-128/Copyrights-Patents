@@ -358,7 +358,8 @@ class FusionPolicyEngine:
         w_l = w.get("lexical", 0.40)
         w_s = w.get("structural", 0.40)
         w_m = w.get("visual", 0.20)
-
+        # Claim 5 Late Confidence-Weighted Fusion:
+        # S_L is evaluated via the closed-form equation: S_L = min(1.0, max(0.0, (entropy - 2.5) / 2.5))
         s_l = lex_risk if lex_risk is not None else min(1.0, max(0.0, (entropy - 2.5) / 2.5))
         s_s = struct_risk if struct_risk is not None else (min(1.0, max(0.0, sdr_deviation / 100.0)) if has_html else 0.0)
         s_m = vis_risk if vis_risk is not None else (0.95 if not tls_valid else 0.05)

@@ -34,16 +34,23 @@ URL:                       https://paypal.com
 Decision:                  LEGITIMATE
 Risk Score:                5.00%
 Confidence:                HIGH
-Rationale:                 LEGITIMATE INFRASTRUCTURE VERIFIED: All multimodal signals reside strictly within verified safe baseline envelopes. Lexical Entropy H(U) = 3.57 <= 4.0, Structural Density Ratio SDR = 17.00 within standard brand tolerance, TLS certificate is valid.
+Rationale:                 LEGITIMATE INFRASTRUCTURE VERIFIED: All multimodal signals reside strictly within verified safe baseline envelopes. Lexical Entropy H(U) = 3.54 <= 4.0, Structural Density Ratio SDR = 17.00 within standard brand tolerance, TLS certificate is valid.
 
 ==============================================================================
  EXAMPLE 4: Late Confidence-Weighted Fusion Strategy
 ==============================================================================
 Patent Claims: Claim 5 (Discrete Numerical Weight Matrix w_L, w_S, w_M)
-Active Policy:             confidence_weighted
+Scenario A:                Full 3-Modality Evaluation (Lexical + Structural AST + Transport)
+Nominal Weights:           w_L=0.40, w_S=0.40, w_M=0.20 (Threshold = 0.65)
 Decision:                  PHISHING
-Risk Score:                98.33%
-Rationale:                 SUSPICIOUS INFRASTRUCTURE DETECTED: The target exhibited elevated anomaly markers. Lexical Entropy H(U) = 4.04 bits/char, SDR baseline deviation = 0.0%, TLS Valid = False. Modality fusion policy 'confidence_weighted' returned an intermediate risk score of 98.33%.
+Risk Score:                79.69%
+Rationale:                 SUSPICIOUS INFRASTRUCTURE DETECTED: The target exhibited elevated anomaly markers. Lexical Entropy H(U) = 4.04 bits/char, SDR baseline deviation = 93.8%, TLS Valid = False. Modality fusion policy 'confidence_weighted' returned an intermediate risk score of 79.69%.
+
+Scenario B:                Missing Modality (HTML Absent -> Section 10(4) Re-normalization)
+Re-normalized Weights:     w_L=0.667, w_M=0.333 (HTML omitted)
+Decision:                  PHISHING
+Risk Score:                72.82%
+Note:                      With re-normalized weights [0.667, 0.333], formula yields 72.82%; without re-normalization it yields 43.69% (0.44)
 
 ==============================================================================
  EXAMPLE 5: Early Fusion Matrix Algebra
@@ -51,8 +58,8 @@ Rationale:                 SUSPICIOUS INFRASTRUCTURE DETECTED: The target exhibi
 Patent Claims: Claims 11 & 12 (Multimodal Signal Tensor Projection)
 Active Policy:             early_fusion
 Decision:                  SUSPICIOUS
-Risk Score:                51.83%
-Rationale:                 SUSPICIOUS INFRASTRUCTURE DETECTED: The target exhibited elevated anomaly markers. Lexical Entropy H(U) = 4.24 bits/char, SDR baseline deviation = 0.0%, TLS Valid = False. Modality fusion policy 'early_fusion' returned an intermediate risk score of 51.83%.
+Risk Score:                51.79%
+Rationale:                 SUSPICIOUS INFRASTRUCTURE DETECTED: The target exhibited elevated anomaly markers. Lexical Entropy H(U) = 4.24 bits/char, SDR baseline deviation = 0.0%, TLS Valid = False. Modality fusion policy 'early_fusion' returned an intermediate risk score of 51.79%.
 
 ==============================================================================
  EXAMPLE 6: Consensus Majority Voting Fusion
@@ -74,7 +81,7 @@ Extracted Value:           4.62
 Source Modality:           lexical
 Extraction Method:         shannon_entropy_base_2
 Confidence:                1.0
-Cryptographic SHA-256:     ac6fc38f7b779d07e55cb18ddb03466265da7ca1e332882babb45ffe2d1ad649
+Cryptographic SHA-256:     e5ecccdb202bb594acd4d271cceb2ed6d8a9b2a45fe8106f1ad4a1c29e3bff23
 
 ==============================================================================
  EXAMPLE 8: Canonical JSON Audit Report Generation (Claim 14)
@@ -99,4 +106,3 @@ Numerical Issues:          []
 ==============================================================================
 ALL 9 PATENT EXAMPLES EXECUTED SUCCESSFULLY (100% VERIFIED).
 ==============================================================================
-
