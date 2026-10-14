@@ -189,7 +189,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_primary, spaceAfter=8))
 
     # Section 1: Executive Summary of Technical Updates
-    story.append(Paragraph("1. Executive Summary of Reconciled Technical Critiques", h1_style))
+    story.append(Paragraph("1. Executive Summary of Reconciled Checklist Requirements", h1_style))
     summary_data = [
         [Paragraph("Item", table_header), Paragraph("Focus Area", table_header), Paragraph("Identified Requirement", table_header), Paragraph("Implemented Technical Resolution", table_header), Paragraph("Verified Outcome", table_header)],
         [Paragraph("<b>1</b>", table_cell), Paragraph("URL Normalizer", table_cell_bold), Paragraph("Ambiguity in pre-entropy character frequencies", table_cell), Paragraph("Unicode Form NFC + single unquote + lowercase scheme/hostname + port strip in <code>URLNormalizer</code>.", table_cell), Paragraph("H(U) invariant to casing/percent evasion.", table_cell)],
@@ -199,7 +199,7 @@ def build_pdf():
         [Paragraph("<b>5</b>", table_cell), Paragraph("Multi-Scope", table_cell_bold), Paragraph("Query token noise in raw URLs; threshold generality", table_cell), Paragraph("Implemented 3 scopes (Full URL, Host+Path, Hostname). Evaluated on 500 unseen inputs across 2 seeds.", table_cell), Paragraph("0.00% FPR in Hostname & Host+Path.", table_cell)],
         [Paragraph("<b>6</b>", table_cell), Paragraph("Schematics", table_cell_bold), Paragraph("Architecture blueprints and empirical plots", table_cell), Paragraph("Generated 7 high-resolution 300 DPI figures (FIG_ARCH, FIG_FLOW, FIGS 1-5).", table_cell), Paragraph("Complete empirical enablement.", table_cell)],
     ]
-    t_summary = Table(summary_data, colWidths=[24, 75, 125, 180, 100])
+    t_summary = Table(summary_data, colWidths=[34, 74, 122, 175, 99])
     t_summary.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_primary),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
@@ -228,7 +228,7 @@ def build_pdf():
     # Section 3: URL Normalization
     story.append(Paragraph("3. URL Normalization Specification & Source Implementation", h1_style))
     story.append(Paragraph(
-        "To guarantee mathematical invariance of character frequencies $P(x_i)$ and base-2 Shannon entropy $H(U)$, "
+        "To guarantee mathematical invariance of character frequencies P(x<sub>i</sub>) and base-2 Shannon entropy H(U), "
         "raw URLs are normalized via Unicode Form NFC, single-pass unquote, RFC 3986 § 3.2.2 authority lowercasing, and port stripping.",
         body_style
     ))
@@ -237,19 +237,18 @@ def build_pdf():
     def normalize(cls, raw_url: str) -> Tuple[str, Dict[str, Any]]:
         if not raw_url:
             return "", {"unicode_form": "NFC", "percent_decoded": False}
-        # 1. Unicode Form NFC (Canonical Decomposition + Composition per UAX #15)
         unicode_normalized = unicodedata.normalize("NFC", raw_url.strip())
-        # 2. Single-pass Percent-Decoding (prevents recursive double-decoding)
         percent_decoded = unquote(unicode_normalized)
-        # 3. RFC 3986 lowercasing of scheme and authority; path/query case preserved
-        parsed = urlparse(percent_decoded)
-        scheme = parsed.scheme.lower() if parsed.scheme else "http"
+        if "://" not in percent_decoded:
+            parsed = urlparse("//" + percent_decoded.lstrip("/"), scheme="http")
+            scheme = "http"
+        else:
+            parsed = urlparse(percent_decoded)
+            scheme = parsed.scheme.lower() if parsed.scheme else "http"
         netloc = parsed.netloc.lower()
-        # 4. Port Normalization: Strip redundant default scheme ports
         if scheme == "http" and netloc.endswith(":80"): netloc = netloc[:-3]
         elif scheme == "https" and netloc.endswith(":443"): netloc = netloc[:-4]
-        # 5. Path canonicalization
-        path = parsed.path if parsed.path or netloc else "/"
+        path = re.sub(r"/+", "/", parsed.path if parsed.path else "/")
         reconstructed = urlunparse((scheme, netloc, path, parsed.params, parsed.query, parsed.fragment))
         return reconstructed, {"unicode_form": "NFC", "percent_decoded_once": True}"""
     story.append(Preformatted(code_norm, code_style))
@@ -258,8 +257,8 @@ def build_pdf():
     # Section 4: DOM AST Node Types
     story.append(Paragraph("4. DOM AST Node Types & State Machine Implementation", h1_style))
     story.append(Paragraph(
-        "The pushdown automaton counts element nodes in $N_{total}$. HTML5 void elements increment $N_{total}$ and update "
-        "$D_{max}$ as leaf elements but are not pushed onto <code>depth_stack</code>. Text and comments are strictly excluded.",
+        "The pushdown automaton counts element nodes in N<sub>total</sub>. HTML5 void elements increment N<sub>total</sub> and update "
+        "D<sub>max</sub> as leaf elements but are not pushed onto <code>depth_stack</code>. Text and comments are strictly excluded.",
         body_style
     ))
     code_ast = """class DeterministicDOMAnalyzer(HTMLParser):
@@ -271,14 +270,19 @@ def build_pdf():
         self.element_nodes_count += 1
         if tag in self.VOID_ELEMENTS:
             self.void_element_nodes_count += 1
-            if self.current_depth + 1 > self.max_depth:
-                self.max_depth = self.current_depth + 1
-            # Void elements are self-closing; NOT pushed to depth_stack
+            if self.current_depth + 1 > self.max_depth: self.max_depth = self.current_depth + 1
         else:
             self.current_depth += 1
             self.depth_stack.append(tag)
-            if self.current_depth > self.max_depth:
-                self.max_depth = self.current_depth
+            if self.current_depth > self.max_depth: self.max_depth = self.current_depth
+    def handle_startendtag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        self.handle_starttag(tag, attrs); self.handle_endtag(tag)
+    def handle_endtag(self, tag: str):
+        tag = tag.lower()
+        if tag in self.VOID_ELEMENTS: return
+        if self.depth_stack and self.depth_stack[-1] == tag:
+            self.depth_stack.pop()
+            if self.current_depth > 0: self.current_depth -= 1
     def handle_data(self, data: str):
         if data and data.strip(): self.excluded_text_nodes_count += 1 # Excluded from N_total
     def calculate_sdr(self) -> float:
@@ -379,7 +383,7 @@ def build_pdf():
     story.append(Paragraph("7. Test Verification & Deterministic Execution Transcripts", h1_style))
     story.append(Paragraph(
         "• <b>Automated Unit Tests (<code>test_prior_art_inventions.py</code>):</b> 24/24 unit tests passed in 0.024s (100% OK, exit code 0).<br/>"
-        "• <b>Comprehensive Workflows (<code>examples.py</code>):</b> 9/9 patent claims executed successfully with cryptographic audit hashes.<br/>"
+        "• <b>Comprehensive Workflows (<code>examples.py</code>):</b> 9/9 worked examples executed successfully with cryptographic audit hashes.<br/>"
         "• <b>Tamper Detection Verifier (<code>AuditVerifier</code>):</b> Modifying recorded values triggers <code>TamperDetectedException</code>.<br/>"
         "• <b>Decision Replay:</b> Feature lineages enable deterministic bit-exact decision replay across runtime environments.",
         body_style
@@ -389,7 +393,7 @@ def build_pdf():
     # Section 8: Technical Conclusion
     story.append(Paragraph("8. Technical Conclusion", h1_style))
     story.append(Paragraph(
-        "All technical critiques and tentative checklist requirements have been resolved through production-grade source code, "
+        "All checklist requirements have been comprehensively addressed through production-grade source code, "
         "reproducible empirical telemetry, high-resolution schematics, and rigorous unit testing. The engineering artifacts "
         "confirm the measured reduction in computational workload, deterministic explainability, and robust zero-day phishing detection.",
         body_style

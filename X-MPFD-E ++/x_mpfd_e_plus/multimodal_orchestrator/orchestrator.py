@@ -41,9 +41,15 @@ class URLNormalizer:
         # 2. Single-pass Percent-Decoding
         percent_decoded = unquote(unicode_normalized)
 
-        # 3. Parse components
-        parsed = urlparse(percent_decoded)
-        scheme = parsed.scheme.lower() if parsed.scheme else "http"
+        # 3. Parse components & canonicalize scheme-less inputs
+        if "://" not in percent_decoded:
+            stripped = percent_decoded.lstrip("/")
+            parsed = urlparse("//" + stripped, scheme="http")
+            scheme = "http"
+        else:
+            parsed = urlparse(percent_decoded)
+            scheme = parsed.scheme.lower() if parsed.scheme else "http"
+
         netloc = parsed.netloc.lower()
 
         # 4. Port Normalization: Strip default ports
@@ -52,10 +58,14 @@ class URLNormalizer:
         elif scheme == "https" and netloc.endswith(":443"):
             netloc = netloc[:-4]
 
-        # 5. Path canonicalization: Collapse multiple leading slashes
+        # 5. Path canonicalization: Ensure leading slash and collapse consecutive slashes
         path = parsed.path
-        if not path and not netloc:
+        if not path:
             path = "/"
+        elif not path.startswith("/"):
+            path = "/" + path
+        import re
+        path = re.sub(r"/+", "/", path)
 
         reconstructed = urlunparse((
             scheme,
@@ -135,6 +145,9 @@ class DeterministicDOMAnalyzer(HTMLParser):
             self.script_count += 1
         elif tag == "iframe":
             self.iframe_count += 1
+            # Note: The <iframe> element itself is counted as a single node in N_total.
+            # In accordance with network compute withholding and same-origin security boundaries,
+            # external documents referenced by the iframe 'src' attribute are never fetched or parsed.
         elif tag == "a" and "href" in attrs_dict:
             href = attrs_dict["href"]
             if href.startswith(("http://", "https://", "//")):
@@ -151,6 +164,14 @@ class DeterministicDOMAnalyzer(HTMLParser):
             self.depth_stack.append(tag)
             if self.current_depth > self.max_depth:
                 self.max_depth = self.current_depth
+
+    def handle_startendtag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        """
+        Explicit handler for self-closing / XHTML-style tags (e.g. <br/>, <img ... />).
+        Dispatches to handle_starttag and handle_endtag to prevent depth stack leaks.
+        """
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
     def handle_endtag(self, tag: str):
         tag = tag.lower()

@@ -146,7 +146,6 @@ def generate_fig_2():
     ax.hist(dga_entropy, bins=bins, alpha=0.75, color='#E53E3E', edgecolor='#742A2A', hatch='\\\\', label='Botnet DGA Domains (N=50) [Mean = 4.69]')
 
     ax.axvline(x=4.50, color='#C53030', linestyle='-', linewidth=2.5, label='Gating Threshold: H(U) = 4.50 bits/char')
-    ax.axvline(x=3.80, color='#2B6CB0', linestyle='--', linewidth=2.0, label='Domain Safe Threshold: H(D) = 3.80 bits/char')
     ax.axvspan(4.34, 4.51, color='#CBD5E0', alpha=0.5, label='Zero-Overlap Safety Margin (Delta = 0.174 bits/char)')
 
     ax.set_xlim(3.0, 5.2)
@@ -161,13 +160,6 @@ def generate_fig_2():
         xy=(4.50, 14), xytext=(4.56, 19.5),
         arrowprops=dict(arrowstyle='->', lw=1.6, color='#C53030'),
         fontsize=9, fontweight='bold', bbox=dict(boxstyle='round,pad=0.4', facecolor='#FFF5F5', edgecolor='#E53E3E', alpha=0.95)
-    )
-
-    ax.annotate(
-        'Safe Baseline:\nH(U) <= 3.80\n(100% Authentic)',
-        xy=(3.80, 14), xytext=(3.25, 19.5),
-        arrowprops=dict(arrowstyle='->', lw=1.6, color='#2B6CB0'),
-        fontsize=9, fontweight='bold', bbox=dict(boxstyle='round,pad=0.4', facecolor='#EBF8FF', edgecolor='#3182CE', alpha=0.95)
     )
 
     ax.legend(loc='upper left', framealpha=0.95, fontsize=8.8)
@@ -274,8 +266,8 @@ def generate_fig_4():
     ax.set_ylim(0.68, 1.045)
 
     ax.set_xlabel('False Positive Rate (FPR = 1 - Specificity)', fontsize=11.5, fontweight='bold')
-    ax.set_ylabel('True Positive Rate (TPR = Sensitivity / Recall)', fontsize=11.5, fontweight='bold')
-    ax.set_title('FIG. 4: Receiver Operating Characteristic (ROC) Comparison\nMultimodal Fusion Synergy vs Single-Modality Prior Art Deficiencies', fontsize=11.5, pad=16, fontweight='bold')
+    ax.set_ylabel('True Positive Rate (TPR) [Zoomed View: 0.70 to 1.00]', fontsize=11.5, fontweight='bold')
+    ax.set_title('FIG. 4: Receiver Operating Characteristic (ROC) Comparison\nMultimodal Fusion Synergy (Truncated Y-Axis for High-Sensitivity Resolution)', fontsize=11.5, pad=16, fontweight='bold')
 
     # Operating point star with breathing room
     ax.plot(0.0, 1.0, marker='*', markersize=13, color='#C53030')

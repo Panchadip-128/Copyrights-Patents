@@ -243,12 +243,16 @@ def build_pdf():
     def normalize(cls, raw_url: str) -> Tuple[str, Dict[str, Any]]:
         unicode_normalized = unicodedata.normalize("NFC", raw_url.strip())
         percent_decoded = unquote(unicode_normalized)
-        parsed = urlparse(percent_decoded)
-        scheme = parsed.scheme.lower() if parsed.scheme else "http"
+        if "://" not in percent_decoded:
+            parsed = urlparse("//" + percent_decoded.lstrip("/"), scheme="http")
+            scheme = "http"
+        else:
+            parsed = urlparse(percent_decoded)
+            scheme = parsed.scheme.lower() if parsed.scheme else "http"
         netloc = parsed.netloc.lower()
         if scheme == "http" and netloc.endswith(":80"): netloc = netloc[:-3]
         elif scheme == "https" and netloc.endswith(":443"): netloc = netloc[:-4]
-        path = parsed.path if parsed.path or netloc else "/"
+        path = re.sub(r"/+", "/", parsed.path if parsed.path else "/")
         return urlunparse((scheme, netloc, path, parsed.params, parsed.query, parsed.fragment)), {"unicode_form": "NFC"}
 
 class DeterministicDOMAnalyzer(HTMLParser):
@@ -262,6 +266,14 @@ class DeterministicDOMAnalyzer(HTMLParser):
             self.current_depth += 1
             self.depth_stack.append(tag)
             if self.current_depth > self.max_depth: self.max_depth = self.current_depth
+    def handle_startendtag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        self.handle_starttag(tag, attrs); self.handle_endtag(tag)
+    def handle_endtag(self, tag: str):
+        tag = tag.lower()
+        if tag in self.VOID_ELEMENTS: return
+        if self.depth_stack and self.depth_stack[-1] == tag:
+            self.depth_stack.pop()
+            if self.current_depth > 0: self.current_depth -= 1
     def handle_data(self, data: str):
         if data and data.strip(): self.excluded_text_nodes_count += 1 # Text excluded from N_total
     def calculate_sdr(self) -> float:

@@ -144,12 +144,16 @@ class URLNormalizer:
             return "", {"unicode_form": "NFC", "percent_decoded": False}
         unicode_normalized = unicodedata.normalize("NFC", raw_url.strip())
         percent_decoded = unquote(unicode_normalized)
-        parsed = urlparse(percent_decoded)
-        scheme = parsed.scheme.lower() if parsed.scheme else "http"
+        if "://" not in percent_decoded:
+            parsed = urlparse("//" + percent_decoded.lstrip("/"), scheme="http")
+            scheme = "http"
+        else:
+            parsed = urlparse(percent_decoded)
+            scheme = parsed.scheme.lower() if parsed.scheme else "http"
         netloc = parsed.netloc.lower()
         if scheme == "http" and netloc.endswith(":80"): netloc = netloc[:-3]
         elif scheme == "https" and netloc.endswith(":443"): netloc = netloc[:-4]
-        path = parsed.path if parsed.path or netloc else "/"
+        path = re.sub(r"/+", "/", parsed.path if parsed.path else "/")
         reconstructed = urlunparse((scheme, netloc, path, parsed.params, parsed.query, parsed.fragment))
         return reconstructed, {
             "unicode_form": "NFC", "percent_decoded_once": True,
@@ -168,6 +172,7 @@ class DeterministicDOMAnalyzer(HTMLParser):
         self.max_depth = 0
         self.form_count = 0
         self.password_fields = 0
+        self.iframe_count = 0
         self.depth_stack = []
         self.element_nodes_count = 0
         self.void_element_nodes_count = 0
@@ -182,6 +187,8 @@ class DeterministicDOMAnalyzer(HTMLParser):
         if tag == "form": self.form_count += 1
         elif tag == "input" and attrs_dict.get("type", "").lower() == "password":
             self.password_fields += 1
+        elif tag == "iframe":
+            self.iframe_count += 1 # Counted as 1 node; document referenced by src is never fetched or parsed
 
         if tag in self.VOID_ELEMENTS:
             self.void_element_nodes_count += 1
@@ -192,6 +199,10 @@ class DeterministicDOMAnalyzer(HTMLParser):
             self.depth_stack.append(tag)
             if self.current_depth > self.max_depth:
                 self.max_depth = self.current_depth
+
+    def handle_startendtag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]):
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
     def handle_endtag(self, tag: str):
         tag = tag.lower()
