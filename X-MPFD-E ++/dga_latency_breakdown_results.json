@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "DGA Latency Microsecond Breakdown & Computational Bypass Profiling",
-    "reference": "AR1115 Checklist Item 3 (Adv. Pranav Bhat / IPTTO MAHE)",
+    "reference": "AR1115 Checklist Item 3 (Patent Counsel & IPTTO Review Team)",
     "iterations_per_pattern": 200,
     "total_measurements": 2000,
     "environment": "Python 3.14.2 on win32 (perf_counter_ns)"
