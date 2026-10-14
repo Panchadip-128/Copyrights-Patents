@@ -181,9 +181,9 @@ DEFAULT_RULES: Tuple[ProductionRule, ...] = (
     ),
     make_rule(
         "PR-MISALIGNMENT", "peer_review_forensics",
-        "P = (pos - neg) / (pos + neg); MISALIGNED iff (P >= polarity_threshold and rec == reject) "
-        "or (P <= -polarity_threshold and rec == accept)",
-        polarity_threshold=0.50,
+        "P = (pos - neg) / (pos + neg); MISALIGNED iff (P >= pos_polarity_threshold and rec == reject) "
+        "or (P <= -neg_polarity_threshold and rec == accept)",
+        polarity_threshold=0.50, pos_polarity_threshold=0.50, neg_polarity_threshold=0.30,
     ),
     make_rule(
         "PR-INDICATOR-WEIGHTS", "peer_review_forensics",

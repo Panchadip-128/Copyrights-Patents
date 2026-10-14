@@ -353,11 +353,17 @@ The complete legal claims specification is codified in [`PATENT_CLAIMS.md`](./PA
 
 ### 11.1. Running the Automated Test Suites
 ```bash
-# Prior Art Inventions & Novelty Verification Suite (7 test suites)
+# Prior Art Inventions & Novelty Verification Suite (8 test suites including physical gateway interdiction)
 python test_prior_art_inventions.py
 
 # Comprehensive End-to-End Demonstration Suite (9 complete examples)
 python examples.py
+
+# Comparative Empirical Benchmark (With vs Without ADW, CSAD, Audit Chain on physical hardware)
+python comparative_benchmark.py
+
+# Compile Formal Due Diligence PDF Response (AR1114)
+python generate_due_diligence_pdf.py
 
 # Empirical Fuzzing Protocol (11,500 runs)
 node empirical_evidence_generator.js

@@ -57,6 +57,14 @@ from .cross_correlation_engine import (
     CompositeRiskProfile,
 )
 
+# Submission gateway & hardware interdiction controller
+from .submission_gateway import (
+    SubmissionGatewayInterdictionController,
+    ManuscriptSubmissionPayload,
+    GatewayActionCode,
+    ActuationRecord,
+)
+
 # Architectural and legacy components
 from .credibility_logic_engine import CredibilityLogicEngine
 from .venue_fingerprint_builder import VenueFingerprintBuilder
@@ -97,6 +105,11 @@ __all__ = [
     # Cross-correlation pipeline
     'CrossCorrelationEngine',
     'CompositeRiskProfile',
+    # Submission gateway & physical interdiction
+    'SubmissionGatewayInterdictionController',
+    'ManuscriptSubmissionPayload',
+    'GatewayActionCode',
+    'ActuationRecord',
     # Structural legacy components
     'CredibilityLogicEngine',
     'VenueFingerprintBuilder',

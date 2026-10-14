@@ -150,6 +150,16 @@ class PeerReviewForensicsAnalyzer:
         self.hedging_threshold = rules.param("PR-HEDGING", "density_threshold")
         self.min_specificity = rules.param("PR-SPECIFICITY", "min_specificity")
         self.polarity_threshold = rules.param("PR-MISALIGNMENT", "polarity_threshold")
+        self.pos_polarity_threshold = (
+            rules.param("PR-MISALIGNMENT", "pos_polarity_threshold")
+            if "pos_polarity_threshold" in rules.get("PR-MISALIGNMENT").as_dict()
+            else self.polarity_threshold
+        )
+        self.neg_polarity_threshold = (
+            rules.param("PR-MISALIGNMENT", "neg_polarity_threshold")
+            if "neg_polarity_threshold" in rules.get("PR-MISALIGNMENT").as_dict()
+            else 0.30
+        )
 
     def extract_fingerprint(self, text: str) -> LinguisticFingerprint:
         """Extract deterministic linguistic features."""
@@ -226,23 +236,23 @@ class PeerReviewForensicsAnalyzer:
 
         # Misalignment logic:
         # Strongly positive text (P >= +0.50) with REJECT
-        # Strongly negative text (P <= -0.50) with ACCEPT
+        # Critical negative text (P <= -0.30) with ACCEPT
         is_misaligned = False
         justification = ""
 
-        if polarity >= self.polarity_threshold and "reject" in rec_clean:
+        if polarity >= self.pos_polarity_threshold and "reject" in rec_clean:
             is_misaligned = True
             justification = (
                 f"Sentiment-Decision Misalignment: Reviewer recommendation is '{recommendation.upper()}' "
                 f"despite strongly positive linguistic sentiment polarity P={polarity:+.2f} "
-                f"(positive terms={pos_count}, negative terms={neg_count})"
+                f"(positive terms={pos_count}, negative terms={neg_count}; threshold >= +{self.pos_polarity_threshold:.2f})"
             )
-        elif polarity <= -self.polarity_threshold and ("accept" in rec_clean and "reject" not in rec_clean):
+        elif polarity <= -self.neg_polarity_threshold and ("accept" in rec_clean and "reject" not in rec_clean):
             is_misaligned = True
             justification = (
                 f"Sentiment-Decision Misalignment: Reviewer recommendation is '{recommendation.upper()}' "
-                f"despite strongly critical linguistic sentiment polarity P={polarity:+.2f} "
-                f"(positive terms={pos_count}, negative terms={neg_count})"
+                f"despite critical linguistic sentiment polarity P={polarity:+.2f} "
+                f"(positive terms={pos_count}, negative terms={neg_count}; threshold <= -{self.neg_polarity_threshold:.2f})"
             )
         else:
             justification = (

@@ -285,13 +285,16 @@ A system combining Modules A-D, comprising:
 
 ## 8. Implementation Status
 
-| Module | Status | Location |
-|--------|--------|----------|
-| Module A: Venue Intelligence | FULLY IMPLEMENTED | Live at aricca-x-portal.vercel.app/dashboard |
-| Module B: Researcher Auditing | ARCHITECTURE READY | UI hooks deployed, backend in development |
-| Module C: Peer-Review Forensics | ARCHITECTURE READY | UI hooks deployed, ML sandbox for validation |
-| Module D: Grant Compliance | ARCHITECTURE READY | UI hooks deployed, mandate database in design |
-| ML Verification Sandbox | TESTING PHASE | Isolated validation via ml_verification.py |
+| Module | Status | Location / Package |
+|--------|--------|--------------------|
+| **Module A: Venue Intelligence** | FULLY IMPLEMENTED | `aricca_x.venue_intelligence` |
+| **Module B: Researcher Auditing** | FULLY IMPLEMENTED | `aricca_x.researcher_auditor` |
+| **Module C: Peer-Review Forensics** | FULLY IMPLEMENTED | `aricca_x.peer_review_forensics` |
+| **Module D: Grant Compliance** | FULLY IMPLEMENTED | `aricca_x.grant_compliance` |
+| **Cross-Correlation Engine (6-Phase)** | FULLY IMPLEMENTED | `aricca_x.cross_correlation_engine` |
+| **Submission Gateway Interdiction** | FULLY IMPLEMENTED | `aricca_x.submission_gateway` |
+| **Deterministic Core & Audit Chain** | FULLY IMPLEMENTED | `aricca_x.deterministic_core` |
+| **ML Verification Sandbox** | TESTING PHASE | Isolated validation via `ml_verification.py` |
 
 ---
 

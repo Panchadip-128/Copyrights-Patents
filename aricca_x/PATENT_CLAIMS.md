@@ -226,6 +226,38 @@ A non-transitory computer-readable storage medium comprising instructions that, 
 
 ---
 
+### CLAIM 17: Submission Gateway Interdiction Controller (Independent System Claim)
+
+A computerized submission gateway interdiction apparatus for protecting computing and network processing resources from fraudulent manuscript submissions, the apparatus comprising:
+a network interface coupled to a communication network;
+one or more processors; and
+a non-transitory memory storing instructions that, when executed by the one or more processors, cause the apparatus to:
+**(a)** intercept an incoming manuscript submission payload and an ingress session token associated with a submitting client session;
+**(b)** evaluate the manuscript submission payload through the deterministic multi-signal pipeline of Claim 1 to generate a composite risk score and a closed-form epistemic evidence interval $[L, U]$ having an interval width $W$;
+**(c)** execute a dual-threshold evidence-coverage gating rule wherein automated rejection is barred when interval width $W > 0.50$, forcing a quarantine hold;
+**(d)** upon determining a RELEASE action code when composite risk is below 0.25 and interval width $W \le 0.50$:
+  (i) issue a cryptographically signed HMAC-SHA256 routing authorization token;
+  (ii) command an operating system thread scheduler to allocate a pool of compute worker threads for downstream Abstract Syntax Tree generation and manuscript parsing; and
+  (iii) commit the submission record to an active editorial queue state;
+**(e)** upon determining a HOLD action code when composite risk is between 0.25 and 0.75, or when interval width $W > 0.50$:
+  (i) acquire an atomic transactional lock on the submission database record;
+  (ii) divert the manuscript submission payload into a segregated sandbox buffer storage partition;
+  (iii) suppress allocation of downstream compute worker threads, conserving processor cycle consumption and memory bus bandwidth; and
+  (iv) dispatch an asynchronous telemetry request identifying unobserved evidence dimensions; and
+**(f)** upon determining a REJECT action code when composite risk is at least 0.75 and interval width $W \le 0.50$:
+  (i) push a revocation record to an ingress firewall session table to cryptographically invalidate said ingress session token;
+  (ii) transmit a network socket reset packet to sever the client session;
+  (iii) purge the segregated sandbox buffer storage partition; and
+  (iv) commit an immutable RFC 8785 canonical JSON forensic audit log with a SHA-256 block hash.
+
+---
+
+### CLAIM 18: Computer-Implemented Gateway Interdiction Method (Independent Method Claim)
+
+A computer-implemented method for physical gateway interdiction and compute thread suppression in a manuscript submission platform, the method comprising executing the steps of Claim 17.
+
+---
+
 ## 35 U.S.C. § 101 Eligibility Analysis (Alice/Mayo Framework)
 
 | Claim | Specific Technical Improvement | Technological Transformation | Physical Transformation & Concrete Output |

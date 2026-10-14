@@ -1,0 +1,281 @@
+=== PAGE 1 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+14-10-2026 
+DUE DILIGENCE REPORT: AR1114 
+Dear Inventor, 
+We have completed our due diligence under the Computer Related Inventions (CRI) Guidelines 
+issued by the Hon. Indian Patent Office, as instructed by Hon. IPTTO MAHE, and we set out our 
+observations below in respect of the invention titled "Deterministic Mu lti-Signal Processing for 
+Academic Integrity Verification with Missing -Evidence Bounds and Cryptographically Linked 
+Phase Records", being a computer-implemented system that evaluates venue, citation, peer-review 
+and publication-policy records and outputs a risk status with missing-evidence bounds and hash-
+linked phase records. We set out our observations in the hope that they assist you, and we would 
+be grateful for your help on the points raised below. 
+1. SECTION 3(k) OBJECTION RISK: MATHEMATICAL METHOD, ALGORITHM 
+AND COMPUTER PROGRAMME PER SE 
+We are of the view that the disclosure, as it presently stands, faces a credible risk of objection 
+under Section 3(k) of the Patents Act, 1970. In our assessment, an examiner is likely to find that 
+the substance of the disclosure lies in mathematical computation and rule-based logic executed on 
+a general-purpose computer, with the output being a score, an interval and a risk tier. 
+The disclosure's researcher auditing module enumerates directed citation cycles, partitions 
+citations by precedence and recomputes the h -index, CIR and LACIR. Each result is an index or 
+a ratio. The review module computes sentence -length variation, hedging density, specificity and 
+polarity, and the venue module computes edit distance, a deadline interval and a weighted root -
+mean-square fingerprint change. An examiner is likely to treat each of these as a mathematical 
+method whose end goal is the number itself. 
+
+=== PAGE 2 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+The disclosure's observed -set weighting with bounds and its cross -signal amplification are 
+claimed as formulas. We expect an examiner to read these claimed formulas as a mathematical 
+method and an algorithm presented in the form of a system. 
+The claimed system refers to processors and memory only generically, the claimed method of 
+processing records makes no reference to any hardware, the claimed storage medium holds 
+instructions for performing that method, and the claimed display apparatus an d submission 
+gateway recite only a processor, memory, a display or a network interface as hardware. Under the 
+CRI Guidelines the examiner looks to the substance of the invention and not to the form of the 
+claim, and we are of the view that these claims are  likely to be treated as a computer programme 
+per se. 
+The Patent Specification Report presents the exclusion of machine learning and a "mathematically 
+verifiable" pipeline as the distinguishing attribute, in its abstract, its discussion of the separation 
+between the offline sandbox and the production pipeline , and its description of the end -to-end 
+method, where the result is described as a "100% mathematically verifiable evidence chain". In 
+our assessment, this describes how the system is designed and is not by itself a technical effect. 
+The emphasis on explic it formulas and Boolean logic may also draw the examiner's attention 
+towards the exclusion. 
+The performance statements are the processing of 11,500 synthetic inputs (1,000 citation graphs, 
+10,000 publication portfolios and 500 text samples) within a stated time and a 100% cartel 
+identification result on synthetic graphs, as given in the Patent Specification Report and reported 
+again in the Specification. The disclosure does not state the hardware, a baseline for comparison 
+or an effect on a technical metric, and the Specification itself notes that the absence of execution 
+errors is distinct from c orrect classification. An examiner is likely to ask what technical 
+improvement results, and measured against what. 
+The thresholds appear as bare values: 0.35, 0.60, 0.20, 0.50, 0.30, 0.25, 0.04, 0.15, 30 days and a 
+cycle length of five. Several are described in the Specification itself as illustrative, as requiring 
+confirmation by the inventors, or as yet to be supplied, including the indexing score mapping, the 
+
+=== PAGE 3 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+hedging lexicon, the specificity denominator, the polarity formula and the non -facade 
+amplification factor. An examiner may regard such values as arbitrary unless the reason for each 
+value is stated. 
+We are of the view that this objection is best answered where the disclosure shows a technical 
+effect beyond the programme itself, for an identified technical problem and by identified technical 
+means. 
+Input required from the inventor: We would be grateful for measured results with and without 
+each of the following features: the observed -set weighting with bounds, the cross -signal 
+amplification and the hash -linked phase records. For each, please state the metric used, the test 
+set, the hardware and the baseline against which the result is compared. We would also be grateful 
+if, for each threshold named above, you could let us know the value, the reason for that value, and 
+the technical consequence of a value below or above it. 
+2. SECTION 3(k) OBJECTION RISK: BUSINESS METHOD 
+We are of the view that the disclosure, as it presently stands, also faces a credible risk of objection 
+under the business method limb of Section 3(k). The Section 3(k) exclusion for a business method 
+is not qualified by "per se", and an examiner is likely to ask where the core of the invention lies. 
+The disclosure's grant compliance module selects a publication policy by authority and effective 
+date, tests publication metadata such as open-access route, repository deposit, embargo duration, 
+licence and funding acknowledgment against that policy, and m aps each failed outcome to a 
+remediation code. In our assessment, an examiner is likely to characterise this as the application 
+of administrative rules to a record, which is a compliance procedure carried out by computer. The 
+disclosure itself states that the sample policies are synthetic and that a failed predicate is a result 
+under a chosen rule version and not a legal determination, and an examiner may take that as 
+confirming that the module's contribution lies in the rules and not in the machinery. 
+The submission gateway receives a submission, assesses it and returns a release, hold or rejection 
+code according to a risk tier and an evidence -coverage rule, as claimed. The claimed display 
+
+=== PAGE 4 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+apparatus presents the same assessment on a display. We expect an examiner to treat the release, 
+hold or rejection decision as an editorial or institutional decision on a manuscript, and the display 
+as the presentation of information to a user. The disclosure does not identify any technical system 
+component whose operation is controlled or improved by the action code. 
+The same reasoning is likely to be applied to the assessment of venue credibility, researcher 
+independence and peer -review authenticity, since the disclosure presents the system as an 
+academic integrity assessment used through an institutional dashboard an d a manuscript 
+submission gateway. 
+We are of the view that this objection is answered where the business context is shown to be only 
+a constraint on scope, and the contribution is shown to be a technical improvement to an 
+underlying system or process. In our assessment, the features of the disclosure that may be argued 
+in this direction are the evaluation of policy predicates with an explicit unknown state, the 
+selection of a policy version by effective date so that a past assessment can be reproduced, and the 
+coverage rule that prevents an adverse automated action on incomplete evidence. These can be 
+presented as data -handling measures only if the disclosure shows what technical problem each 
+solves and what measurable effect results. 
+Input required from the inventor:  We would be grateful if you could let us know what is 
+technically improved, if the funder, publisher and institutional context is set aside, by the policy -
+version selection, the three-valued predicate evaluation and the coverage -based action rule, with 
+a measured result where available. We would also be grateful if you could describe the system 
+component that receives the release, hold or rejection code and the operation that component 
+performs on receipt, for example the routing or locking of a submission  record in a submission 
+platform. 
+3. POINTS WHERE THE DOCUMENTS DIFFER 
+In reviewing the Patent Specification Report, the Specification and the Technical Figure Set 
+together, we noted the points below where the documents differ in a value or description, or where 
+
+=== PAGE 5 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+one document describes a feature that another does not. We would be grateful for your 
+confirmation of what is intended in each case, so that the filing reflects the invention as 
+implemented. 
+● The Patent Specification Report removes self -citations and co -author citations to obtain 
+independent citations, the True Independent H-Index and the Citation Independence Ratio, 
+with an alert below 0.30. The Specification describes a further loop-associated category, a 
+loop-purged h -index and a loop -adjusted ratio, each with an alert below 0.30. It uses 
+"independent citations" for the category remaining after loop removal, so the Citation 
+Independence Ratio in the Specification also counts loop-associated citations. 
+● The Patent Specification Report flags a review where polarity exceeds 0.6 with a Reject 
+recommendation. The Specification flags polarity of at least 0.50 with Reject and of at 
+most −0.30 with Accept. 
+● The Patent Specification Report gives the formula for hedging density, expressed as a 
+percentage of total words, and describes specificity by regular -expression matching, 
+without a threshold for either. The Specification gives a hedging threshold of 0.04 a s a 
+fraction of word tokens and a specificity threshold of 0.15, and defines the denominators 
+of both. 
+● The Patent Specification Report states that the bounded search for citation rings runs in 
+linear time in the number of authors and citations. The Specification states that no linear 
+bound is asserted for complete cycle enumeration, and describes a canonica l minimum-
+node start with a recorded truncation status. 
+● The Patent Specification Report states 100% cartel identification with zero false negatives 
+and processing of 11,500 inputs in under one second. The Specification states a processing 
+time of 0.589 seconds, seven verification suites and nine completed examples. The ground 
+truth and the cycle lengths covered by the 100% result, and the run to which the 0.589 
+second figure relates, were not included in the material we received. 
+
+=== PAGE 6 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+● The Patent Specification Report groups  Adaptive Decay Weighting and Cross -Signal 
+Anomaly Detection in a single credibility phase. The Specification places the weighting 
+in component scoring and the anomaly detection in anomaly aggregation. The weighting 
+redistributes weights proportionally and contains no time-decay function. 
+● The Patent Specification Report presents machine -readable rule matrices for named 
+funders with an example rule. The Specification states that no current policy requirement 
+is hardcoded and uses versioned policy records selected by effective date. 
+● The Patent Specification Report describes an on -chain deterministic pipeline and an off -
+chain sandbox. The Specification describes hash -linked phase records verified against a 
+retained anchor and states that no blockchain is required. 
+Input required from the inventor: We would be grateful for your confirmation, for each point 
+above, of the value or description that corresponds to the implemented system. Please also let us 
+know whether the loop-associated category and loop-adjusted ratio are implemented, whether any 
+time-decay function is used in the weighting, and whether any distributed ledger is used for the 
+phase records. 
+4. CONSOLIDATED SUPPORT WE WOULD BE GRATEFUL TO RECEIVE 
+Measured technical effect (supporting Part 1) 
+We would be grateful for measured results with and without the observed -set weighting with 
+bounds, the cross-signal amplification and the hash -linked phase records. For each, please state 
+the metric, the test set, the hardware and the baseline compared. 
+Reasons for the thresholds (supporting Part 1) 
+We would be grateful for the value, the reason for that value and the technical consequence of a 
+value below or above it, for each threshold named in Part 1. 
+Hardware and deployment (supporting Part 1) 
+
+=== PAGE 7 ===
+ 
+LEXTRIA 
+RESEARCH 
+An Astraea Innovative 
+Solutions, #21, 4th floor, 
+MUTBI, ARC, Manipal - 
+576104     
+   
+  
++91-8317385434 
+ 
+pranavbhat@lextria.in 
+info@lextria.in 
+The disclosure states that the system may run as a command -line process, a service or an 
+institutional application. We would be grateful for a description of the processor, memory, data 
+volume and number of concurrent assessments used in the reported runs and in deployment, so 
+that each measured result can be tied to an identified technical setting. 
+Policy handling and the action code (supporting Part 2) 
+We would be grateful for what is technically improved by the policy-version selection, the three-
+valued predicate evaluation and the coverage -based action rule, with a measured result where 
+available. We would also be grateful for a description of the syst em component that receives the 
+release, hold or rejection code and the operation it performs on receipt. 
+Implemented embodiments (supporting Parts 1 and 3) 
+We would be grateful for a list of the features that are implemented in the system as built, together 
+with the complete hedging lexicon, the indexing -language patterns, the authorised host registry 
+and the policy records used, since the disclosure gives examples only. 
+Confirmation of the points that differ (supporting Part 3) 
+We would be grateful for your confirmation, for each point in Part 3, of the value or description 
+that corresponds to the implemented system. 
+Conclusion: In our assessment, the objection risks under Section 3(k), namely mathematical 
+method, algorithm, computer programme per se and business method, remain open on the 
+disclosure as it presently stands. Our further observations will follow on receipt of your response 
+to the points above. 
+ 
+ 
+Prepared by: Lextria Research Team 
+
+

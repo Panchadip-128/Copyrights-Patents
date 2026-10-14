@@ -284,6 +284,131 @@ def test_7_full_pipeline_audit_chain_reproducibility():
     print(f"  [OK] PASS: Bit-identical determinism and cryptographic audit chain verified (Digest: {p1.audit_chain['final_hash'][:16]}...).")
 
 
+def test_8_submission_gateway_interdiction():
+    print("\n[TEST 8] Testing Submission Gateway Interdiction Controller & Physical Actuation...")
+    from aricca_x.submission_gateway import (
+        SubmissionGatewayInterdictionController,
+        ManuscriptSubmissionPayload,
+        GatewayActionCode,
+    )
+    from aricca_x.cross_correlation_engine import CompositeRiskProfile
+
+    controller = SubmissionGatewayInterdictionController()
+
+    # Scenario 1: Clean submission (low risk, high coverage) -> RELEASE
+    clean_profile = CompositeRiskProfile(
+        target_id="SUB_CLEAN_001",
+        target_type="publication",
+        overall_credibility_score=0.92,
+        total_risk_score=0.08,
+        risk_level="low",
+        confidence=0.85,
+        epistemic_interval=(0.85, 1.0),
+        interval_width=0.15,
+        insufficient_evidence=False,
+        module_signals={"venue": 0.95, "researcher": 0.90, "peer_review": 0.92, "grant": 0.90},
+        flags=[],
+        recommendations=["ASSESSMENT CLEAR"],
+        csad_amplification_applied=False,
+        audit_chain={"genesis_hash": "gen_clean", "head": "head_clean"},
+    )
+    clean_payload = ManuscriptSubmissionPayload(
+        submission_id="MS_2026_001",
+        manuscript_title="Formal Verification of Cryptographic State Machines",
+        submitting_author_id="AUTH_991",
+        submitting_author_email="author@university.edu",
+        session_token="SESS_TOKEN_CLEAN_12345",
+        client_ip="192.168.1.50",
+        payload_size_bytes=1048576,
+        payload_sha256="abc123cleanhash",
+        claimed_venue="IEEE Transactions on Software Engineering",
+        timestamp_iso="2026-10-15T00:00:00Z",
+    )
+    act_clean = controller.process_and_actuate(clean_payload, clean_profile, b"DUMMY_PDF_STREAM")
+    assert act_clean.action_code == GatewayActionCode.RELEASE
+    assert act_clean.worker_threads_allocated == 4
+    assert act_clean.database_transaction_state == "COMMITTED_TO_EDITORIAL_QUEUE"
+    assert act_clean.route_authorization_token is not None
+    assert controller.is_session_revoked("SESS_TOKEN_CLEAN_12345") is False
+
+    # Scenario 2: Critical raw risk but INCOMPLETE evidence coverage (W = 0.70 > 0.50) -> HOLD (Safeguard)
+    sparse_critical_profile = CompositeRiskProfile(
+        target_id="SUB_SPARSE_002",
+        target_type="publication",
+        overall_credibility_score=0.10,
+        total_risk_score=0.90,
+        risk_level="critical",
+        confidence=0.30,
+        epistemic_interval=(0.10, 0.80),
+        interval_width=0.70,  # 70% unobserved!
+        insufficient_evidence=True,
+        module_signals={"venue": 0.10, "researcher": None, "peer_review": None, "grant": None},
+        flags=["ADW_INSUFFICIENT_EVIDENCE_INTERVAL_WIDE"],
+        recommendations=["ACQUIRE TELEMETRY"],
+        csad_amplification_applied=False,
+        audit_chain={"genesis_hash": "gen_sparse", "head": "head_sparse"},
+    )
+    sparse_payload = ManuscriptSubmissionPayload(
+        submission_id="MS_2026_002",
+        manuscript_title="Preliminary Sparse Manuscript",
+        submitting_author_id="AUTH_332",
+        submitting_author_email="author2@institute.org",
+        session_token="SESS_TOKEN_SPARSE_67890",
+        client_ip="10.0.0.12",
+        payload_size_bytes=524288,
+        payload_sha256="def456sparsehash",
+        claimed_venue="Unknown Workshop",
+        timestamp_iso="2026-10-15T00:05:00Z",
+    )
+    act_sparse = controller.process_and_actuate(sparse_payload, sparse_critical_profile, b"SPARSE_PAYLOAD")
+    # Coverage safeguard forces HOLD despite critical raw risk!
+    assert act_sparse.action_code == GatewayActionCode.HOLD
+    assert act_sparse.coverage_rule_applied is True
+    assert act_sparse.worker_threads_allocated == 0  # Worker compute allocation suppressed!
+    assert act_sparse.database_transaction_state == "QUARANTINE_PENDING_TELEMETRY"
+    assert act_sparse.telemetry_request is not None
+    assert "researcher" in act_sparse.telemetry_request["missing_dimensions"]
+
+    # Scenario 3: Critical risk WITH verified evidence coverage -> REJECT
+    critical_verified_profile = CompositeRiskProfile(
+        target_id="SUB_CRIT_003",
+        target_type="publication",
+        overall_credibility_score=0.05,
+        total_risk_score=0.95,
+        risk_level="critical",
+        confidence=0.90,
+        epistemic_interval=(0.0, 0.10),
+        interval_width=0.10,
+        insufficient_evidence=False,
+        module_signals={"venue": 0.05, "researcher": 0.10, "peer_review": 0.05, "grant": 0.00},
+        flags=["VI_URL_SPOOF_LOOKALIKE_SPOOF", "RA_LOOP_INFLATION_ALERT", "CSAD_CROSS_SIGNAL_DIVERGENCE_AMPLIFIED"],
+        recommendations=["INTERDICT VENUE", "REVOKE SUBMISSION"],
+        csad_amplification_applied=True,
+        audit_chain={"genesis_hash": "gen_crit", "head": "head_crit"},
+    )
+    crit_payload = ManuscriptSubmissionPayload(
+        submission_id="MS_2026_003",
+        manuscript_title="Fraudulent Spoofed Lookalike Paper",
+        submitting_author_id="AUTH_BAD_666",
+        submitting_author_email="scammer@ieee-fake-portal.org",
+        session_token="SESS_TOKEN_REVOKE_99999",
+        client_ip="198.51.100.42",
+        payload_size_bytes=2097152,
+        payload_sha256="bad999fraudhash",
+        claimed_venue="IEEE Fake Conference",
+        timestamp_iso="2026-10-15T00:10:00Z",
+    )
+    act_crit = controller.process_and_actuate(crit_payload, critical_verified_profile, b"MALICIOUS_PAYLOAD")
+    assert act_crit.action_code == GatewayActionCode.REJECT
+    assert act_crit.session_token_revoked is True
+    assert controller.is_session_revoked("SESS_TOKEN_REVOKE_99999") is True
+    assert act_crit.worker_threads_allocated == 0
+    assert act_crit.database_transaction_state == "INTERDICTED_SECURITY_REJECTION"
+    assert len(act_crit.audit_record_hash) == 64
+
+    print("  [OK] PASS: Submission Gateway Interdiction Controller verified across RELEASE, HOLD (coverage safeguard), and REJECT.")
+
+
 def run_all_tests():
     print("=" * 80)
     print(" STARTING ARICCA-X PRIOR ART NOVELTY & VERIFICATION SUITE")
@@ -296,12 +421,14 @@ def run_all_tests():
     test_5_grant_compliance()
     test_6_adw_and_csad_mathematics()
     test_7_full_pipeline_audit_chain_reproducibility()
+    test_8_submission_gateway_interdiction()
 
     print("\n" + "=" * 80)
-    print(" ALL 7 TEST SUITES PASSED WITH 100% SUCCESS")
+    print(" ALL 8 TEST SUITES PASSED WITH 100% SUCCESS")
     print(" ARICCA-X INVENTIONS PROVEN DETERMINISTIC, NOVEL & MATHEMATICALLY SOUND")
     print("=" * 80)
 
 
 if __name__ == "__main__":
     run_all_tests()
+
