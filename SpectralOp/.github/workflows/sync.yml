@@ -1,0 +1,25 @@
+name: Sync Folder to Another Repo
+
+on:
+  push:
+    branches:
+      - main # Change to your default branch if it is not 'main'
+
+jobs:
+  copy-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repo
+        uses: actions/checkout@v4
+
+      - name: Pushes Folder to Destination Repo
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SYNC_TOKEN }}
+        with:
+          source_file: '.'        # Folder in your current repo you want to copy
+          destination_repo: 'Panchadip-128/Copyrights-Patents' # Your target GitHub repo
+          destination_folder: 'SpectralOp' # The folder inside the destination repo
+          user_email: 'sanvisharma850@gmail.com'
+          user_name: 'sanvisharma850'
+          commit_message: 'Automatically synced from source repository'
