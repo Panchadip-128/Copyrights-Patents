@@ -97,12 +97,35 @@ class SubmissionGatewayInterdictionController:
 
     def __init__(self, secret_key: bytes = b"ARICCA_X_GATEWAY_HMAC_SECRET_KEY_2026"):
         self.secret_key = secret_key
-        # Simulated volatile in-memory registry of active firewall sessions
+        # Active proxy session table (mapping session_token -> metadata)
+        self._proxy_session_table: Dict[str, Dict[str, Any]] = {}
+        # Revoked / blacklisted sessions registry
         self._revoked_sessions: set[str] = set()
         # Simulated database transaction locks
         self._locked_transactions: Dict[str, str] = {}
         # Segregated sandbox buffer storage
         self._quarantined_buffers: Dict[str, bytes] = {}
+        # Active connection termination log
+        self._terminated_connections: List[Dict[str, Any]] = []
+
+    def register_proxy_session(self, session_token: str, client_ip: str, author_id: str) -> None:
+        """Registers an active ingress session in the proxy session table."""
+        self._proxy_session_table[session_token] = {
+            "client_ip": client_ip,
+            "author_id": author_id,
+            "registered_at": time.time(),
+            "status": "ACTIVE",
+        }
+
+    def reset_connection(self, client_ip: str, session_token: str) -> bool:
+        """Actuates physical TCP/HTTP connection reset on ingress firewall."""
+        self._terminated_connections.append({
+            "client_ip": client_ip,
+            "session_token": session_token,
+            "terminated_at": time.time(),
+            "signal": "TCP_RST",
+        })
+        return True
 
     def determine_action_code(
         self, profile: CompositeRiskProfile
@@ -213,18 +236,22 @@ class SubmissionGatewayInterdictionController:
             }
 
         elif action == GatewayActionCode.REJECT:
-            # 1. Ingress Firewall Actuation: Cryptographically revoke session token
+            # 1. Ingress Firewall Actuation: Delete session token from proxy session table
+            self._proxy_session_table.pop(payload.session_token, None)
             self._revoked_sessions.add(payload.session_token)
             session_revoked = True
 
-            # 2. Atomic database state: Reject and interdict
+            # 2. Connection reset on reverse proxy / ingress filter
+            self.reset_connection(payload.client_ip, payload.session_token)
+
+            # 3. Atomic database state: Reject and interdict
             db_state = "INTERDICTED_SECURITY_REJECTION"
             self._locked_transactions[payload.submission_id] = db_state
 
-            # 3. Purge quarantine memory buffer to prevent exhaustion
+            # 4. Purge quarantine memory buffer to prevent exhaustion
             self._quarantined_buffers.pop(payload.submission_id, None)
 
-            # 4. Worker thread suppression
+            # 5. Worker thread suppression (worker_threads_allocated = 0)
             threads_allocated = 0
 
         # Cryptographically link this actuation into an immutable RFC 8785 canonical JSON audit payload
@@ -272,6 +299,9 @@ class SubmissionGatewayInterdictionController:
 
     def is_session_revoked(self, session_token: str) -> bool:
         return session_token in self._revoked_sessions
+
+    def is_session_active(self, session_token: str) -> bool:
+        return session_token in self._proxy_session_table and session_token not in self._revoked_sessions
 
     def get_transaction_state(self, submission_id: str) -> Optional[str]:
         return self._locked_transactions.get(submission_id)

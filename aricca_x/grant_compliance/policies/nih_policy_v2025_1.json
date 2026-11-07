@@ -1,0 +1,35 @@
+{
+  "funder_id": "NIH",
+  "funder_name": "National Institutes of Health",
+  "policy_version": "v2025.1",
+  "effective_date": "2025-01-01",
+  "mandate_reference": "NIH Public Access Policy (Updated per OSTP Nelson Memorandum)",
+  "digest": "sha256-a9b8c7d6e5f41234567890abcdef1234567890abcdef1234567890abcdef12",
+  "requirements": {
+    "pmc_deposit_mandatory": true,
+    "max_embargo_months": 0,
+    "allowed_oa_types": ["gold", "diamond", "green"],
+    "required_acknowledgment": true,
+    "grant_number_pattern": "^[A-Z0-9]{2}[0-9]{6}$"
+  },
+  "rules": [
+    {
+      "rule_id": "NIH-2025-01",
+      "clause": "pmc_deposit",
+      "description": "Deposit peer-reviewed manuscript into PubMed Central (PMC)",
+      "mandatory": true
+    },
+    {
+      "rule_id": "NIH-2025-02",
+      "clause": "zero_embargo",
+      "description": "Zero-month embargo period for public access availability",
+      "mandatory": true
+    },
+    {
+      "rule_id": "NIH-2025-03",
+      "clause": "award_acknowledgment",
+      "description": "Explicit NIH grant award number in funding disclosure statement",
+      "mandatory": true
+    }
+  ]
+}

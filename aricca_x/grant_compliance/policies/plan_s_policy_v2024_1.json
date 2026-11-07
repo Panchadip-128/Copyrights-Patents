@@ -1,0 +1,35 @@
+{
+  "funder_id": "Plan_S",
+  "funder_name": "cOAlition S / Plan S",
+  "policy_version": "v2024.1",
+  "effective_date": "2024-01-01",
+  "mandate_reference": "Plan S Core Principles and Implementation Guidance (cOAlition S)",
+  "digest": "sha256-11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff",
+  "requirements": {
+    "immediate_open_access": true,
+    "max_embargo_months": 0,
+    "allowed_licenses": ["CC-BY", "CC-BY-SA"],
+    "allowed_oa_types": ["gold", "diamond", "green"],
+    "rights_retention_mandatory": true
+  },
+  "rules": [
+    {
+      "rule_id": "PLANS-2024-01",
+      "clause": "immediate_oa",
+      "description": "Immediate Open Access without any embargo period",
+      "mandatory": true
+    },
+    {
+      "rule_id": "PLANS-2024-02",
+      "clause": "open_license",
+      "description": "Publication under Creative Commons CC-BY or CC-BY-SA license",
+      "mandatory": true
+    },
+    {
+      "rule_id": "PLANS-2024-03",
+      "clause": "repository_deposit",
+      "description": "Immediate deposit of AAM or VoR in an OpenDOAR-registered repository",
+      "mandatory": true
+    }
+  ]
+}

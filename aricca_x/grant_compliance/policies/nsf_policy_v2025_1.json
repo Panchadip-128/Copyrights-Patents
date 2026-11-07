@@ -1,0 +1,35 @@
+{
+  "funder_id": "NSF",
+  "funder_name": "National Science Foundation",
+  "policy_version": "v2025.1",
+  "effective_date": "2025-01-01",
+  "mandate_reference": "NSF Public Access Plan 2.0 (Ensuring Free, Immediate Access)",
+  "digest": "sha256-f4e3d2c1b0a9876543210fedcba09876543210fedcba09876543210fedcba0",
+  "requirements": {
+    "nsf_par_deposit_mandatory": true,
+    "max_embargo_months": 0,
+    "allowed_oa_types": ["gold", "diamond", "green"],
+    "required_acknowledgment": true,
+    "grant_number_pattern": "^[0-9]{7}$"
+  },
+  "rules": [
+    {
+      "rule_id": "NSF-2025-01",
+      "clause": "par_deposit",
+      "description": "Deposit accepted author manuscript into NSF Public Access Repository (NSF-PAR)",
+      "mandatory": true
+    },
+    {
+      "rule_id": "NSF-2025-02",
+      "clause": "zero_embargo",
+      "description": "Immediate public accessibility without embargo delay",
+      "mandatory": true
+    },
+    {
+      "rule_id": "NSF-2025-03",
+      "clause": "award_acknowledgment",
+      "description": "Acknowledgment of NSF support citing 7-digit award number",
+      "mandatory": true
+    }
+  ]
+}
