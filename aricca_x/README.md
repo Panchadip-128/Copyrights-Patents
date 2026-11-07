@@ -142,12 +142,12 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | **Symmetric Divergence ($\alpha = 0.20$)** | `166 / 500` (`33.2%`) | `0.5625` | Fails to penalize directional facade asymmetry |
 | **Asymmetric CSAD ($\alpha_{\text{facade}}=0.60, \alpha_{\text{neutral}}=0.20$)** | **`473 / 500` (`94.6%`)** | **`0.7647`** (`+0.2768`) | **94.6% facade interdiction** with `0.0%` coherent false alarms |
 
-### Table 3 — Bounded Canonical DFS ($2 \le k \le 5, C_{\max}=10,000$) vs. Unbounded Cycle Search
-| Graph Topology | Bounded DFS Cycles | Unbounded DFS Cycles | Bounded Runtime | Unbounded Runtime |
-| :--- | :---: | :---: | :---: | :---: |
-| **Sparse Graph** | `1` | `1` | `0.81 ms` (50 nodes) | Matches on sparse |
-| **Moderate Cartel Ring** | `84` | `84` | `< 3.1 ms` (500 nodes) | Exponential growth on dense |
-| **Dense $K_{12}$ Cartel Clique** | **`1,980`** (exact $k \le 5$) | **`> 100,000` (Aborted)** | **Bounded sub-second** | **> 1.8 s – 2.2 s (Aborted)** |
+### Table 3 — Bounded Canonical DFS ($2 \le k \le 5, C_{\max}=10,000$) Across Graph Sizes & Measured Unbounded $K_{12}$ Baseline
+| Graph / Cartel Topology | Cycles Enumerated | Execution Time | Peak Memory (`tracemalloc`) | Technical Effect / Recall |
+| :--- | :---: | :---: | :---: | :--- |
+| **50 -> 1,000 Node Directed Graphs** (4 injected rings $k \in \{2,3,4,5\}$) | `9 – 13` | **`0.76 ms -> 6.07 ms`** | **`9.7 KB -> 61.8 KB`** | **`100.0%` recall** of all injected rings across all 5 graph sizes |
+| **Dense $K_{12}$ Cartel Clique — ARICCA-X Bounded ($k \le 5, C_{\max}=10,000$)** | **`10,000`** (`truncated=True`) | **`325.26 ms`** | **`6,205.5 KB` (`6.06 MB`)** | Deterministic halt at budget ceiling with explicit truncation flag |
+| **Dense $K_{12}$ Cartel Clique — Unbounded DFS (Emergency Cap `100,000`)** | `100,000` (`aborted=True`) | `5,012.96 ms` (`5.01 s`) | `114,851.2 KB` (`112.16 MB`) | **`15.41×` speedup & `94.60%` peak RAM reduction** vs. unbounded search |
 
 ### Table 4 — Audit Chain Tamper Detection & Bit-Identical Replay (1,000 Trials Each)
 | Verification Test | Detection / Match Rate | Mean Verification Latency | Storage / Overhead |
@@ -167,12 +167,19 @@ Evaluated across a 1,000-submission workload comprising **`300 RELEASE`**, **`40
 | **False Auto-Rejections Under High Missingness ($W > 0.50$)** | Unprotected | **`0 / 250` (`100%` prevented)** | All incomplete-evidence payloads safely routed to `HOLD` |
 | **Gateway Controller Actuation Latency** | `~145 ms` full parse | **`~0.24 – 0.28 ms`** | Sub-millisecond admission gating |
 
-### Real-World Benchmark Validation (`real_world_validation.py`)
-Executed in **`18.33 ms`** with **`100.0%` classification accuracy** across documented real-world test cases:
-- **5 Venues:** IEEE TSE (`0.985`), ACM SIGCOMM (`0.985`), WASET (`0.470`, flagged), OMICS (`0.495`, flagged), IEEE Brand-Embedding Spoof (`0.305`, flagged).
-- **4 Peer Reviews:** 2 authentic OpenReview/ICLR human reviews (`CV = 0.4853, 0.3118`, `AUTHENTIC_HUMAN`) and 2 LLM-generated reviews (`CV = 0.0487, 0.1806`, `SUSPICIOUS_OR_SYNTHETIC`).
-- **2 Author Citation Topologies:** Independent scholar (`LACIR = 85.71%`, `h_lp = 2`) vs. 3-author reciprocal ring (`LACIR = 0.00%`, `h = 2 -> h_lp = 0`, cartel detected).
-- **2 Grant Compliance Records:** Compliant NIH PMC Gold OA (`PMC9876543`, `0` violations) vs. non-compliant closed 18-month embargo record (`4` violations, `11` remediations).
+### Table 6 — Dual-Corpus Validation: Real-World Scholarly Entities & Controlled 500/1,000-Trial Threshold Separation
+1. **Real-World Scholarly Corpus (`real_world_validation.py` -> [`real_world_validation_results.json`](./real_world_validation_results.json), `18.33 ms`, `100.0%` Accuracy):**
+   - **5 Venues (`5/5` = `100.0%`):** Flagship `IEEE_TSE` (`182-day` CFP window, score `0.985`) and `ACM_SIGCOMM` (`139-day` CFP window, score `0.985`) vs. documented predatory venues `WASET` (`17-day` window $< 30\text{d}$, score `0.470`), `OMICS` (`19-day` window $< 30\text{d}$, score `0.495`), and `ieee-conference-2026.org` brand-embedding spoof (`14-day` window, score `0.305`).
+   - **4 Peer Reviews (`4/4` = `100.0%`):** 2 authentic OpenReview/ICLR human reviews (`CV = 0.4853, 0.3118`, hedging `0.0%`, specificity `1.1667, 1.0000` -> `AUTHENTIC_HUMAN`) vs. 2 GPT-4/Claude synthetic reviews (`CV = 0.0487, 0.1806`, hedging `6.15%–31.58%`, specificity `0.0000` -> `SUSPICIOUS_OR_SYNTHETIC`).
+   - **2 Author Citation Topologies (`2/2` = `100.0%`):** Independent scholar (`LACIR = 85.71%`, `h_lp = 2`) vs. 3-author reciprocal ring (`LACIR = 0.00%` vs deceptive traditional `CIR = 83.33%`, `h = 2 -> h_lp = 0`).
+   - **2 Grant Compliance Records (`2/2` = `100.0%`):** Compliant NIH PMC Gold OA (`PMC9876543`, `0` violations) vs. closed 18-month embargo record (`4` violations, `11` remediations).
+2. **Reproducible Controlled Threshold Separation & Mathematical Invariant Benchmarks ([`test_checklist_empirical_benchmarks.py`](./test_checklist_empirical_benchmarks.py) -> [`checklist_empirical_results.json`](./checklist_empirical_results.json), `seed=606`):**
+
+| Benchmark Suite | Sample Size | Measured Outcome | Mean Latency |
+| :--- | :---: | :--- | :---: |
+| **H-Index & LACIR Monotonicity Invariants** ($0 \le h_{\text{lp}} \le h_{\text{tih}} \le h_{\text{std}}$, $\text{LACIR} \le \text{CIR}$) | `1,000` portfolios | **`1,000 / 1,000` (`100.0%` satisfied, `0` violations)** | Sub-ms / portfolio |
+| **Controlled Peer-Review Separation + Boundary Stress** (`250` anchored human vs. `250` hedged/uniform/misaligned + up to `5,000`-word edge inputs) | `500 + 3` inputs | **`100.0%` sensitivity (`250/250`), `100.0%` specificity (`250/250`), `0` exceptions** | **`1,058.68 µs`** (`1.06 ms`) |
+| **Controlled Venue Separation** (`250` authenticated registry venues $\Delta t \in [45, 180]\text{d}$ vs. `250` spoofed/predatory venues $\Delta t \in [5, 28]\text{d}$) | `500` venues | **`100.0%` legit pass (`250/250`), `100.0%` predatory interdiction (`250/250`)** | **`980.88 µs`** (`0.98 ms`) |
 
 ---
 

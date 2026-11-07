@@ -1,6 +1,6 @@
 {
   "title": "ARICCA-X (AR1114) Checklist Empirical Evidence Telemetry",
-  "timestamp_iso": "2026-11-07T09:15:07Z",
+  "timestamp_iso": "2026-11-07T09:24:41Z",
   "hardware": {
     "os_name": "Windows",
     "os_release": "11",
@@ -10,7 +10,7 @@
     "cpu_count_physical": 6,
     "cpu_count_logical": 12,
     "total_ram_gb": 15.31,
-    "available_ram_gb": 4.12,
+    "available_ram_gb": 4.3,
     "python_version": "3.14.2",
     "python_compiler": "MSC v.1944 64 bit (AMD64)"
   },
@@ -22,19 +22,19 @@
       "num_tested": 1000,
       "num_detected": 1000,
       "detection_rate_percent": 100.0,
-      "verification_latency_us": 120.17
+      "verification_latency_us": 119.11
     },
     "deleted_test": {
       "num_tested": 1000,
       "num_detected": 1000,
       "detection_rate_percent": 100.0,
-      "verification_latency_us": 105.07
+      "verification_latency_us": 126.18
     },
     "reordered_test": {
       "num_tested": 1000,
       "num_detected": 1000,
       "detection_rate_percent": 100.0,
-      "verification_latency_us": 93.89
+      "verification_latency_us": 95.55
     },
     "baseline_comparison": "Unanchored In-Memory / Unhashed logging (0% detection of post-hoc tampering)"
   },
@@ -56,7 +56,7 @@
         ],
         "detected_cycles_count": 11,
         "is_truncated": false,
-        "execution_time_ms": 0.812,
+        "execution_time_ms": 0.756,
         "peak_memory_kb": 9.66,
         "precision_percent": 36.36,
         "recall_percent": 100.0,
@@ -74,7 +74,7 @@
         ],
         "detected_cycles_count": 9,
         "is_truncated": false,
-        "execution_time_ms": 0.847,
+        "execution_time_ms": 0.941,
         "peak_memory_kb": 10.62,
         "precision_percent": 44.44,
         "recall_percent": 100.0,
@@ -92,7 +92,7 @@
         ],
         "detected_cycles_count": 9,
         "is_truncated": false,
-        "execution_time_ms": 1.745,
+        "execution_time_ms": 1.655,
         "peak_memory_kb": 14.1,
         "precision_percent": 44.44,
         "recall_percent": 100.0,
@@ -110,7 +110,7 @@
         ],
         "detected_cycles_count": 13,
         "is_truncated": false,
-        "execution_time_ms": 3.072,
+        "execution_time_ms": 3.303,
         "peak_memory_kb": 28.48,
         "precision_percent": 30.77,
         "recall_percent": 100.0,
@@ -128,12 +128,29 @@
         ],
         "detected_cycles_count": 9,
         "is_truncated": false,
-        "execution_time_ms": 5.879,
+        "execution_time_ms": 6.066,
         "peak_memory_kb": 61.77,
         "precision_percent": 44.44,
         "recall_percent": 100.0,
         "false_alert_rate_percent": 55.56
       }
+    },
+    "dense_clique_bounded_vs_unbounded": {
+      "topology": "Complete 12-author reciprocal cartel clique K_12 (12 nodes, 132 directed edges)",
+      "bounded_dfs_k5_budget_10k": {
+        "cycles_enumerated": 10000,
+        "loops_truncated_flag": true,
+        "execution_time_ms": 325.256,
+        "peak_memory_kb": 6205.51
+      },
+      "unbounded_dfs_emergency_cap_100k": {
+        "cycles_before_emergency_abort": 100000,
+        "emergency_aborted": true,
+        "execution_time_ms": 5012.959,
+        "peak_memory_kb": 114851.19
+      },
+      "speedup_factor_vs_unbounded_abort": 15.41,
+      "memory_reduction_percent_vs_unbounded_abort": 94.6
     }
   },
   "feature_3_bit_exact_replay": {
@@ -142,7 +159,7 @@
     "bit_identical_matches": 1000,
     "hash_identical_matches": 1000,
     "bit_exact_reproducibility_percent": 100.0,
-    "mean_replay_verification_latency_us": 720.56,
+    "mean_replay_verification_latency_us": 736.57,
     "serialization_standard": "RFC 8785 Canonical JSON (Strict numeric formatting, sorted keys)",
     "ground_truth_consistency": "100.0% zero-drift across independent runtime executions"
   },
@@ -185,9 +202,32 @@
       "total_worker_threads_spawned": 1200,
       "worker_thread_compute_reduction_percent": 70.0,
       "sessions_cryptographically_revoked": 300,
-      "peak_gateway_memory_kb": 20258.35,
-      "actuation_latency_us": 237.45,
+      "peak_gateway_memory_kb": 20258.19,
+      "actuation_latency_us": 244.87,
       "technical_effect": "Suppresses worker thread allocation from 4000 down to 1200 (70.0% reduction in server compute overhead). Severes 300 adversarial sessions at ingress firewall before downstream memory exhaustion."
+    }
+  },
+  "feature_6_threshold_separation_and_invariants": {
+    "random_seed": 606,
+    "h_index_and_lacir_invariants": {
+      "portfolios_tested": 1000,
+      "invariant_satisfied_count": 1000,
+      "invariant_satisfaction_percent": 100.0
+    },
+    "peer_review_controlled_500": {
+      "human_reviews_tested": 250,
+      "synthetic_or_misaligned_tested": 250,
+      "specificity_percent": 100.0,
+      "sensitivity_percent": 100.0,
+      "boundary_exceptions": 0,
+      "mean_latency_us": 1058.68
+    },
+    "venue_controlled_500": {
+      "authenticated_venues_tested": 250,
+      "predatory_or_spoofed_tested": 250,
+      "legitimate_pass_rate_percent": 100.0,
+      "predatory_interdiction_rate_percent": 100.0,
+      "mean_latency_us": 980.88
     }
   }
 }
