@@ -1,7 +1,7 @@
 {
   "title": "ARICCA-X Real-World Empirical Validation Telemetry",
-  "timestamp_iso": "2026-10-21T09:47:54Z",
-  "total_execution_time_ms": 22.6,
+  "timestamp_iso": "2026-11-07T09:15:07Z",
+  "total_execution_time_ms": 18.33,
   "real_venue_evaluation": {
     "dataset_name": "Real-World Venue Evaluation Corpus (Authentic Publishers vs. Documented Predatory/Spoof)",
     "total_venues_tested": 5,
