@@ -96,8 +96,7 @@ Given active modules $K$ with normalized base weights $\sum_{k \in K} w_k = 1$ (
 - **Stem-Scaled Levenshtein Typosquat Detection (`VI-SPOOF`):** Flags `TYPOSQUAT` (`score = 0.0`) when $1 \le D_{\text{Lev}}(\text{candidate}, \text{registry\_stem}) \le \max(1, \lfloor 0.20 \times \text{len}(\text{registry\_stem}) \rfloor)$ (edit distance `1` to `2` depending on stem length). Brand-substring embedding on unauthorized domains receives `score = 0.10`; unrelated domains receive `0.70`; verified registries receive `1.00`.
 - **CFP Announcement-to-Deadline Schedule Score (`VI-URGENCY`):** For $\Delta t = t_{\text{deadline}} - t_{\text{announce}}$ (in days):
   - $\Delta t \le 0$: `0.00` (inverted/impossible dates)
-  - $0 < \Delta t < 14$: `0.05` (`PREDATORY_URGENCY` flagged for all $0 \le \Delta t < 30$)
-  - $14 \le \Delta t < 30$: `0.20` (`PREDATORY_URGENCY` flagged)
+  - $0 < \Delta t < 30$: `PREDATORY_URGENCY` flagged, with linear ramp $\max\!\left(0.0,\; \frac{\Delta t}{30} \times 0.5\right)$ in [`venue_intelligence.py`](./venue_intelligence/venue_intelligence.py) (or step values `0.05` for $0 < \Delta t < 14$ and `0.20` for $14 \le \Delta t < 30$ in an alternative embodiment)
   - $\Delta t \ge 30$: linear ramp from `0.50` at 30 days to `1.00` at 90+ days: $\min\!\left(1.0,\; 0.5 + \min\!\left(0.5, \frac{\Delta t - 30}{60}\right)\right)$.
 - **Grammatical Tense Analysis (`GTA-WEIGHTS`):** Conditional `+0.30`, Future `+0.25`, Unknown `+0.05`, Present `0.00`, Past `-0.05` (corroborated bonus); website future/conditional location penalty `+0.10`; same-indexer tense contradiction `+0.20`; anachronistic `"since YYYY"` ($Y > Y_{\text{current}}$) `+0.30`.
 - **Temporal Fingerprint Evolution Tracking (`TFET`):** 7 weighted dimensions (`cfp_risk=0.15`, `website_depth=0.10`, `structural_completeness=0.10`, `indexing_claims=0.25`, `cfp_signature=0.10`, `organizer_continuity=0.15`, `ownership=0.15`). Raises `stability_alert` when $\|\Delta \mathbf{F}\|_W > 0.25$, and raises `hijack_suspected` iff `d_domain > 0 and (d_sig > 0 or d_claims > 0.50)`.
@@ -109,8 +108,8 @@ Given active modules $K$ with normalized base weights $\sum_{k \in K} w_k = 1$ (
 ### 2.5. Peer-Review Forensics (`peer_review_forensics/peer_review_forensics.py`)
 - **Sentence-Length Uniformity (`PR-UNIFORMITY`):** Evaluates population $\text{CV} = \sigma / \mu$ when sentence count $\ge 3$; flags synthetic uniformity when $\text{CV} < 0.20$.
 - **Academic Hedging Lexicon (`PR-HEDGING`):** 29 closed-set phrases; $\text{Density} = 100 \times \text{matches} / \text{words}$ (flags $> 4.0$, with warning tier above `2.0`).
-- **Manuscript-Element Specificity (`PR-SPECIFICITY`):** 9 compiled regex patterns (`section`, `figure`, `table`, `equation`, `theorem/lemma`, `algorithm`, `page`, `line`, `citation [n]`); $\text{Specificity} = \text{total\_element\_matches} / \text{sentence\_count}$ (flags $< 0.15$).
-- **Dual Asymmetric Sentiment-Decision Misalignment (`PR-MISALIGNMENT`):** 42 polarity tokens (21 positive, 21 negative) with optional 3-word preceding negation inversion (`not`, `never`, `no`, `neither`, `barely`, `hardly`, `scarcely`, `seldom`), $P = (N_{\text{pos}} - N_{\text{neg}}) / (N_{\text{pos}} + N_{\text{neg}})$. Flags misalignment when:
+- **Manuscript-Element Specificity (`PR-SPECIFICITY`):** 9 compiled regex patterns (`equation`, `table`, `figure`, `section`, `page`, `line`, `theorem`, `algorithm`, `appendix`); $\text{Specificity} = \text{total\_element\_matches} / \text{sentence\_count}$ (flags $< 0.15$).
+- **Dual Asymmetric Sentiment-Decision Misalignment (`PR-MISALIGNMENT`):** 42 polarity tokens (21 positive, 21 negative; with optional 3-word preceding negation inversion in an alternative embodiment), $P = (N_{\text{pos}} - N_{\text{neg}}) / (N_{\text{pos}} + N_{\text{neg}})$. Flags misalignment when:
   - Recommendation is **`Reject`** while $P \ge +0.50$, OR
   - Recommendation is **`Accept`** while $P \le -0.30$.
 
@@ -176,7 +175,7 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | **Ingress Session Revocation (`TCP_RST`)** | `300` high-confidence `REJECT` inputs | `0` sessions revoked (connections persist) | **`300 / 300` (`100.0%`)** revoked in **`0.28 ms`** (`244.87 – 280.0 µs` across runs) | Sub-millisecond session table severance |
 
 ### Table 6 — Dual-Corpus Validation: Real-World Scholarly Entities & Controlled 500/1,000-Trial Threshold Separation
-1. **Real-World Scholarly Corpus (`real_world_validation.py` -> [`real_world_validation_results.json`](./real_world_validation_results.json), `18.33 ms`, `100.0%` Accuracy):**
+1. **Real-World Scholarly Corpus (`real_world_validation.py` -> [`real_world_validation_results.json`](./real_world_validation_results.json), `18.33 – 29.08 ms`, `100.0%` Accuracy):**
    - **5 Venues (`5/5` = `100.0%`):** Flagship `IEEE_TSE` (`182-day` CFP window, score `0.985`) and `ACM_SIGCOMM` (`139-day` CFP window, score `0.985`) vs. documented predatory venues `WASET` (`17-day` window $< 30\text{d}$, score `0.470`), `OMICS` (`19-day` window $< 30\text{d}$, score `0.495`), and `ieee-conference-2026.org` brand-embedding spoof (`14-day` window, score `0.305`).
    - **4 Peer Reviews (`4/4` = `100.0%`):** 2 authentic OpenReview/ICLR human reviews (`CV = 0.4853, 0.3118`, hedging `0.0%`, specificity `1.1667, 1.0000` -> `AUTHENTIC_HUMAN`) vs. 2 GPT-4/Claude synthetic reviews (`CV = 0.0487, 0.1806`, hedging `6.15%–31.58%`, specificity `0.0000` -> `SUSPICIOUS_OR_SYNTHETIC`).
    - **2 Author Citation Topologies (`2/2` = `100.0%`):** Independent scholar (`LACIR = 85.71%`, `h_lp = 2`) vs. 3-author reciprocal ring (`LACIR = 0.00%` vs deceptive traditional `CIR = 83.33%`, `h = 2 -> h_lp = 0`).

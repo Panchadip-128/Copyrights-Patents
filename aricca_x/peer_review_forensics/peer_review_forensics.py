@@ -31,7 +31,7 @@ of peer-review text without probabilistic or machine-learning classifiers:
      where P in [-1.0, 1.0].
      Raises SENTIMENT_DECISION_MISALIGNMENT if:
          - Review text is strongly positive (P >= +0.50) but recommendation is REJECT, or
-         - Review text is strongly negative (P <= -0.50) but recommendation is ACCEPT.
+         - Review text is strongly negative (P <= -0.30) but recommendation is ACCEPT.
 
 All decisions are produced by explicit arithmetic formulas and Boolean rules
 carrying human-readable mathematical justification.
