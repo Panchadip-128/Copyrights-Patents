@@ -110,12 +110,12 @@ Given active modules $K$ with normalized base weights $\sum_{k \in K} w_k = 1$ (
 - **Sentence-Length Uniformity (`PR-UNIFORMITY`):** Evaluates population $\text{CV} = \sigma / \mu$ when sentence count $\ge 3$; flags synthetic uniformity when $\text{CV} < 0.20$.
 - **Academic Hedging Lexicon (`PR-HEDGING`):** 29 closed-set phrases; $\text{Density} = 100 \times \text{matches} / \text{words}$ (flags $> 4.0$, with warning tier above `2.0`).
 - **Manuscript-Element Specificity (`PR-SPECIFICITY`):** 9 compiled regex patterns (`section`, `figure`, `table`, `equation`, `theorem/lemma`, `algorithm`, `page`, `line`, `citation [n]`); $\text{Specificity} = \text{total\_element\_matches} / \text{sentence\_count}$ (flags $< 0.15$).
-- **Dual Asymmetric Sentiment-Decision Misalignment (`PR-MISALIGNMENT`):** 42 polarity tokens (21 positive, 21 negative), $P = (N_{\text{pos}} - N_{\text{neg}}) / (N_{\text{pos}} + N_{\text{neg}})$. Flags misalignment when:
+- **Dual Asymmetric Sentiment-Decision Misalignment (`PR-MISALIGNMENT`):** 42 polarity tokens (21 positive, 21 negative) with optional 3-word preceding negation inversion (`not`, `never`, `no`, `neither`, `barely`, `hardly`, `scarcely`, `seldom`), $P = (N_{\text{pos}} - N_{\text{neg}}) / (N_{\text{pos}} + N_{\text{neg}})$. Flags misalignment when:
   - Recommendation is **`Reject`** while $P \ge +0.50$, OR
   - Recommendation is **`Accept`** while $P \le -0.30$.
 
 ### 2.6. Grant Compliance (`grant_compliance/grant_compliance.py` & `policies/*.json`)
-- Deterministic Boolean mandate evaluation with actionable remediation directives for **NIH**, **NSF**, **Plan S (cOAlition S)**, and **UKRI**, backed by content-hashed versioned JSON policy definitions in [`grant_compliance/policies/`](./grant_compliance/policies/).
+- Deterministic Boolean and three-valued Kleene (`TRUE`, `FALSE`, `UNKNOWN`) mandate evaluation with actionable remediation directives for **NIH**, **NSF**, **Plan S (cOAlition S)**, and **UKRI**, backed by content-hashed versioned JSON policy definitions in [`grant_compliance/policies/`](./grant_compliance/policies/).
 
 ---
 
@@ -123,7 +123,7 @@ Given active modules $K$ with normalized base weights $\sum_{k \in K} w_k = 1$ (
 
 All benchmark figures below are directly reproducible from [`comparative_benchmark.py`](./comparative_benchmark.py), [`test_checklist_empirical_benchmarks.py`](./test_checklist_empirical_benchmarks.py), and [`real_world_validation.py`](./real_world_validation.py) (raw logs archived in [`comparative_benchmark_results.json`](./comparative_benchmark_results.json), [`checklist_empirical_results.json`](./checklist_empirical_results.json), and [`real_world_validation_results.json`](./real_world_validation_results.json)).
 
-* **Test Hardware:** AMD64 Family 25 Model 80 (6 physical cores / 12 threads), 15.31 GB RAM, Windows 11 64-bit, Python 3.14.2.
+* **Test Hardware:** 15 W AMD Ryzen 5 7530U / AMD64 Family 25 Model 80 (6 physical cores / 12 threads), 15.31 GB RAM, Windows 11 64-bit, Python 3.14.2.
 
 ### Table 1 — Observed-Set Weighting (ADW) vs. Neutral `0.50` Placeholder Substitution (`N = 1,000` Trials)
 Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities missing = `25%`), **Tier 2** (`2` of `4` missing = `50%`), and **Tier 3** (`3` of `4` missing = `75%`):
