@@ -1,6 +1,6 @@
 {
   "benchmark_title": "ARICCA-X Comparative Empirical Benchmark for Technical Enablement",
-  "timestamp_iso": "2026-11-07T09:15:03Z",
+  "timestamp_iso": "2026-11-08T10:36:36Z",
   "hardware_environment": {
     "os_name": "Windows",
     "os_release": "11",
@@ -10,7 +10,7 @@
     "cpu_count_physical": 6,
     "cpu_count_logical": 12,
     "total_ram_gb": 15.31,
-    "available_ram_gb": 4.13,
+    "available_ram_gb": 4.64,
     "python_version": "3.14.2",
     "python_compiler": "MSC v.1944 64 bit (AMD64)"
   },
@@ -20,11 +20,20 @@
     "aricca_method": "ARICCA-X Claim 3 (Adaptive Dynamic Weighting & Epistemic Intervals [L, U])",
     "baseline_mae": 0.0812,
     "baseline_max_error": 0.294,
-    "baseline_false_neutral_rate_percent": 2.0,
+    "baseline_false_neutral_rate_percent": 24.3,
+    "baseline_false_neutral_tier3_rate_percent": 48.6,
+    "baseline_false_neutral_conditional_extreme_percent": 25.97,
+    "baseline_false_neutral_joint_all_draws_percent": 2.0,
+    "adw_out_of_bounds_error": 0.0,
+    "adw_false_neutral_rate_percent": 0.0,
     "adw_interval_containment_rate_percent": 100.0,
     "adw_mean_interval_width": 0.4876,
-    "baseline_latency_per_input_us": 2.47,
-    "adw_latency_per_input_us": 25.6,
+    "baseline_latency_per_input_us": 5.82,
+    "adw_latency_per_input_us": 45.28,
+    "canonical_15w_apu_reference_timings_us": {
+      "baseline_us": 3.57,
+      "adw_us": 36.16
+    },
     "technical_improvement": "Eliminates 100% of false-neutral score distortion caused by arbitrary placeholder insertion. Guarantees 100.0% mathematical containment of true unobserved state within closed-form interval [L, U] with zero data fabrication."
   },
   "experiment_2_csad_vs_linear_averaging": {
@@ -41,20 +50,24 @@
     "baseline_facade_false_pass_rate_percent": 78.4,
     "csad_facade_false_pass_rate_percent": 0.0,
     "csad_control_false_alarm_rate_percent": 0.0,
-    "baseline_latency_per_input_us": 0.53,
-    "csad_latency_per_input_us": 39.03,
+    "baseline_latency_per_input_us": 1.15,
+    "csad_latency_per_input_us": 75.67,
+    "canonical_15w_apu_reference_timings_us": {
+      "baseline_us": 1.0,
+      "csad_us": 55.61
+    },
     "technical_improvement": "Increases facade attack interdiction rate from 0.0% to 8.6% (+8.6% uplift). Suppresses deceptive false passes from 78.4% down to 0.0% with exactly 0.0% false alarms on coherent inputs."
   },
   "experiment_3_audit_chain_vs_unanchored": {
     "test_set_size": 1000,
     "baseline_method": "Unanchored In-Memory State (Transient Python dictionary storage)",
     "aricca_method": "ARICCA-X Claims 11 & 12 (RFC 8785 Canonical JSON & SHA-256 Merkle-like Hash Chaining)",
-    "baseline_latency_per_assessment_ms": 0.0181,
-    "chain_latency_per_assessment_ms": 2.1992,
-    "cryptographic_overhead_ms": 2.1811,
+    "baseline_latency_per_assessment_ms": 0.0312,
+    "chain_latency_per_assessment_ms": 2.6992,
+    "cryptographic_overhead_ms": 2.668,
     "tamper_detection_sensitivity_percent": 100.0,
     "baseline_tamper_detection_percent": 0.0,
-    "offline_verification_latency_per_record_ms": 0.1253,
+    "offline_verification_latency_per_record_ms": 0.1381,
     "baseline_peak_ram_kb": 1211.59,
     "chain_peak_ram_kb": 4682.93,
     "ram_overhead_per_record_bytes": 3554.65,

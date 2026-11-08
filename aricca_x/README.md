@@ -123,7 +123,7 @@ Given active modules $K$ with normalized base weights $\sum_{k \in K} w_k = 1$ (
 
 All benchmark figures below are directly reproducible from [`comparative_benchmark.py`](./comparative_benchmark.py), [`test_checklist_empirical_benchmarks.py`](./test_checklist_empirical_benchmarks.py), and [`real_world_validation.py`](./real_world_validation.py) (raw logs archived in [`comparative_benchmark_results.json`](./comparative_benchmark_results.json), [`checklist_empirical_results.json`](./checklist_empirical_results.json), and [`real_world_validation_results.json`](./real_world_validation_results.json)).
 
-* **Test Hardware:** 15 W AMD Ryzen 5 7530U / AMD64 Family 25 Model 80 (6 physical cores / 12 threads), 15.31 GB RAM, Windows 11 64-bit, Python 3.14.2.
+* **Test Hardware:** 15 W AMD Ryzen 5 7530U / AMD64 Family 25 Model 80 (6 physical cores / 12 threads), 15.31 GB RAM, Windows 11 64-bit, Python 3.14.2. *(Note: Deterministic accuracy, containment, recall, thread-count, and byte-size metrics are 100% seed-invariant; wall-clock microsecond/millisecond latencies reflect the canonical 15 W APU hardware benchmark run and exhibit normal $\pm 15\%$ OS scheduling variance across runs).*
 
 ### Table 1 — Observed-Set Weighting (ADW) vs. Neutral `0.50` Placeholder Substitution (`N = 1,000` Trials)
 Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities missing = `25%`), **Tier 2** (`2` of `4` missing = `50%`), and **Tier 3** (`3` of `4` missing = `75%`):
@@ -132,7 +132,7 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | :--- | :---: | :---: | :--- |
 | **Mean Absolute Error (MAE) vs. Out-of-Bounds Error** | `0.0812` | **`0.0000`** (`[L, U]` out-of-bounds error) | **`100%` elimination** of uncalibrated point-estimate distortion (`dist(s_true, [L, U]) = 0`) |
 | **Maximum Point Error Distortion** | `0.2940` | **`0.0000`** (`[L, U]` out-of-bounds error) | Eliminates worst-case `29.4%` scoring error |
-| **False Neutral Rate** (Extreme risks masked into `[0.40, 0.60]`) | `24.30%` (`48.6%` at Tier 3) | **`0.00%`** (Explicitly gated by interval width $W$) | **`100%` elimination** of false-neutral masking |
+| **False Neutral Rate** (Decisive evidence diluted into neutral band; `25.97%` of extreme $s_{\text{true}}$ draws) | `24.30%` (`48.6%` at Tier 3) | **`0.00%`** (Explicitly gated by interval width $W$) | **`100%` elimination** of false-neutral masking |
 | **Ground-Truth Containment Rate** ($s_{\text{true}} \in [L, U]$) | `0.00%` (Point estimate only; no bounds) | **`100.00%`** (`1,000 / 1,000`) | Provable mathematical enclosure across all `1,000` trials |
 | **Mean Uncertainty Width $W = U - L$** | `0.0000` (Unreported; hidden uncertainty) | **`0.4876`** (`0.20–0.30` at Tier 1; `0.70–0.80` at Tier 3) | Quantifies exact missing-evidence mass (`1 - coverage`) |
 | **Execution Latency per Input** | `3.57 µs` | **`36.16 µs`** | Sub-40 µs deterministic interval calculation |
