@@ -127,27 +127,32 @@ class PhishingDetector:
         password_fields = v_s.get("password_fields", 0)
         max_depth = v_s.get("max_depth", 0)
 
-        # Step 3: Feature Registry with Cryptographic Provenance (Claims 1, 7)
+        # Step 3: Feature Registry with Cryptographic Provenance (Claims 1, 6, 7, 8, 10)
+        q_entropy = round(float(entropy), 4)
+        q_sdr = round(float(sdr), 4)
+        q_sdr_dev = round(float(sdr_deviation), 4)
+
         feat_entropy = self.feature_registry.register_feature(
             name="Shannon Entropy",
             category=FeatureCategory.LEXICAL,
-            value=entropy,
+            value=q_entropy,
             source_modality="lexical",
             extraction_method="shannon_entropy_base_2",
             confidence=1.0,
-            parameters={"threshold": active_thresh, "scope": active_scope},
+            parameters={"value": q_entropy, "threshold": round(float(active_thresh), 4), "scope": active_scope},
         )
 
         feat_sdr = self.feature_registry.register_feature(
             name="Structural Density Ratio",
             category=FeatureCategory.STRUCTURAL,
-            value=sdr,
+            value=q_sdr,
             source_modality="structural",
             extraction_method="ast_node_depth_sdr",
             confidence=0.95 if not bypass_downstream else 0.0,
             parameters={
+                "value": q_sdr,
                 "baseline_sdr": 16.0,
-                "deviation_pct": sdr_deviation,
+                "deviation_pct": q_sdr_dev,
                 "has_html": v_s.get("has_html", False),
                 "password_fields": password_fields,
                 "max_depth": max_depth,
@@ -158,11 +163,11 @@ class PhishingDetector:
         feat_tls = self.feature_registry.register_feature(
             name="TLS Certificate Validity",
             category=FeatureCategory.VISUAL,
-            value=tls_valid,
+            value=bool(tls_valid),
             source_modality="visual",
             extraction_method="tls_certificate_evaluator",
             confidence=1.0 if not bypass_downstream else 0.5,
-            parameters={"is_self_signed": is_self_signed, "bypassed": bypass_downstream},
+            parameters={"value": bool(tls_valid), "is_self_signed": is_self_signed, "bypassed": bypass_downstream},
         )
 
         features = [feat_entropy, feat_sdr, feat_tls]

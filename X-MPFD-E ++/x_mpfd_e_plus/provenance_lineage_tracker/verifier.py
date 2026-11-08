@@ -58,7 +58,10 @@ class AuditVerifier:
             method = prov.get("extraction_method", "")
             ts = prov.get("extraction_timestamp", "")
             conf = prov.get("confidence", 1.0)
-            params = prov.get("parameters", {})
+            params = dict(prov.get("parameters", {}))
+            if "value" in params and "value" in feat:
+                feat_val = feat.get("value")
+                params["value"] = round(float(feat_val), 4) if isinstance(feat_val, (int, float)) and not isinstance(feat_val, bool) else feat_val
 
             canonical_repr = f"{source}:{method}:{ts}:{conf}:{json.dumps(params, sort_keys=True)}"
             recomputed_hash = hashlib.sha256(canonical_repr.encode("utf-8")).hexdigest()

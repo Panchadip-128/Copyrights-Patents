@@ -551,12 +551,16 @@ class FusionPolicyEngine:
         )
 
         directive = (
-            SystemControlDirective.WITHHOLD_PARSER_AND_RENDERER.value
-            if decision == "PHISHING"
+            SystemControlDirective.ISOLATE_CREDENTIAL_FORM.value
+            if (b_lex, b_struct, b_vis) == (0, 1, 1)
             else (
-                SystemControlDirective.ALLOCATE_AST_PARSER.value
-                if decision == "SUSPICIOUS"
-                else SystemControlDirective.ALLOW_STREAM_AND_CACHE.value
+                SystemControlDirective.WITHHOLD_PARSER_AND_RENDERER.value
+                if decision == "PHISHING"
+                else (
+                    SystemControlDirective.ALLOCATE_AST_PARSER.value
+                    if decision == "SUSPICIOUS"
+                    else SystemControlDirective.ALLOW_STREAM_AND_CACHE.value
+                )
             )
         )
 

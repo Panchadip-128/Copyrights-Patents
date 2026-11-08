@@ -405,16 +405,16 @@ class TestSection3nAuditVerificationAndTamperDetection(unittest.TestCase):
         report_json = gen.generate_json_report(res)
         parsed = json.loads(report_json)
 
-        # Adversary alters feature parameters (e.g. changing Shannon Entropy threshold from 4.50 to 9.99)
+        # Adversary alters recorded feature value or parameters (Claim 10 tamper detection)
         for feat in parsed["feature_provenance_registry"]:
             if feat["name"] == "Shannon Entropy":
-                feat["provenance"]["parameters"]["threshold"] = 9.99  # Tampering with recorded parameters!
+                feat["value"] = 1.2345  # Tampering with recorded feature value!
 
         tampered_json = json.dumps(parsed)
         verifier = AuditVerifier()
         is_valid, msg, details = verifier.verify_report(tampered_json)
 
-        self.assertFalse(is_valid, "Verifier must detect tampering when parameters are modified!")
+        self.assertFalse(is_valid, "Verifier must detect tampering when feature value is modified!")
         self.assertIn("TAMPER_DETECTED", msg)
         self.assertGreater(len(details["mismatches"]), 0)
 
@@ -470,6 +470,13 @@ class TestSection3mSystemControlDirectivesAndRuleExecution(unittest.TestCase):
         r2 = engine.execute(entropy=4.8, sdr_deviation=80.0, tls_valid=True, url="")
         self.assertEqual(r2.decision, "PHISHING")
         self.assertEqual(r2.rule_id, "RULE_TABLE_6_2_CELL_2_LEX_STRUCT")
+
+        # Test Cell 4: (0, 1, 1) -> PHISHING with ISOLATE_CREDENTIAL_FORM (Table 3)
+        r4 = engine.execute(entropy=3.2, sdr_deviation=80.0, tls_valid=False, url="")
+        self.assertEqual(r4.decision, "PHISHING")
+        self.assertEqual(r4.risk_score, 0.85)
+        self.assertEqual(r4.system_control_directive, "ISOLATE_CREDENTIAL_FORM")
+        self.assertEqual(r4.rule_id, "RULE_TABLE_6_2_CELL_4_STRUCT_VISUAL")
 
         # Test Cell 5: (1, 0, 0) -> SUSPICIOUS
         r5 = engine.execute(entropy=4.8, sdr_deviation=10.0, tls_valid=True, url="")
