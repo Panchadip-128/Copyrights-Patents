@@ -267,9 +267,22 @@ class SubmissionGatewayInterdictionController:
             "client_ip": payload.client_ip,
             "payload_sha256": payload.payload_sha256,
             "profile_genesis_hash": profile.audit_chain.get("genesis_hash", ""),
-            "profile_final_hash": profile.audit_chain.get("head", ""),
+            "profile_final_hash": profile.audit_chain.get("final_hash", profile.audit_chain.get("head", "")),
         }
         audit_hash = sha256_hex(canonical_json(actuation_dict))
+        prev_hash = profile.audit_chain.get("final_hash", profile.audit_chain.get("head", ""))
+        next_idx = len(profile.audit_chain.get("records", [])) + 1
+        linked_record_hash = sha256_hex(f"{prev_hash}|{next_idx}|Phase_7_GatewayActuation|{audit_hash}")
+        if isinstance(profile.audit_chain.get("records"), list):
+            profile.audit_chain["records"].append({
+                "index": next_idx,
+                "phase": "Phase_7_GatewayActuation",
+                "state": actuation_dict,
+                "state_digest": audit_hash,
+                "previous_hash": prev_hash,
+                "record_hash": linked_record_hash,
+            })
+            profile.audit_chain["final_hash"] = linked_record_hash
 
         t1 = time.perf_counter()
         actuation_latency_ms = (t1 - t0) * 1000.0

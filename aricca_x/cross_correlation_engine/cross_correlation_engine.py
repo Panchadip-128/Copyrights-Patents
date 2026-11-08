@@ -37,6 +37,7 @@ from ..deterministic_core import (
     clamp01,
     cross_signal_anomaly_detection,
     digest,
+    enforce_deterministic_runtime,
 )
 from ..grant_compliance.grant_compliance import GrantComplianceResult
 from ..peer_review_forensics.peer_review_forensics import PeerReviewAuditResult
@@ -122,6 +123,7 @@ class CrossCorrelationEngine:
         grant_result: Optional[GrantComplianceResult] = None,
     ) -> CompositeRiskProfile:
         """Run the six-phase deterministic assessment pipeline."""
+        enforce_deterministic_runtime(strict=True)
         input_digest = digest({
             "target_id": target_id,
             "target_type": target_type,
