@@ -98,10 +98,10 @@ def run_benchmark_1_adw(num_samples: int = 1000) -> Dict[str, Any]:
     # --- Run Baseline (AU2012231158B2) ---
     t0_baseline = time.perf_counter()
     baseline_errors = []
-    baseline_false_neutrals = 0  # Joint rate across all 1,000 uniform draws: true <=0.25 or >=0.75 masked into [0.40, 0.60]
+    baseline_false_neutrals = 0  # True corrupt (<=0.25) or pristine (>=0.75) masked into [0.40, 0.60]
     baseline_extreme_trials = 0
-    baseline_decisive_obs_masked = 0  # Decisive observed evidence (<=0.35 or >=0.65) diluted into neutral band [0.39, 0.61]
-    baseline_decisive_obs_masked_t3 = 0  # Tier-3 decisive observed evidence diluted into neutral band
+    baseline_extreme_t3 = 0
+    baseline_false_neutrals_t3 = 0
     baseline_out_of_bounds = 0
 
     for obs, true_s, true_comp, missing_count in trials:
@@ -115,16 +115,12 @@ def run_benchmark_1_adw(num_samples: int = 1000) -> Dict[str, Any]:
         is_neutral_baseline = 0.40 <= baseline_score <= 0.60
         if is_extreme_true:
             baseline_extreme_trials += 1
+            if missing_count == 3:
+                baseline_extreme_t3 += 1
             if is_neutral_baseline:
                 baseline_false_neutrals += 1
-
-        # Observed-set mean before 0.50 placeholder dilution
-        obs_weight_sum = sum(base_weights[m] for m in modalities if obs[m] is not None)
-        obs_mean = sum(base_weights[m] * obs[m] for m in modalities if obs[m] is not None) / obs_weight_sum
-        if (obs_mean <= 0.35 or obs_mean >= 0.65) and (0.39 <= baseline_score <= 0.61):
-            baseline_decisive_obs_masked += 1
-            if missing_count == 3:
-                baseline_decisive_obs_masked_t3 += 1
+                if missing_count == 3:
+                    baseline_false_neutrals_t3 += 1
 
     t1_baseline = time.perf_counter()
     baseline_time_total = t1_baseline - t0_baseline
@@ -151,17 +147,15 @@ def run_benchmark_1_adw(num_samples: int = 1000) -> Dict[str, Any]:
         "aricca_method": "ARICCA-X Claim 3 (Adaptive Dynamic Weighting & Epistemic Intervals [L, U])",
         "baseline_mae": round(sum(baseline_errors) / len(baseline_errors), 4),
         "baseline_max_error": round(max(baseline_errors), 4),
-        "baseline_false_neutral_rate_percent": round((baseline_decisive_obs_masked / num_samples) * 100, 2),
-        "baseline_false_neutral_tier3_rate_percent": 48.6,
+        "baseline_false_neutral_rate_percent": round((baseline_false_neutrals / num_samples) * 100, 2),
         "baseline_false_neutral_conditional_extreme_percent": round((baseline_false_neutrals / max(1, baseline_extreme_trials)) * 100, 2),
-        "baseline_false_neutral_joint_all_draws_percent": round((baseline_false_neutrals / num_samples) * 100, 2),
+        "baseline_false_neutral_tier3_extreme_percent": round((baseline_false_neutrals_t3 / max(1, baseline_extreme_t3)) * 100, 2),
         "adw_out_of_bounds_error": 0.0,
         "adw_false_neutral_rate_percent": 0.0,
         "adw_interval_containment_rate_percent": round((adw_enclosed_in_interval / num_samples) * 100, 2),
         "adw_mean_interval_width": round(sum(adw_widths) / len(adw_widths), 4),
         "baseline_latency_per_input_us": round((baseline_time_total / num_samples) * 1e6, 2),
         "adw_latency_per_input_us": round((adw_time_total / num_samples) * 1e6, 2),
-        "canonical_15w_apu_reference_timings_us": {"baseline_us": 3.57, "adw_us": 36.16},
         "technical_improvement": (
             "Eliminates 100% of false-neutral score distortion caused by arbitrary placeholder insertion. "
             "Guarantees 100.0% mathematical containment of true unobserved state within closed-form interval [L, U] "
@@ -271,7 +265,6 @@ def run_benchmark_2_csad(num_samples: int = 1000) -> Dict[str, Any]:
         "csad_control_false_alarm_rate_percent": round((csad_false_positives_control / 500) * 100, 2),
         "baseline_latency_per_input_us": round((baseline_time_total / num_samples) * 1e6, 2),
         "csad_latency_per_input_us": round((csad_time_total / num_samples) * 1e6, 2),
-        "canonical_15w_apu_reference_timings_us": {"baseline_us": 1.0, "csad_us": 55.61},
         "technical_improvement": (
             f"Increases facade attack interdiction rate from {round((baseline_facade_interdicted / 500) * 100, 1)}% "
             f"to {round((csad_facade_interdicted / 500) * 100, 1)}% (+{round(((csad_facade_interdicted - baseline_facade_interdicted)/500)*100, 1)}% uplift). "
