@@ -135,7 +135,7 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | **False Neutral Rate** (Extreme $s_{\text{true}} \le 0.25$ or $\ge 0.75$ masked into `[0.40, 0.60]`) | `2.00%` of all `1,000` trials (`25.97%` of extreme-score cases; `68.18%` at Tier 3) | **`0.00%`** (`0 / 1,000`; explicitly gated by interval width $W$) | **`100%` elimination** of false-neutral masking |
 | **Ground-Truth Containment Rate** ($s_{\text{true}} \in [L, U]$) | `0.00%` (Point estimate only; no bounds) | **`100.00%`** (`1,000 / 1,000`) | Provable mathematical enclosure across all `1,000` trials |
 | **Mean Uncertainty Width $W = U - L$** | `0.0000` (Unreported; hidden uncertainty) | **`0.4876`** (`0.20–0.30` at Tier 1; `0.70–0.80` at Tier 3) | Quantifies exact missing-evidence mass (`1 - coverage`) |
-| **Execution Latency per Input** | `3.57 µs` | **`36.16 µs`** | Sub-40 µs deterministic interval calculation |
+| **Execution Latency per Input** | `3.57 µs` (`2.47 – 3.57 µs` across runs) | **`36.16 µs`** (`25.60 – 36.16 µs` across runs) | Sub-40 µs deterministic interval calculation |
 
 ### Table 2 — Asymmetric CSAD (`0.60 / 0.20`) vs. Simple Weighted Averaging (`N = 1,000` Trials: `500` Facade + `500` Coherent Controls)
 | Metric | Baseline (Weighted Average Only) | ARICCA-X Asymmetric CSAD (`csad.py`) | Improvement / Technical Effect |
@@ -144,25 +144,25 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | **Facade Attack False Pass Rate** (`Risk < 0.50` / Low-Moderate) | `78.40%` (`392 / 500` facade attacks missed) | **`0.00%`** (`0 / 500` missed; `100%` elevated to High/Critical) | **`100%` elimination** of missed facade attacks (`392` caught) |
 | **Automated Critical Rejection Rate (`Risk >= 0.75`)** | `0.00%` (`0 / 500`) | **`8.60%`** (Immediate critical interdiction; remaining `91.40%` held at High Risk `[0.61, 0.75)`) | Catches severe facade asymmetry that weighted averaging completely misses |
 | **False Alarm Rate on Coherent Inputs** (Over-penalization) | `0.00%` | **`0.00%`** (`0 / 500`) | Zero false positives on consistent legitimate submissions |
-| **Execution Latency per Evaluation** | `1.00 µs` | **`55.61 µs`** | Sub-60 µs deterministic calculation |
+| **Execution Latency per Evaluation** | `1.00 µs` (`0.53 – 1.00 µs` across runs) | **`55.61 µs`** (`39.03 – 55.61 µs` across runs) | Sub-60 µs deterministic calculation |
 
 *(Note: Under a `Risk >= 0.70` interdiction threshold against extreme facade profiles, Asymmetric CSAD interdicts `473 / 500` (`94.6%`) with mean risk `0.7647` vs. `166 / 500` (`33.2%`) for symmetric $\alpha = 0.20$ and `0 / 500` (`0.0%`) for weighted averaging).*
 
 ### Table 3 — Cryptographic SHA-256 Audit Chain Tamper Detection (`N = 3,000` Adversarial Tamper Attempts)
-| Attack / Tamper Vector (`1,000` trials each) | Baseline (Standard Unhashed JSON Logs) | ARICCA-X SHA-256 Audit Chain (`audit_chain.py`) | Mean Verification Latency | Storage Overhead per 6-Phase Record |
+| Attack / Tamper Vector (`1,000` trials each) | Baseline (Standard Unhashed JSON Logs) | ARICCA-X SHA-256 Audit Chain (`audit_chain.py`) | Mean Verification Latency (Specification / Latest JSON Run) | Storage Overhead per 6-Phase Record |
 | :--- | :---: | :---: | :---: | :---: |
-| **Altered Intermediate Phase State** (Post-hoc score edit) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`166.19 µs`** | **`2,457.0 bytes`** (`~2.40 KB`) |
-| **Deleted Phase Record** (Dropping a failed check phase) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`123.37 µs`** | Included in `2.40 KB` chain |
-| **Reordered Phase Sequence** (Swapping execution order) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`122.41 µs`** | Included in `2.40 KB` chain |
+| **Altered Intermediate Phase State** (Post-hoc score edit) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`166.19 µs`** (`119.11 µs` latest run) | **`2,457.0 bytes`** (`~2.40 KB`) |
+| **Deleted Phase Record** (Dropping a failed check phase) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`123.37 µs`** (`126.18 µs` latest run) | Included in `2.40 KB` chain |
+| **Reordered Phase Sequence** (Swapping execution order) | `0.00%` (`0 / 1,000` detected) | **`100.00%`** (`1,000 / 1,000` detected) | **`122.41 µs`** (`95.55 µs` latest run) | Included in `2.40 KB` chain |
 
 ### Table 4 — Bounded Canonical DFS ($2 \le k \le 5, C_{\max}=10,000$) Across Graph Sizes & Measured Unbounded $K_{12}$ Baseline
-| Graph Scale / Cartel Topology | Cycles Enumerated | Execution Time | Peak Memory (`tracemalloc`) | Cycle Precision / False-Alert Rate | Injected Ring Recall ($k \in \{2,3,4,5\}$) |
+| Graph Scale / Cartel Topology | Cycles Enumerated | Execution Time (Specification / Latest JSON Run) | Peak Memory (`tracemalloc`) | Cycle Precision / False-Alert Rate | Injected Ring Recall ($k \in \{2,3,4,5\}$) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **`50` Nodes (`148` edges)** | `11` | **`0.780 ms`** | **`9.66 KB`** | `36.36%` / `63.64%` | **`100.0%`** (`4 / 4`) |
-| **`100` Nodes (`301` edges)** | `9` | **`0.883 ms`** | **`10.62 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
-| **`250` Nodes (`765` edges)** | `9` | **`1.910 ms`** | **`14.10 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
-| **`500` Nodes (`1,486` edges)** | `13` | **`5.822 ms`** | **`28.48 KB`** | `30.77%` / `69.23%` | **`100.0%`** (`4 / 4`) |
-| **`1,000` Nodes (`2,989` edges)** | `9` | **`6.723 ms`** | **`61.77 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
+| **`50` Nodes (`148` edges)** | `11` | **`0.780 ms`** (`0.756 ms` latest run) | **`9.66 KB`** | `36.36%` / `63.64%` | **`100.0%`** (`4 / 4`) |
+| **`100` Nodes (`301` edges)** | `9` | **`0.883 ms`** (`0.941 ms` latest run) | **`10.62 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
+| **`250` Nodes (`765` edges)** | `9` | **`1.910 ms`** (`1.655 ms` latest run) | **`14.10 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
+| **`500` Nodes (`1,486` edges)** | `13` | **`5.822 ms`** (`3.303 ms` latest run) | **`28.48 KB`** | `30.77%` / `69.23%` | **`100.0%`** (`4 / 4`) |
+| **`1,000` Nodes (`2,989` edges)** | `9` | **`6.723 ms`** (`6.066 ms` latest run) | **`61.77 KB`** | `44.44%` / `55.56%` | **`100.0%`** (`4 / 4`) |
 | **Dense $K_{12}$ (`12` nodes, `132` edges) — ARICCA-X Bounded ($k \le 5, C_{\max}=10,000$)** | **`10,000`** (`truncated=True`) | **`325.26 ms`** | **`6,205.5 KB` (`6.06 MB`)** | Deterministic halt at budget ceiling | Explicit `truncated=True` flag |
 | **Dense $K_{12}$ (`12` nodes, `132` edges) — Unbounded DFS (Emergency Cap `100,000`)** | `100,000` (`aborted=True`) | `5,012.96 ms` (`5.01 s`) | `114,851.2 KB` (`112.16 MB`) | **`15.41×` speedup & `94.60%` RAM reduction** | Prevents memory exhaustion |
 
@@ -173,7 +173,7 @@ Evaluated across three missing-evidence tiers: **Tier 1** (`1` of `4` modalities
 | **Three-Valued Kleene Compliance Logic** | `1,000` vectors | Binary crash or false pass on `UNKNOWN` | **`1,000 / 1,000` (`100.0%`)** exact truth-table match (`0` exceptions) | Prevents missing metadata from crashing or bypassing compliance |
 | **Evidence Coverage Safeguard ($W > 0.50$)** | `250` high-risk sparse inputs | `250 / 250` (`100.0%`) wrongfully auto-rejected | **`0 / 250` (`0.0%`)** wrongfully rejected (**`100.0%` routed to `HOLD`**) | Eliminates false auto-rejection of incomplete submissions |
 | **Downstream Worker Thread Allocation** | `1,000` submissions (`4` threads/job) | `4,000` threads (`100.0%` allocated) | **`1,200` threads** (`30.0%` allocated; **`70.0%` thread suppression**) | Prevents thread-pool starvation from `HOLD` (`400`) and `REJECT` (`300`) traffic |
-| **Ingress Session Revocation (`TCP_RST`)** | `300` high-confidence `REJECT` inputs | `0` sessions revoked (connections persist) | **`300 / 300` (`100.0%`)** revoked in **`0.28 ms`** (`280 µs`) | Sub-millisecond session table severance |
+| **Ingress Session Revocation (`TCP_RST`)** | `300` high-confidence `REJECT` inputs | `0` sessions revoked (connections persist) | **`300 / 300` (`100.0%`)** revoked in **`0.28 ms`** (`244.87 – 280.0 µs` across runs) | Sub-millisecond session table severance |
 
 ### Table 6 — Dual-Corpus Validation: Real-World Scholarly Entities & Controlled 500/1,000-Trial Threshold Separation
 1. **Real-World Scholarly Corpus (`real_world_validation.py` -> [`real_world_validation_results.json`](./real_world_validation_results.json), `18.33 ms`, `100.0%` Accuracy):**
